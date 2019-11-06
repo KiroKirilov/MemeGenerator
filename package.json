@@ -1,0 +1,43 @@
+{
+  "name": "meme-generator",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@types/jest": "24.0.22",
+    "@types/node": "12.12.6",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "16.9.3",
+    "concurrently": "^5.0.0",
+    "node-sass": "^4.13.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-scripts": "3.2.0",
+    "typescript": "3.7.2"
+  },
+  "scripts": {
+    "start": "concurrently sass-module-types \"react-scripts start\"",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babakness/sass-module-types": "0.0.31",
+    "npm-run-all": "^4.1.5",
+    "typings-for-css-modules-loader": "^1.7.0"
+  }
+}

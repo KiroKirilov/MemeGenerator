@@ -1,0 +1,5 @@
+{
+    "files.exclude": {
+        "src/**/*.module.scss.d.ts": true
+    }
+}
