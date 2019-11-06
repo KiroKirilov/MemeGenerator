@@ -14,7 +14,6 @@ const App: React.FC<{ store: Store<IStore, any> }> = ({ store }) => {
     <Provider store={store}>
       <BrowserRouter>
         <header className="App-header">
-          Change
           This is the header
           <Link to="/">GO TO HOME</Link>
           <Link to="/register">GO TO REGISTER</Link>
