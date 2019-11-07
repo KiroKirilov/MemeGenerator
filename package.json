@@ -12,6 +12,7 @@
     "@types/react-router-dom": "^5.1.2",
     "antd": "^3.25.0",
     "concurrently": "^5.0.0",
+    "fabric": "^3.4.0",
     "node-sass": "^4.13.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",

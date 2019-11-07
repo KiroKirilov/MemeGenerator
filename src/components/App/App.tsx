@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { IStore } from "../../store/IStore";
 import { Store } from "redux";
 import { Editor } from "../Home/Editor";
+import "antd/dist/antd.css";
 
 const App: React.FC<{ store: Store<IStore, any> }> = ({ store }) => {
 
