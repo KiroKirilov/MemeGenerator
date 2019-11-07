@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { default as classes } from './App.module.scss';
+import * as React from "react";
+import { default as classes } from "./App.module.scss";
 import { Route, BrowserRouter, Link, Switch } from "react-router-dom";
-import { Home } from '../Home/Home';
-import { Register } from '../Auth/Register/Register';
-import { Provider } from 'react-redux';
-import { IStore } from '../../store/IStore';
-import { Store } from 'redux';
-import "antd/dist/antd.css"
+import { Home } from "../Home/Home";
+import { Register } from "../Auth/Register/Register";
+import { Provider } from "react-redux";
+import { IStore } from "../../store/IStore";
+import { Store } from "redux";
+import { Editor } from "../Home/Editor";
 
 const App: React.FC<{ store: Store<IStore, any> }> = ({ store }) => {
 
@@ -15,13 +15,17 @@ const App: React.FC<{ store: Store<IStore, any> }> = ({ store }) => {
       <BrowserRouter>
         <header className="App-header">
           This is the header
-          <Link to="/">GO TO HOME</Link>
-          <Link to="/register">GO TO REGISTER</Link>
+          <div>
+            <Link to="/">GO TO HOME</Link>
+            <Link to="/register">GO TO REGISTER</Link>
+            <Link to="/editor">GO TO EDITOR</Link>
+          </div>
         </header>
 
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/register" component={Register} />
+          <Route path="/editor" component={Editor} />
         </Switch>
 
         <footer>

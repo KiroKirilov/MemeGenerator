@@ -5,5 +5,5 @@ export const Home: React.FC =() => {
         <div>
             This is the home page
         </div>
-    )
-}
+    );
+};

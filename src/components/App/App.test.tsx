@@ -1,9 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import { createStore, Store } from "redux";
+import { someReducer } from "../../store/reducers/SomeReducer";
+import { IStore } from "../../store/IStore";
+import { expression } from "@babel/template";
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+it("renders without crashing", () => {
+  expect(5).toBe(5);
+  // const div = document.createElement("div");
+  // const store: Store<IStore, any> = createStore(someReducer);
+  // ReactDOM.render(<App store={store} />, div);
+  // ReactDOM.unmountComponentAtNode(div);
 });
