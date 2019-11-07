@@ -27,7 +27,7 @@ export const Editor: React.FC = () => {
                         name: "Donkey image"
                     },
                     // menu: ["shape", "filter", "text"],
-                    initMenu: "filter",
+                    initMenu: "text",
                     uiSize: {
                         width: "1000px",
                         height: "800px"

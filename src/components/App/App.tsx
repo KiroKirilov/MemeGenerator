@@ -9,31 +9,29 @@ import { Store } from "redux";
 import { Editor } from "../Home/Editor";
 import "antd/dist/antd.css";
 
-const App: React.FC<{ store: Store<IStore, any> }> = ({ store }) => {
+const App: React.FC = () => {
 
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <header className="App-header">
-          This is the header
+    <BrowserRouter>
+      <header className="App-header">
+        This is the header
           <div>
-            <Link to="/">GO TO HOME</Link>
-            <Link to="/register">GO TO REGISTER</Link>
-            <Link to="/editor">GO TO EDITOR</Link>
-          </div>
-        </header>
+          <Link to="/">GO TO HOME</Link>
+          <Link to="/register">GO TO REGISTER</Link>
+          <Link to="/editor">GO TO EDITOR</Link>
+        </div>
+      </header>
 
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/register" component={Register} />
-          <Route path="/editor" component={Editor} />
-        </Switch>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/register" component={Register} />
+        <Route path="/editor" component={Editor} />
+      </Switch>
 
-        <footer>
-          This is the footer
+      <footer>
+        This is the footer
         </footer>
-      </BrowserRouter>
-    </Provider>
+    </BrowserRouter>
   );
 };
 
