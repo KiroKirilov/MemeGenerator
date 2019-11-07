@@ -2,7 +2,7 @@ import * as React from "react";
 import { default as classes } from "./App.module.scss";
 import { Route, BrowserRouter, Link, Switch } from "react-router-dom";
 import { Home } from "../Home/Home";
-import { Register } from "../Auth/Register/Register";
+import { Register } from "../auth/Register/Register";
 import { Provider } from "react-redux";
 import { IStore } from "../../store/IStore";
 import { Store } from "redux";

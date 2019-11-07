@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { IStore } from "../../../store/IStore";
 import { Tooltip } from "antd";
 import { memo } from "react";
+import { SomeActions } from "../../../store/actions/SomeActions";
+
 
 const OtherComp: React.FC = memo(() => {
     const val: string = useSelector((store: IStore) => store.anotherVal);
@@ -15,14 +17,13 @@ const OtherComp: React.FC = memo(() => {
 });
 
 export const Register: React.FC = memo(() => {
-    const val: string = useSelector((store: IStore) => store.someProp)
+    const val: string = useSelector((store: IStore) => store.someProp);
     const dispatch: React.Dispatch<any> = useDispatch();
 
     return (
         <div>
-            {console.log("Register rendered")}
             <div>This is the register {val}</div>
-            <button onClick={() => dispatch({ type: "CHANGE_PROP", payload: "new val" })}>asdasd</button>
+            <button onClick={() => dispatch(SomeActions.makeChange("new val thunk"))}>Thunk</button>
 
             <Tooltip title="prompt text">
                 <span>Tooltip will show on mouse enter.</span>
