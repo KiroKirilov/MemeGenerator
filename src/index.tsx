@@ -12,13 +12,13 @@ import firebaseConfig from "./config/firebase.config";
 import { rootReducer } from "./store/reducers/RootReducer";
 
 
-const store = createStore(rootReducer,
+const store: any = createStore(rootReducer,
     compose(
         applyMiddleware(thunk.withExtraArgument({ getFirestore, getFirebase })),
         reduxFirestore(firebaseConfig)
     ));
 
-const reactReduxFirebaseProps = {
+const reactReduxFirebaseProps: any = {
     firebase: firebaseConfig,
     config: {
         testCol: "test-collection",

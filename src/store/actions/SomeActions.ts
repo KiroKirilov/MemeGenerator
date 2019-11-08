@@ -1,9 +1,11 @@
+import { GetFirestore } from "../../types/GetFirestore";
+import { FunctionAction } from "../../types/FunctionAction";
+
 export class SomeActions {
-    public static makeChange(newval: string) {
-        // @ts-ignore
-        return async (dispatch: any, getState: any, { getFirestore, getFirebase }) => {
+    public static makeChange(newval: string): FunctionAction {
+        return async (dispatch: any, getState: any, { getFirestore }: GetFirestore) => {
             try {
-                const firestore = getFirestore();
+                const firestore: any = getFirestore();
                 await firestore
                     .collection("test-collection")
                     .add({
@@ -13,7 +15,6 @@ export class SomeActions {
                     });
             } catch (error) {
                 console.log(error);
-                debugger
             }
 
             dispatch({ type: "CHANGE_PROP", payload: newval });

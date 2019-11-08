@@ -4,11 +4,12 @@ import { IStore } from "../../../store/IStore";
 import { Tooltip } from "antd";
 import { memo } from "react";
 import { SomeActions } from "../../../store/actions/SomeActions";
-import { useFirestoreConnect } from 'react-redux-firebase';
+import { useFirestoreConnect } from "react-redux-firebase";
+import {ReduxStore} from "../../../types/ReduxStore";
 
 
 const OtherComp: React.FC = memo(() => {
-    const val: string = useSelector((store: IStore) => store.anotherVal);
+    const val: string = useSelector((store: ReduxStore) => store.some.anotherVal);
     return (
         <div>
             {console.log("OtherComp rendered")}
@@ -18,14 +19,14 @@ const OtherComp: React.FC = memo(() => {
 });
 
 export const Register: React.FC = memo(() => {
-    const val: string = useSelector((store: any) => store.some.someProp);
+    const val: string = useSelector((store: ReduxStore) => store.some.someProp);
 
-    const a = useSelector((state: any) => state.firestore.ordered["test-collection"]);
+    const a: any[] = useSelector((state: ReduxStore) => state.firestore.ordered["test-collection"]);
     const dispatch: React.Dispatch<any> = useDispatch();
 
     useFirestoreConnect([
-        { collection: "test-collection"} 
-      ])
+        { collection: "test-collection"}
+      ]);
 
     return (
         <div>

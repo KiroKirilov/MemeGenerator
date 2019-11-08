@@ -3,8 +3,9 @@ import "firebase/firestore";
 import "firebase/auth";
 import "firebase/analytics";
 import  "firebase/database";
+import { FirebaseConfig } from "../types/FirebaseConfig";
 
-var firebaseConfig = {
+var firebaseConfig: FirebaseConfig = {
     apiKey: "AIzaSyCJ4PMolZ40N6FXuh2nLcwF91ngBqizjDE",
     authDomain: "meme-generator-e6065.firebaseapp.com",
     databaseURL: "https://meme-generator-e6065.firebaseio.com",
@@ -14,7 +15,7 @@ var firebaseConfig = {
     appId: "1:1023210383140:web:3e1df3df9135dc1853b5b1",
     measurementId: "G-T1VWR7HGHQ"
 };
-// Initialize Firebase
+
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 firebase.firestore();
