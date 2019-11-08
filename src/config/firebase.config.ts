@@ -16,6 +16,8 @@ var firebaseConfig: FirebaseConfig = {
     measurementId: "G-T1VWR7HGHQ"
 };
 
+// change
+
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 firebase.firestore();
