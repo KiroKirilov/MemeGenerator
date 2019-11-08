@@ -10,13 +10,12 @@ export class SomeActions {
                         title: "new one",
                         content: "new content",
                         createdAt: new Date()
-                    })
-                debugger;
+                    });
             } catch (error) {
                 console.log(error);
                 debugger
             }
-            
+
             dispatch({ type: "CHANGE_PROP", payload: newval });
         };
     }

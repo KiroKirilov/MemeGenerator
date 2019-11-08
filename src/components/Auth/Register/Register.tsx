@@ -4,6 +4,7 @@ import { IStore } from "../../../store/IStore";
 import { Tooltip } from "antd";
 import { memo } from "react";
 import { SomeActions } from "../../../store/actions/SomeActions";
+import { useFirestoreConnect } from 'react-redux-firebase';
 
 
 const OtherComp: React.FC = memo(() => {
@@ -17,17 +18,28 @@ const OtherComp: React.FC = memo(() => {
 });
 
 export const Register: React.FC = memo(() => {
-    const val: string = useSelector((store: IStore) => store.someProp);
+    const val: string = useSelector((store: any) => store.some.someProp);
+
+    const a = useSelector((state: any) => state.firestore.ordered["test-collection"]);
     const dispatch: React.Dispatch<any> = useDispatch();
+
+    useFirestoreConnect([
+        { collection: "test-collection"} 
+      ])
 
     return (
         <div>
+            {console.log("register rendered")}
             <div>This is the register {val}</div>
             <button onClick={() => dispatch(SomeActions.makeChange("new val thunk"))}>Thunk</button>
 
             <Tooltip title="prompt text">
                 <span>Tooltip will show on mouse enter.</span>
             </Tooltip>
+
+            <div>
+                {(a || []).length}
+            </div>
 
             <OtherComp />
         </div>
