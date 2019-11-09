@@ -6,6 +6,7 @@ import { memo } from "react";
 import { SomeActions } from "../../../store/actions/SomeActions";
 import { useFirestoreConnect } from "react-redux-firebase";
 import {ReduxStore} from "../../../types/ReduxStore";
+import { useRouteMatch, useHistory, useLocation, useParams } from "react-router-dom";
 
 
 const OtherComp: React.FC = memo(() => {
