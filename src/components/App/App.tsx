@@ -4,7 +4,7 @@ import { Route, BrowserRouter, Link, Switch } from "react-router-dom";
 import { Home } from "../home/home";
 import { Register } from "../auth/register/register";
 import { Provider } from "react-redux";
-import { IStore } from "../../store/IStore";
+import { IStore } from "../../store/store";
 import { Store } from "redux";
 import { Editor } from "../home/editor";
 import "antd/dist/antd.css";

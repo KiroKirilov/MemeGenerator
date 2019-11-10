@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { someReducer } from "./SomeReducer";
+import { someReducer } from "./some-reducer";
 import { firestoreReducer } from "redux-firestore";
 import { firebaseReducer } from "react-redux-firebase";
 

@@ -1,12 +1,11 @@
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { IStore } from "../../../store/IStore";
+import { IStore } from "../../../store/store";
 import { Tooltip } from "antd";
 import { memo } from "react";
-import { SomeActions } from "../../../store/actions/SomeActions";
+import { SomeActions } from "../../../store/actions/some-actions";
 import { useFirestoreConnect } from "react-redux-firebase";
-import {ReduxStore} from "../../../types/ReduxStore";
-import { useRouteMatch, useHistory, useLocation, useParams } from "react-router-dom";
+import { ReduxStore } from "../../../types/redux-store";
 
 
 const OtherComp: React.FC = memo(() => {
@@ -26,8 +25,8 @@ export const Register: React.FC = memo(() => {
     const dispatch: React.Dispatch<any> = useDispatch();
 
     useFirestoreConnect([
-        { collection: "test-collection"}
-      ]);
+        { collection: "test-collection" }
+    ]);
 
     return (
         <div>

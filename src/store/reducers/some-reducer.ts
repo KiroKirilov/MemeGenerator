@@ -1,4 +1,4 @@
-import { IStore } from "../IStore";
+import { IStore } from "../store";
 
 const initialState: IStore = {
 	someProp: "startVal",

@@ -1,5 +1,5 @@
-import { GetFirestore } from "../../types/GetFirestore";
-import { FunctionAction } from "../../types/FunctionAction";
+import { GetFirestore } from "../../types/get-firestore-firebase";
+import { FunctionAction } from "../../types/function-action";
 
 export class SomeActions {
     public static makeChange(newval: string): FunctionAction {
