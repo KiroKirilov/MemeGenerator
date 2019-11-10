@@ -31,6 +31,7 @@ export const Login: React.FC = () => {
 
     return (
         <form noValidate className={bootstrap.containerFluid} onSubmit={handleSubmit(onSubmit)}>
+            {console.log("login rendered")}
             <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
                 <div className={bootstrap.col3}>
                     <Form.Item
@@ -57,7 +58,7 @@ export const Login: React.FC = () => {
                         help={errors.password && errors.password.message}>
                         <Input.Password
                             onChange={(e) => setValue(fields.password, e.target.value)}
-                            value={values.email}
+                            value={values.password}
                             prefix={<Icon type="lock" />}
                             type="password"
                             placeholder="Password"
