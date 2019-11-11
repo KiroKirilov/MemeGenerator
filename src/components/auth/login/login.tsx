@@ -6,8 +6,6 @@ import { AuthActions } from '../../../store/actions/auth-actions';
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { StringHelpers } from '../../../helpers/string-helpers';
 import { ReduxStore } from '../../../types/redux-store';
-import { Redirect } from 'react-router-dom';
-import { appRoutes } from '../../../common/constants/app-routes';
 import { ValidationHelpers } from '../../../common/helpers/validation-helpers';
 import { FormErrorMessage } from '../../common/form-error-message/form-error-message';
 
@@ -15,7 +13,6 @@ export const Login: React.FC = () => {
     const { register, handleSubmit, errors, getValues, setValue } = useForm();
     const loginError = useSelector((store: ReduxStore) => store.auth.loginError);
     const auth = useSelector((store: ReduxStore) => store.firebase.auth);
-    const isAuthenticated = !auth.isEmpty;
     const values = getValues();
     const dispatch = useDispatch();
 
