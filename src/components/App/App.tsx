@@ -9,23 +9,33 @@ import { ProtectedRoute, AnonymousOnlyRoute } from "../custom-routes/auth-routes
 import { Register } from "../auth/register/register";
 import { Editor } from "../home/editor";
 import { Home } from "../home/home";
+import { useSelector } from "react-redux";
+import { ReduxStore } from "../../types/redux-store";
 
 const App: React.FC = () => {
+  const auth: any = useSelector((store: ReduxStore) => store.firebase.auth);
 
   return (
     <BrowserRouter>
-      <NavBar />
 
-      <Route exact path={appRoutes.home} component={Home} />
-      <Switch>
-        <AnonymousOnlyRoute path={appRoutes.register} component={Register} />
-        <AnonymousOnlyRoute path={appRoutes.login} component={Login} />
-        <ProtectedRoute path={appRoutes.editor} component={Editor} />
-      </Switch>
+      {
+        !!auth.isLoaded
+          ? (
+            <>
+              <NavBar />
+              <Switch>
+                <Route exact path={appRoutes.home} component={Home} />
+                <AnonymousOnlyRoute path={appRoutes.register} component={Register} />
+                <AnonymousOnlyRoute path={appRoutes.login} component={Login} />
+                <ProtectedRoute path={appRoutes.editor} component={Editor} />
+              </Switch>
+              <footer>
+                This is the footer
+              </footer>
+            </>
+          )
+          : null}
 
-      <footer>
-        This is the footer
-        </footer>
     </BrowserRouter>
   );
 };
