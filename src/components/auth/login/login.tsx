@@ -37,10 +37,6 @@ export const Login: React.FC = () => {
         }
     }
 
-    if (!loginError && isAuthenticated) {
-        return <Redirect to={{ pathname: appRoutes.home, state: { from: appRoutes.login } }} />
-    }
-
     return (
         <form noValidate className={bootstrap.containerFluid} onSubmit={handleSubmit(onSubmit)}>
             {console.log("login rendered")}
