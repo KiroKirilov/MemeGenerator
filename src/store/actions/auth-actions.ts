@@ -1,6 +1,6 @@
 import { LoginModel } from "../../models/auth/login-model";
 import { FunctionAction } from "../../types/function-action";
-import { GetFirebase } from "../../types/get-firestore-firebase";
+import { GetFirebase, FirebaseInstance } from "../../types/get-firestore-firebase";
 
 export class AuthActions {
     public static login(model: LoginModel): FunctionAction {
@@ -11,23 +11,23 @@ export class AuthActions {
                 await firebase.auth().signInWithEmailAndPassword(
                     model.email,
                     model.password
-                )
+                );
 
                 debugger;
             } catch (error) {
                 console.log(error);
                 debugger;
-            }
-        };
+            };
+        }
     }
 
     public static logout(): FunctionAction {
         return async (dispatch, getState, { getFirebase }) => {
             try {
-                const firebase = getFirebase();
+                const firebase: FirebaseInstance = getFirebase();
                 await firebase.auth().signOut();
-                
-                //dispatch({ type: 'SIGNOUT_SUCCESS' });
+
+                // dispatch({ type: 'SIGNOUT_SUCCESS' });
             } catch (error) {
                 console.log(error);
                 debugger;

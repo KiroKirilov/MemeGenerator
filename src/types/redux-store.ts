@@ -1,5 +1,3 @@
-import { Reducer } from "react";
-import { AnyAction } from "redux";
 import { IStore } from "../store/store";
 
 export type ReduxStore = {
