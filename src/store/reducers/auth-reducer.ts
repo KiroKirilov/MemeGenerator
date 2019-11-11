@@ -1,5 +1,6 @@
 import { AuthStore } from "../../types/redux-store";
 import { AuthActionType } from "../action-types/auth-actions-type";
+import { FirebaseError } from "@firebase/util";
 
 const initialState: AuthStore = {
     loginError: undefined
@@ -7,7 +8,7 @@ const initialState: AuthStore = {
 
 type AuthActionPayload = {
     type: AuthActionType,
-    error: Error
+    error: FirebaseError
 }
 
 export const authReducer: any = (state: AuthStore = initialState, action: AuthActionPayload): AuthStore => {
@@ -15,7 +16,7 @@ export const authReducer: any = (state: AuthStore = initialState, action: AuthAc
         case AuthActionType.LOGIN_ERROR:
             return {
                 ...state,
-                loginError: "OPAAAAAAAAAA"
+                loginError: action.error
             };
 
         case AuthActionType.LOGIN_SUCCESS:

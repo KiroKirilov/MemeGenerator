@@ -2,6 +2,7 @@ import { LoginModel } from "../../models/auth/login-model";
 import { FunctionAction } from "../../types/function-action";
 import { GetFirebase, FirebaseInstance } from "../../types/get-firestore-firebase";
 import { AuthActionType } from "../action-types/auth-actions-type";
+import { FirebaseError } from "@firebase/util";
 
 export class AuthActions {
     public static login(model: LoginModel): FunctionAction {
@@ -17,7 +18,6 @@ export class AuthActions {
                 dispatch({type: AuthActionType.LOGIN_SUCCESS});
 
             } catch (error) {
-                console.log(error);
                 // TODO: Map error message
                 dispatch({type: AuthActionType.LOGIN_ERROR, error});
             }

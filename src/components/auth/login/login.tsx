@@ -1,13 +1,21 @@
 import * as React from 'react';
-import { Input, Icon, Button, Form } from 'antd';
+import { Input, Icon, Button, Form, Alert } from 'antd';
 import useForm from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthActions } from '../../../store/actions/auth-actions';
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { StringHelpers } from '../../../helpers/string-helpers';
+import { ReduxStore } from '../../../types/redux-store';
+import { Redirect } from 'react-router-dom';
+import { appRoutes } from '../../../common/constants/app-routes';
+import { ValidationHelpers } from '../../../common/helpers/validation-helpers';
+import { FormErrorMessage } from '../../common/form-error-message/form-error-message';
 
 export const Login: React.FC = () => {
     const { register, handleSubmit, errors, getValues, setValue } = useForm();
+    const loginError = useSelector((store: ReduxStore) => store.auth.loginError);
+    const auth = useSelector((store: ReduxStore) => store.firebase.auth);
+    const isAuthenticated = !auth.isEmpty;
     const values = getValues();
     const dispatch = useDispatch();
 
@@ -29,9 +37,16 @@ export const Login: React.FC = () => {
         }
     }
 
+    if (!loginError && isAuthenticated) {
+        return <Redirect to={{ pathname: appRoutes.home, state: { from: appRoutes.login } }} />
+    }
+
     return (
         <form noValidate className={bootstrap.containerFluid} onSubmit={handleSubmit(onSubmit)}>
             {console.log("login rendered")}
+
+            <FormErrorMessage showErrorMessage={!!loginError} errorMessage={loginError && loginError.message} />
+
             <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
                 <div className={bootstrap.col3}>
                     <Form.Item
@@ -44,11 +59,16 @@ export const Login: React.FC = () => {
                             prefix={<Icon type="user" />}
                             placeholder="Email"
                             name={fields.email}
-                            ref={registerField({ required: "Email is required."})}
+                            ref={registerField({
+                                required: "Email is required.",
+                                pattern: {
+                                    value: ValidationHelpers.emailRegex,
+                                    message: "Please provide a valid email."
+                                }
+                            })}
                         />
                     </Form.Item>
                 </div>
-
             </div>
 
             <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
