@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { IStore } from "../../../store/store";
 import { Tooltip } from "antd";
 import { memo } from "react";
 import { SomeActions } from "../../../store/actions/some-actions";

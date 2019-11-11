@@ -1,6 +1,7 @@
 import { LoginModel } from "../../models/auth/login-model";
 import { FunctionAction } from "../../types/function-action";
 import { GetFirebase, FirebaseInstance } from "../../types/get-firestore-firebase";
+import { AuthActionType } from "../action-types/auth-actions-type";
 
 export class AuthActions {
     public static login(model: LoginModel): FunctionAction {
@@ -13,12 +14,14 @@ export class AuthActions {
                     model.password
                 );
 
-                debugger;
+                dispatch({type: AuthActionType.LOGIN_SUCCESS});
+
             } catch (error) {
                 console.log(error);
-                debugger;
-            };
-        }
+                // TODO: Map error message
+                dispatch({type: AuthActionType.LOGIN_ERROR, error});
+            }
+        };
     }
 
     public static logout(): FunctionAction {
@@ -32,6 +35,6 @@ export class AuthActions {
                 console.log(error);
                 debugger;
             }
-        }
+        };
     }
 }

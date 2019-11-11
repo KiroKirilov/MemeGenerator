@@ -1,11 +1,11 @@
-import { IStore } from "../store";
+import { SomeStore } from "../../types/redux-store";
 
-const initialState: IStore = {
+const initialState: SomeStore = {
     someProp: "startVal",
     anotherVal: "other val"
 };
 
-export const someReducer: any = (state: IStore = initialState, action: any): IStore => {
+export const someReducer: any = (state: SomeStore = initialState, action: any): SomeStore => {
     switch (action.type) {
     case "CHANGE_PROP":
         return {
