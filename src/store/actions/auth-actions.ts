@@ -29,11 +29,10 @@ export class AuthActions {
     public static register(model: RegisterModel): FunctionAction {
         return async (dispatch, getState, { getFirebase, getFirestore }) => {
             try {
-                debugger;
                 const firebase: FirebaseInstance = getFirebase();
-                const firestore = getFirestore();
+                const firestore: any = getFirestore();
                 const newUserInfo: UserCredential = await firebase.auth().createUserWithEmailAndPassword(model.email, model.password);
-                const userId = newUserInfo.user ? newUserInfo.user.uid : null;
+                const userId: any = newUserInfo.user ? newUserInfo.user.uid : null;
                 const profileAddPromise: Promise<any> = firestore.collection(collectionNames.userProfiles).doc(userId).set({
                     username: model.username
                 });
@@ -45,7 +44,6 @@ export class AuthActions {
 
                 await profileAddPromise;
                 await usernamesAddPromise;
-                debugger;
             } catch (error) {
                 console.log(error);
                 debugger;
@@ -67,3 +65,5 @@ export class AuthActions {
         };
     }
 }
+
+eml
