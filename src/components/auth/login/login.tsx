@@ -1,16 +1,19 @@
-import * as React from 'react';
-import { Input, Icon, Button, Form, Alert } from 'antd';
-import useForm from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { AuthActions } from '../../../store/actions/auth-actions';
+import * as React from "react";
+import { Input, Icon, Button, Form } from "antd";
+import useForm from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { AuthActions } from "../../../store/actions/auth-actions";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
-import { StringHelpers } from '../../../helpers/string-helpers';
-import { ReduxStore } from '../../../types/redux-store';
-import { ValidationHelpers } from '../../../common/helpers/validation-helpers';
-import { FormErrorMessage } from '../../common/form-error-message/form-error-message';
+import { StringHelpers } from "../../../helpers/string-helpers";
+import { ReduxStore } from "../../../types/redux-store";
+import { ValidationHelpers } from "../../../common/helpers/validation-helpers";
+import { FormErrorMessage } from "../../common/form-error-message/form-error-message";
+import { FormHelpers } from "../../../common/helpers/form-helpers";
 
 export const Login: React.FC = () => {
-    const { register, handleSubmit, errors, getValues, setValue } = useForm();
+    const { register, handleSubmit, errors, getValues, setValue } = useForm({
+        mode: "onBlur"
+    });
     const loginError = useSelector((store: ReduxStore) => store.auth.loginError);
     const auth = useSelector((store: ReduxStore) => store.firebase.auth);
     const values = getValues();
@@ -25,18 +28,9 @@ export const Login: React.FC = () => {
         dispatch(AuthActions.login(data));
     };
 
-    const registerField = (validationRules?: any) => {
-        return (fieldRef: any) => {
-            if (fieldRef) {
-                // @ts-ignore
-                return register(validationRules || {})(fieldRef.input);
-            }
-        }
-    }
-
     return (
         <form noValidate className={bootstrap.containerFluid} onSubmit={handleSubmit(onSubmit)}>
-            {console.log("login rendered")}
+            {console.log("register rendered")}
 
             <FormErrorMessage showErrorMessage={!!loginError} errorMessage={loginError && loginError.message} />
 
@@ -52,7 +46,7 @@ export const Login: React.FC = () => {
                             prefix={<Icon type="user" />}
                             placeholder="Email"
                             name={fields.email}
-                            ref={registerField({
+                            ref={FormHelpers.registerField(register as any, {
                                 required: "Email is required.",
                                 pattern: {
                                     value: ValidationHelpers.emailRegex,
@@ -76,7 +70,7 @@ export const Login: React.FC = () => {
                             type="password"
                             placeholder="Password"
                             name={fields.password}
-                            ref={registerField({
+                            ref={FormHelpers.registerField(register as any, {
                                 required: true,
                                 minLength: {
                                     value: 6,

@@ -6,10 +6,11 @@ import * as serviceWorker from "./serviceWorker";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { getFirestore, reduxFirestore, createFirestoreInstance } from "redux-firestore";
-import { getFirebase, ReactReduxFirebaseProvider } from "react-redux-firebase";
+import { getFirebase, ReactReduxFirebaseProvider, ReactReduxFirebaseProviderProps } from "react-redux-firebase";
 import { Provider } from "react-redux";
 import firebaseConfig from "./config/firebase.config";
 import { rootReducer } from "./store/reducers/root-reducer";
+import { collectionNames } from "./common/constants/collection-names";
 
 
 const store: any = createStore(rootReducer,
@@ -18,11 +19,12 @@ const store: any = createStore(rootReducer,
         reduxFirestore(firebaseConfig)
     ));
 
-const reactReduxFirebaseProps: any = {
+const reactReduxFirebaseProps: ReactReduxFirebaseProviderProps = {
     firebase: firebaseConfig,
     config: {
-        testCol: "test-collection",
-        useFirestoreForProfile: true
+        userProfile: collectionNames.userProfiles,
+        useFirestoreForProfile: true,
+        presence: "presence"
     },
     dispatch: store.dispatch,
     createFirestoreInstance
