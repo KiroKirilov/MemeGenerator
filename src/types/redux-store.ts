@@ -7,6 +7,7 @@ export type SomeStore = {
 
 export type AuthStore = {
     loginError?: FirebaseError;
+    registerError?: FirebaseError;
 };
 
 export type ReduxStore = {

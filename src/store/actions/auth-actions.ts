@@ -3,6 +3,9 @@ import { FunctionAction } from "../../types/function-action";
 import { GetFirebase, FirebaseInstance } from "../../types/get-firestore-firebase";
 import { AuthActionType } from "../action-types/auth-actions-type";
 import { FirebaseError } from "@firebase/util";
+import { RegisterModel } from "../../models/auth/register-model";
+import { collectionNames } from "../../common/constants/collection-names";
+import { UserCredential } from "@firebase/auth-types";
 
 export class AuthActions {
     public static login(model: LoginModel): FunctionAction {
@@ -15,11 +18,35 @@ export class AuthActions {
                     model.password
                 );
 
-                dispatch({type: AuthActionType.LOGIN_SUCCESS});
+                dispatch({ type: AuthActionType.LOGIN_SUCCESS });
 
             } catch (error) {
-                // TODO: Map error message
-                dispatch({type: AuthActionType.LOGIN_ERROR, error});
+                dispatch({ type: AuthActionType.LOGIN_ERROR, error });
+            }
+        };
+    }
+
+    public static register(model: RegisterModel): FunctionAction {
+        return async (dispatch, getState, { getFirebase, getFirestore }) => {
+            try {
+                const firebase: FirebaseInstance = getFirebase();
+                const firestore: any = getFirestore();
+                const newUserInfo: UserCredential = await firebase.auth().createUserWithEmailAndPassword(model.email, model.password);
+                const userId: any = newUserInfo.user ? newUserInfo.user.uid : null;
+                const profileAddPromise: Promise<any> = firestore.collection(collectionNames.userProfiles).doc(userId).set({
+                    username: model.username
+                });
+
+                const usernamesAddPromise: Promise<any> = firestore.collection(collectionNames.usernames).add({
+                    username: model.username,
+                    userId: userId
+                });
+
+                await profileAddPromise;
+                await usernamesAddPromise;
+            } catch (error) {
+                console.log(error);
+                debugger;
             }
         };
     }
