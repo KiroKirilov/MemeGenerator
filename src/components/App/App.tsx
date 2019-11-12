@@ -11,6 +11,7 @@ import { Editor } from "../home/editor";
 import { Home } from "../home/home";
 import { useSelector } from "react-redux";
 import { ReduxStore } from "../../types/redux-store";
+import { NotFound } from "../common/not-found/not-found";
 
 const App: React.FC = () => {
   const auth: any = useSelector((store: ReduxStore) => store.firebase.auth);
@@ -28,6 +29,7 @@ const App: React.FC = () => {
                 <AnonymousOnlyRoute path={appRoutes.register} component={Register} />
                 <AnonymousOnlyRoute path={appRoutes.login} component={Login} />
                 <ProtectedRoute path={appRoutes.editor} component={Editor} />
+                <Route component={NotFound} />
               </Switch>
               <footer>
                 This is the footer
