@@ -12,9 +12,19 @@ import { StringHelpers } from "../../../helpers/string-helpers";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { AuthActions } from "../../../store/actions/auth-actions";
 import { ValidationHelpers } from "../../../common/helpers/validation-helpers";
-import { FirebaseError } from "@firebase/util";
-import { RegisterModel } from "../../../models/auth/register-model";
+import AwesomeDebouncePromise from "awesome-debounce-promise";
 
+const delayBeforeSearch: number = 500;
+
+const usernameIsAvailable: (usernameToRegister: string, takenUsernames: string[]) => boolean
+    = (usernameToRegister: string, takenUsernames: string[]) => {
+        const lowerUsernameToRegister: string = usernameToRegister.toLowerCase();
+        const lowerTakenUsernames: string[] = takenUsernames.filter(Boolean).map(u => u.toLowerCase());
+        return lowerTakenUsernames.indexOf(lowerUsernameToRegister) < 0;
+    };
+
+const debouncedUsernameIsAvailable: (usernameToRegister: string, takenUsernames: string[]) => boolean
+    = AwesomeDebouncePromise(usernameIsAvailable, delayBeforeSearch);
 
 export const Register: React.FC = () => {
     const { register, handleSubmit, errors, getValues, setValue, watch } = useForm({
