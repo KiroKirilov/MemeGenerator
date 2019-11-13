@@ -1,4 +1,4 @@
-import { FirebaseError } from "@firebase/util";
+import { FirebaseError } from "./firebase-error";
 
 export type SomeStore = {
     someProp: string;
@@ -8,6 +8,7 @@ export type SomeStore = {
 export type AuthStore = {
     loginError?: FirebaseError;
     registerError?: FirebaseError;
+    isLoading: boolean;
 };
 
 export type ReduxStore = {

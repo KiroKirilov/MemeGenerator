@@ -1,10 +1,11 @@
 import { AuthStore } from "../../types/redux-store";
 import { AuthActionType } from "../action-types/auth-actions-type";
-import { FirebaseError } from "@firebase/util";
+import { FirebaseError } from "../../types/firebase-error";
 
 const initialState: AuthStore = {
     loginError: undefined,
-    registerError: undefined
+    registerError: undefined,
+    isLoading: false
 };
 
 type AuthActionPayload = {
@@ -36,6 +37,19 @@ export const authReducer: any = (state: AuthStore = initialState, action: AuthAc
             return {
                 ...state,
                 registerError: undefined
+            };
+
+        case AuthActionType.IS_LOADING:
+            return {
+                ...state,
+                isLoading: true,
+                registerError: undefined
+            };
+
+        case AuthActionType.IS_NOT_LOADING:
+            return {
+                ...state,
+                isLoading: false
             };
 
 

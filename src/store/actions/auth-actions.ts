@@ -52,8 +52,8 @@ export class AuthActions {
 
                 dispatch({ type: AuthActionType.LOGOUT_SUCCESS });
             } catch (error) {
-                console.log(error);
-                debugger;
+                // imma pretend i didnt see that
+                dispatch({ type: AuthActionType.LOGOUT_SUCCESS })
             }
         };
     }
