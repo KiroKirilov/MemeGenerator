@@ -7,8 +7,9 @@ import icona from "tui-image-editor/dist/svg/icon-a.svg";
 import iconb from "tui-image-editor/dist/svg/icon-b.svg";
 import iconc from "tui-image-editor/dist/svg/icon-c.svg";
 import icond from "tui-image-editor/dist/svg/icon-d.svg";
+import { memo } from "react";
 
-export const Editor: React.FC = () => {
+export const Editor: React.FC = memo(() => {
     const blackTheme: any = { // or white
         // main icons
         "menu.normalIcon.path": icond,
@@ -45,4 +46,4 @@ export const Editor: React.FC = () => {
             />
         </div>
     );
-};
+});

@@ -6,9 +6,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { ReduxStore } from "../../../types/redux-store";
 import { AuthActions } from "../../../store/actions/auth-actions";
 import { appRoutes } from "../../../common/constants/app-routes";
+import { memo } from "react";
 
-export const RightNav: React.FC<NavProps> = (props: NavProps) => {
+export const RightNav: React.FC<NavProps> = memo((props: NavProps) => {
     const auth = useSelector((store: ReduxStore) => store.firebase.auth);
+    const profile = useSelector((store: ReduxStore) => store.firebase.profile);
     const location = useLocation();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -31,9 +33,9 @@ export const RightNav: React.FC<NavProps> = (props: NavProps) => {
                     <NavLink to={appRoutes.register}>Register</NavLink>
                 </Menu.Item>}
 
-            {isAuthenticated
+            {isAuthenticated && profile.isLoaded
                 ? <Menu.Item key={appRoutes.profile}>
-                    <NavLink to={appRoutes.profile}>Profile</NavLink>
+                    <NavLink to={appRoutes.profile}>{profile.username}</NavLink>
                 </Menu.Item>
                 : null}
 
@@ -47,4 +49,4 @@ export const RightNav: React.FC<NavProps> = (props: NavProps) => {
                 : null}
         </Menu >
     );
-}
+});

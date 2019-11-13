@@ -33,20 +33,13 @@ export class AuthActions {
                 const firestore: any = getFirestore();
                 const newUserInfo: UserCredential = await firebase.auth().createUserWithEmailAndPassword(model.email, model.password);
                 const userId: any = newUserInfo.user ? newUserInfo.user.uid : null;
-                const profileAddPromise: Promise<any> = firestore.collection(collectionNames.userProfiles).doc(userId).set({
+                await firestore.collection(collectionNames.userProfiles).doc(userId).set({
                     username: model.username
                 });
 
-                const usernamesAddPromise: Promise<any> = firestore.collection(collectionNames.usernames).add({
-                    username: model.username,
-                    userId: userId
-                });
-
-                await profileAddPromise;
-                await usernamesAddPromise;
+                dispatch({ type: AuthActionType.REGISTER_SUCCESS });
             } catch (error) {
-                console.log(error);
-                debugger;
+                dispatch({ type: AuthActionType.REGISTER_ERROR, error });
             }
         };
     }
@@ -57,7 +50,7 @@ export class AuthActions {
                 const firebase: FirebaseInstance = getFirebase();
                 await firebase.auth().signOut();
 
-                // dispatch({ type: 'SIGNOUT_SUCCESS' });
+                dispatch({ type: AuthActionType.LOGOUT_SUCCESS });
             } catch (error) {
                 console.log(error);
                 debugger;

@@ -24,7 +24,6 @@ const reactReduxFirebaseProps: ReactReduxFirebaseProviderProps = {
     config: {
         userProfile: collectionNames.userProfiles,
         useFirestoreForProfile: true,
-        presence: "presence"
     },
     dispatch: store.dispatch,
     createFirestoreInstance

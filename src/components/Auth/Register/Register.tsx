@@ -12,21 +12,8 @@ import { StringHelpers } from "../../../helpers/string-helpers";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { AuthActions } from "../../../store/actions/auth-actions";
 import { ValidationHelpers } from "../../../common/helpers/validation-helpers";
-import AwesomeDebouncePromise from "awesome-debounce-promise";
 
-const delayBeforeSearch: number = 500;
-
-const usernameIsAvailable: (usernameToRegister: string, takenUsernames: string[]) => boolean
-    = (usernameToRegister: string, takenUsernames: string[]) => {
-        const lowerUsernameToRegister: string = usernameToRegister.toLowerCase();
-        const lowerTakenUsernames: string[] = takenUsernames.filter(Boolean).map(u => u.toLowerCase());
-        return lowerTakenUsernames.indexOf(lowerUsernameToRegister) < 0;
-    };
-
-const debouncedUsernameIsAvailable: (usernameToRegister: string, takenUsernames: string[]) => boolean
-    = AwesomeDebouncePromise(usernameIsAvailable, delayBeforeSearch);
-
-export const Register: React.FC = () => {
+export const Register: React.FC = memo(() => {
     const { register, handleSubmit, errors, getValues, setValue, watch } = useForm({
         mode: "onBlur"
     });
@@ -48,7 +35,7 @@ export const Register: React.FC = () => {
 
     return (
         <form noValidate className={bootstrap.containerFluid} onSubmit={handleSubmit(onSubmit)}>
-            {console.log("login rendered")}
+            {console.log("registered rendered")}
 
             <FormErrorMessage showErrorMessage={!!registerError} errorMessage={registerError && registerError.message} />
 
@@ -93,6 +80,10 @@ export const Register: React.FC = () => {
                                 minLength: {
                                     value: 3,
                                     message: "Username must be at least 3 characters long."
+                                },
+                                maxLength: {
+                                    value: 15,
+                                    message: "Username must be shorter than 15 characters."
                                 }
                             })}
                         />
@@ -155,4 +146,4 @@ export const Register: React.FC = () => {
             </div>
         </form>
     );
-};
+});

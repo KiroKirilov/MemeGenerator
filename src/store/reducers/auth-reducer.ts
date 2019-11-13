@@ -3,7 +3,8 @@ import { AuthActionType } from "../action-types/auth-actions-type";
 import { FirebaseError } from "@firebase/util";
 
 const initialState: AuthStore = {
-    loginError: undefined
+    loginError: undefined,
+    registerError: undefined
 };
 
 type AuthActionPayload = {
@@ -24,6 +25,19 @@ export const authReducer: any = (state: AuthStore = initialState, action: AuthAc
                 ...state,
                 loginError: undefined
             };
+
+        case AuthActionType.REGISTER_ERROR:
+            return {
+                ...state,
+                registerError: action.error
+            };
+
+        case AuthActionType.REGISTER_SUCCESS:
+            return {
+                ...state,
+                registerError: undefined
+            };
+
 
         case AuthActionType.LOGOUT_SUCCESS:
             return state;

@@ -4,8 +4,9 @@ import { default as bootstrap } from "../../../common/styles/bootstrapGrid.modul
 import { StringHelpers } from '../../../helpers/string-helpers';
 import { Alert } from 'antd';
 import { default as classes } from "./form-error-message.module.scss";
+import { memo } from 'react';
 
-export const FormErrorMessage: React.FC<FormErrorMessageProps> = (props: FormErrorMessageProps) => {
+export const FormErrorMessage: React.FC<FormErrorMessageProps> = memo((props: FormErrorMessageProps) => {
     return (
         <>
             {
@@ -26,4 +27,4 @@ export const FormErrorMessage: React.FC<FormErrorMessageProps> = (props: FormErr
             }
         </>
     );
-};
+});

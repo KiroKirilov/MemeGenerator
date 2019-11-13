@@ -12,8 +12,9 @@ import { Home } from "../home/home";
 import { useSelector } from "react-redux";
 import { ReduxStore } from "../../types/redux-store";
 import { NotFound } from "../common/not-found/not-found";
+import { memo } from "react";
 
-const App: React.FC = () => {
+const App: React.FC = memo(() => {
   const auth: any = useSelector((store: ReduxStore) => store.firebase.auth);
 
   return (
@@ -40,6 +41,6 @@ const App: React.FC = () => {
 
     </BrowserRouter>
   );
-};
+});
 
 export default App;

@@ -9,8 +9,9 @@ import { ReduxStore } from "../../../types/redux-store";
 import { ValidationHelpers } from "../../../common/helpers/validation-helpers";
 import { FormErrorMessage } from "../../common/form-error-message/form-error-message";
 import { FormHelpers } from "../../../common/helpers/form-helpers";
+import { memo } from "react";
 
-export const Login: React.FC = () => {
+export const Login: React.FC = memo(() => {
     const { register, handleSubmit, errors, getValues, setValue } = useForm({
         mode: "onBlur"
     });
@@ -92,4 +93,4 @@ export const Login: React.FC = () => {
             </div>
         </form>
     );
-};
+});

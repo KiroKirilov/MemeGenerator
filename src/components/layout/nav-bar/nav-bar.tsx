@@ -3,8 +3,9 @@ import { RightNav } from './right-nav';
 import { LeftNav } from './left-nav';
 import { Button, Drawer, Icon } from 'antd';
 import "./nav-bar.scss";
+import { memo } from 'react';
 
-export const NavBar: React.FC = () => {
+export const NavBar: React.FC = memo(() => {
     const [visible, setVisible] = React.useState(false);
     const showDrawer = () => {
         setVisible(true);
@@ -47,4 +48,4 @@ export const NavBar: React.FC = () => {
             </div>
         </nav>
     );
-};
+});
