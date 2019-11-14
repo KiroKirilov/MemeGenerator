@@ -1,11 +1,12 @@
 import { LoginModel } from "../../models/auth/login-model";
 import { FunctionAction } from "../../types/function-action";
 import { GetFirebase, FirebaseInstance } from "../../types/get-firestore-firebase";
-import { AuthActionType } from "../action-types/auth-actions-type";
-import { FirebaseError } from "@firebase/util";
+import { AuthActionType } from "../action-types/auth/auth-actions-type";
 import { RegisterModel } from "../../models/auth/register-model";
 import { collectionNames } from "../../common/constants/collection-names";
 import { UserCredential } from "@firebase/auth-types";
+import { AuthActionPayload } from "../action-types/auth/auth-action-payload";
+import { AuthErrorMessages } from "../../common/error-messages/auth-error-messages";
 
 export class AuthActions {
     public static login(model: LoginModel): FunctionAction {
@@ -21,6 +22,11 @@ export class AuthActions {
                 dispatch({ type: AuthActionType.LOGIN_SUCCESS });
 
             } catch (error) {
+                if (!!error) {
+                    const errorCode: string = error.code as string;
+                    error.message = AuthErrorMessages[errorCode] as any;
+                }
+
                 dispatch({ type: AuthActionType.LOGIN_ERROR, error });
             }
         };
@@ -53,8 +59,16 @@ export class AuthActions {
                 dispatch({ type: AuthActionType.LOGOUT_SUCCESS });
             } catch (error) {
                 // imma pretend i didnt see that
-                dispatch({ type: AuthActionType.LOGOUT_SUCCESS })
+                dispatch({ type: AuthActionType.LOGOUT_SUCCESS });
             }
         };
+    }
+
+    public static startLoading(): AuthActionPayload {
+        return { type: AuthActionType.IS_LOADING };
+    }
+
+    public static stopLoading(): AuthActionPayload {
+        return { type: AuthActionType.IS_NOT_LOADING };
     }
 }

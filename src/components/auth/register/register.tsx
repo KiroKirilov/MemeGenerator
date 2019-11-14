@@ -9,7 +9,8 @@ import { FormHelpers } from "../../../common/helpers/form-helpers";
 import { StringHelpers } from "../../../helpers/string-helpers";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { AuthActions } from "../../../store/actions/auth-actions";
-import { AuthActionType } from "../../../store/action-types/auth-actions-type";
+import { AuthActionType } from "../../../store/action-types/auth/auth-actions-type";
+import { ValidationHelpers } from "../../../common/helpers/validation-helpers";
 
 export const Register: React.FC = memo(() => {
     const { register, handleSubmit, errors, getValues, setValue, watch } = useForm({
@@ -29,16 +30,16 @@ export const Register: React.FC = memo(() => {
     };
 
     if (registerErrorMessage && isLoading) {
-        dispatch({ type: AuthActionType.IS_NOT_LOADING });
+        dispatch(AuthActions.stopLoading());
     }
 
     const onSubmit = (data: any) => {
-        dispatch({ type: AuthActionType.IS_LOADING })
+        dispatch(AuthActions.startLoading())
         dispatch(AuthActions.register(data));
     };
 
     return (
-        <Spin spinning={isLoading}>
+        <Spin spinning={isLoading} delay={100}>
             <form noValidate className={bootstrap.containerFluid} onSubmit={handleSubmit(onSubmit)}>
 
                 <FormErrorMessage showErrorMessage={!!registerErrorMessage} errorMessage={registerErrorMessage} />
@@ -57,10 +58,10 @@ export const Register: React.FC = memo(() => {
                                 name={fields.email}
                                 ref={FormHelpers.registerField(register as any, {
                                     required: "Email is required.",
-                                    // pattern: {
-                                    //     value: ValidationHelpers.emailRegex,
-                                    //     message: "Please provide a valid email."
-                                    // }
+                                    pattern: {
+                                        value: ValidationHelpers.emailRegex,
+                                        message: "Please provide a valid email."
+                                    }
                                 })}
                             />
                         </Form.Item>

@@ -1,17 +1,12 @@
 import { AuthStore } from "../../types/redux-store";
-import { AuthActionType } from "../action-types/auth-actions-type";
-import { FirebaseError } from "../../types/firebase-error";
+import { AuthActionType } from "../action-types/auth/auth-actions-type";
+import { AuthActionPayload } from "../action-types/auth/auth-action-payload";
 
 const initialState: AuthStore = {
     loginError: undefined,
     registerError: undefined,
     isLoading: false
 };
-
-type AuthActionPayload = {
-    type: AuthActionType,
-    error: FirebaseError
-}
 
 export const authReducer: any = (state: AuthStore = initialState, action: AuthActionPayload): AuthStore => {
     switch (action.type) {
@@ -43,7 +38,8 @@ export const authReducer: any = (state: AuthStore = initialState, action: AuthAc
             return {
                 ...state,
                 isLoading: true,
-                registerError: undefined
+                registerError: undefined,
+                loginError: undefined
             };
 
         case AuthActionType.IS_NOT_LOADING:

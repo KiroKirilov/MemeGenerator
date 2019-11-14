@@ -1,9 +1,4 @@
-export type AuthErrorMessage = {
-    message: string;
-    relatedTo: string;
-}
-
-export const AuthErrorMessages = {
+export const AuthErrorMessages: { [key: string]: string } = {
     "auth/argument-error": "",
     "auth/app-not-authorized": "This app, identified by the domain where it's hosted, is not authorized to use Firebase Authentication with the provided API key. Review your key configuration in the Google API console.",
     "auth/app-not-installed": "The requested mobile application corresponding to the identifier (Android package name or iOS bundle ID) provided is not installed on this device.",
@@ -50,7 +45,7 @@ export const AuthErrorMessages = {
     "auth/no-auth-event": "An internal error has occurred.",
     "auth/no-such-provider": "User was not linked to an account with the given provider.",
     "auth/operation-not-allowed": "The given sign-in provider is disabled for this Firebase project. Enable it in the Firebase console, under the sign-in method tab of the Auth section.",
-    "auth/operation-not-supported-in-this-environment": 'This operation is not supported in the environment this application is running on. "location.protocol" must be http, https or chrome-extension and web storage must be enabled.',
+    "auth/operation-not-supported-in-this-environment": "This operation is not supported in the environment this application is running on. \"location.protocol\" must be http, https or chrome-extension and web storage must be enabled.",
     "auth/popup-blocked": "Unable to establish a connection with the popup. It may have been blocked by the browser.",
     "auth/popup-closed-by-user": "The popup has been closed by the user before finalizing the operation.",
     "auth/provider-already-linked": "User can only be linked to one identity for the given provider.",
@@ -59,7 +54,7 @@ export const AuthErrorMessages = {
     "auth/redirect-operation-pending": "A redirect sign-in operation is already pending.",
     "auth/timeout": "The operation has timed out.",
     "auth/user-token-expired": "The user's credential is no longer valid. The user must sign in again.",
-    "auth/too-many-requests": "We have blocked all requests from this device due to unusual activity. Try again later.",
+    "auth/too-many-requests": "Please try again in a couple of minutes.",
     "auth/user-cancelled": "User did not grant your application the permissions it requested.",
     "auth/user-not-found": "There is no user record corresponding to this identifier. The user may have been deleted.",
     "auth/user-disabled": "The user account has been disabled by an administrator.",
