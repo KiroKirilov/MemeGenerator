@@ -66,6 +66,17 @@
   }
 }
 
+.ant-drawer-content {
+  .ant-menu-inline {
+    width: 100% !important;
+  }
+
+  .ant-drawer-body {
+    padding: 0 !important;
+  }
+}
+
+
 @media (max-width: 767px) {
   .menu {
     .menu__mobileButton {

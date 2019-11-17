@@ -10,6 +10,8 @@ import { ValidationHelpers } from "../../../common/helpers/validation-helpers";
 import { FormErrorMessage } from "../../common/form-error-message/form-error-message";
 import { FormHelpers } from "../../../common/helpers/form-helpers";
 import { memo } from "react";
+import { BootstrapHelpers } from "../../../common/helpers/bootstrap-helpers";
+import { PageHeader } from "../../common/page-header/page-header";
 
 export const Login: React.FC = memo(() => {
     const { register, handleSubmit, errors, getValues, setValue } = useForm({
@@ -40,10 +42,12 @@ export const Login: React.FC = memo(() => {
         <Spin spinning={isLoading} delay={100}>
             <form noValidate className={bootstrap.containerFluid} onSubmit={handleSubmit(onSubmit)}>
 
+                <PageHeader text="Login" />
+
                 <FormErrorMessage showErrorMessage={!!loginErrorMessage} errorMessage={loginErrorMessage} />
 
                 <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
-                    <div className={bootstrap.col3}>
+                    <div className={BootstrapHelpers.formFieldClasses}>
                         <Form.Item
                             validateStatus={errors.email && "error"}
                             help={errors.email && errors.email.message}>
@@ -67,7 +71,7 @@ export const Login: React.FC = memo(() => {
                 </div>
 
                 <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
-                    <div className={bootstrap.col3}>
+                    <div className={BootstrapHelpers.formFieldClasses}>
                         <Form.Item
                             validateStatus={errors.password && "error"}
                             help={errors.password && errors.password.message}>
@@ -79,7 +83,7 @@ export const Login: React.FC = memo(() => {
                                 placeholder="Password"
                                 name={fields.password}
                                 ref={FormHelpers.registerField(register as any, {
-                                    required: true,
+                                    required: "Password is required.",
                                     minLength: {
                                         value: 6,
                                         message: "Password must be at least 6 characters long"
@@ -91,7 +95,7 @@ export const Login: React.FC = memo(() => {
                 </div>
 
                 <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
-                    <div className={StringHelpers.joinClassNames(bootstrap.col3, bootstrap.dFlex, bootstrap.justifyContentCenter)}>
+                    <div className={StringHelpers.joinClassNames(BootstrapHelpers.formFieldClasses, bootstrap.dFlex, bootstrap.justifyContentCenter)}>
                         <Button type="primary" htmlType="submit" className="login-form-button">
                             Log in
                         </Button>

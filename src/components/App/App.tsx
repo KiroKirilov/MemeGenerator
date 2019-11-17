@@ -7,7 +7,6 @@ import { Login } from "../auth/login/login";
 import { appRoutes } from "../../common/constants/app-routes";
 import { ProtectedRoute, AnonymousOnlyRoute } from "../custom-routes/auth-routes";
 import { Register } from "../auth/register/register";
-import { Editor } from "../home/editor";
 import { Home } from "../home/home";
 import { useSelector } from "react-redux";
 import { ReduxStore } from "../../types/redux-store";
@@ -15,12 +14,13 @@ import { NotFound } from "../common/not-found/not-found";
 import { memo } from "react";
 import { Footer } from "../layout/footer/footer";
 import { Layout } from "antd";
+import { EditMeme } from "../edit-meme/edit-meme";
 
 const App: React.FC = memo(() => {
   const auth: any = useSelector((store: ReduxStore) => store.firebase.auth);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter >
 
       {
         !!auth.isLoaded
@@ -34,7 +34,7 @@ const App: React.FC = memo(() => {
                     <Route exact path={appRoutes.home} component={Home} />
                     <AnonymousOnlyRoute path={appRoutes.register} component={Register} />
                     <AnonymousOnlyRoute path={appRoutes.login} component={Login} />
-                    <ProtectedRoute path={appRoutes.editor} component={Editor} />
+                    <ProtectedRoute path={appRoutes.editor} component={EditMeme} />
                     <Route component={NotFound} />
                   </Switch>
                 </div>

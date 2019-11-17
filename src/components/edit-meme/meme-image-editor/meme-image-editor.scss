@@ -1,0 +1,65 @@
+.tui-image-editor-header-logo {
+  display: none;
+}
+
+.tui-image-editor-controls-logo {
+  display: none;
+}
+
+.tui-image-editor-header-buttons {
+  float: none !important;
+  text-align: center !important;
+}
+
+.tui-image-editor {
+  width: 100% !important;
+  height: 0 !important;
+  padding-top: 536px / 750px * 50% !important;
+  padding-bottom: 536px / 750px * 50% !important;
+  position: relative;
+  overflow: hidden;
+  top: 0 !important;
+}
+
+.tui-image-editor-canvas-container {
+  position: absolute !important;
+  top: 0 !important;
+  //left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  left: 536px / 750px * 50% !important;
+}
+
+.tui-image-editor-header {
+  min-width: unset !important;
+}
+
+.tui-image-editor-controls,
+.tui-image-editor-menu-text,
+.tui-image-editor-size-wrap {
+  display: block !important;
+}
+
+.tui-image-editor-menu {
+  width: 100% !important;
+  display: block !important;
+  overflow-x: auto !important;
+  height: 100% !important;
+}
+
+.tui-image-editor-submenu {
+  display: block !important;
+  padding-top: 30px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+}
+
+.tui-image-editor-submenu-style {
+  display: none !important;
+}
+
+.tui-image-editor-align-wrap {
+    display: block !important;
+    max-height: 500px !important;
+    overflow: hidden !important;
+}

@@ -11,6 +11,8 @@ import { default as bootstrap } from "../../../common/styles/bootstrapGrid.modul
 import { AuthActions } from "../../../store/actions/auth-actions";
 import { AuthActionType } from "../../../store/action-types/auth/auth-actions-type";
 import { ValidationHelpers } from "../../../common/helpers/validation-helpers";
+import { PageHeader } from "../../common/page-header/page-header";
+import { BootstrapHelpers } from "../../../common/helpers/bootstrap-helpers";
 
 export const Register: React.FC = memo(() => {
     const { register, handleSubmit, errors, getValues, setValue, watch } = useForm({
@@ -42,10 +44,12 @@ export const Register: React.FC = memo(() => {
         <Spin spinning={isLoading} delay={100}>
             <form noValidate className={bootstrap.containerFluid} onSubmit={handleSubmit(onSubmit)}>
 
+                <PageHeader text="Register" />
+
                 <FormErrorMessage showErrorMessage={!!registerErrorMessage} errorMessage={registerErrorMessage} />
 
                 <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
-                    <div className={bootstrap.col3}>
+                    <div className={BootstrapHelpers.formFieldClasses}>
                         <Form.Item
                             validateStatus={errors.email && "error"}
                             help={errors.email && errors.email.message}>
@@ -69,7 +73,7 @@ export const Register: React.FC = memo(() => {
                 </div>
 
                 <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
-                    <div className={bootstrap.col3}>
+                    <div className={BootstrapHelpers.formFieldClasses}>
                         <Form.Item
                             validateStatus={errors.username && "error"}
                             help={errors.username && errors.username.message}>
@@ -97,7 +101,7 @@ export const Register: React.FC = memo(() => {
                 </div>
 
                 <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
-                    <div className={bootstrap.col3}>
+                    <div className={BootstrapHelpers.formFieldClasses}>
                         <Form.Item
                             validateStatus={errors.password && "error"}
                             help={errors.password && errors.password.message}>
@@ -121,7 +125,7 @@ export const Register: React.FC = memo(() => {
                 </div>
 
                 <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
-                    <div className={bootstrap.col3}>
+                    <div className={BootstrapHelpers.formFieldClasses}>
                         <Form.Item
                             validateStatus={errors.confirmPassword && "error"}
                             help={errors.confirmPassword && errors.confirmPassword.message}>
@@ -142,7 +146,7 @@ export const Register: React.FC = memo(() => {
                 </div>
 
                 <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
-                    <div className={StringHelpers.joinClassNames(bootstrap.col3, bootstrap.dFlex, bootstrap.justifyContentCenter)}>
+                    <div className={StringHelpers.joinClassNames(BootstrapHelpers.formFieldClasses, bootstrap.dFlex, bootstrap.justifyContentCenter)}>
                         <Button type="primary" htmlType="submit" className="login-form-button">
                             Register
                     </Button>

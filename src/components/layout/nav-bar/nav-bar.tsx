@@ -3,10 +3,20 @@ import { RightNav } from './right-nav';
 import { LeftNav } from './left-nav';
 import { Button, Drawer, Icon } from 'antd';
 import "./nav-bar.scss";
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export const NavBar: React.FC = memo(() => {
     const [visible, setVisible] = React.useState(false);
+
+    const location = useLocation();
+
+    useEffect(() => {
+        // onRouteChanged
+        setVisible(false);
+    }, [location]);
+  
+
     const showDrawer = () => {
         setVisible(true);
     };
