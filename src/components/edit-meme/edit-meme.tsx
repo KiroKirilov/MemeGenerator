@@ -2,8 +2,9 @@ import * as React from 'react';
 import { default as bootstrap } from "../../common/styles/bootstrapGrid.module.scss";
 import { MemeImageEditor } from './meme-image-editor/meme-image-editor';
 import { StringHelpers } from '../../helpers/string-helpers';
+import { memo } from 'react';
 
-export const EditMeme: React.FC = () => {
+export const EditMeme: React.FC = memo(() => {
     return (
         <div className={bootstrap.containerFluid}>
             <div className={bootstrap.row}>
@@ -17,4 +18,4 @@ export const EditMeme: React.FC = () => {
             </div>
         </div>
     );
-};
+});
