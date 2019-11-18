@@ -43,10 +43,13 @@
 }
 
 .tui-image-editor-submenu {
-  display: block !important;
   padding-top: 30px !important;
   overflow-x: auto !important;
   overflow-y: hidden !important;
+}
+
+.tui-image-editor-container .tui-image-editor-main.tui-image-editor-menu-text .tui-image-editor-submenu {
+  display: block;
 }
 
 .tui-image-editor-submenu-style {
@@ -55,12 +58,19 @@
 
 .tui-image-editor-align-wrap {
   display: block !important;
-  max-height: 500px !important;
   overflow: hidden !important;
 }
 
-// TODO: Relocate color bubble with top/left and so on
-// TODO: Bottom bar not being hidden because of display: block
+.color-picker-control {
+  top: -30px !important;
+  left: -205px !important;
+}
+
+.triangle {
+  bottom: 85px !important;
+  left: 189px !important;
+  transform: rotate(-90deg);
+}
 
 @media (min-width: 950px) {
   .tui-image-editor-canvas-container {
