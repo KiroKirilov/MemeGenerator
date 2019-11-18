@@ -46,7 +46,7 @@
   display: block !important;
   padding-top: 30px !important;
   overflow-x: auto !important;
-  overflow-y: visible !important;
+  overflow-y: hidden !important;
 }
 
 .tui-image-editor-submenu-style {
@@ -58,6 +58,9 @@
   max-height: 500px !important;
   overflow: hidden !important;
 }
+
+// TODO: Relocate color bubble with top/left and so on
+// TODO: Bottom bar not being hidden because of display: block
 
 @media (min-width: 950px) {
   .tui-image-editor-canvas-container {

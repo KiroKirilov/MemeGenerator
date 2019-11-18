@@ -40,8 +40,8 @@ export const MemeImageEditor: React.FC = memo(() => {
             <ImageEditor
                 includeUI={{
                     loadImage: {
-                        path: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Donkey_1_arp_750px.jpg",
-                        name: "Donkey image"
+                        path: "https://www.gannett-cdn.com/presto/2019/07/13/PROC/7ae05c5c-67da-4402-983f-6a3fccb42328-TY_071119_BLAZE_RED_PANDA_SENECA_PARK_ZOO.jpg",
+                        name: "Red Panda image"
                     },
                     menu: ["text"],
                     initMenu: "text",
