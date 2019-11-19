@@ -35,6 +35,10 @@
   display: block !important;
 }
 
+.tui-image-editor-size-wrap, .tui-image-editor-main.tui-image-editor-menu-text {
+  overflow: hidden;
+}
+
 .tui-image-editor-menu {
   width: 100% !important;
   display: block !important;
