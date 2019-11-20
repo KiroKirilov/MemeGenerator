@@ -54,26 +54,32 @@ export const MemeImageEditor: React.FC = memo(() => {
         });
     }
 
-    if (window) {
-        window.onresize = async (_event: UIEvent) => {
-            await debouncedReziseEditor();
-        };
+    async function setCanvasSize() {
+        const image: HTMLImageElement = await loadImage(imageUrl);
+
+        const imageWidth: number = image.width;
+        const imageHeight: number = image.height;
+
+        const canvasContainers: HTMLCollectionOf<Element> = document.getElementsByClassName("tui-image-editor-canvas-container");
+        for (let i: number = 0; i < canvasContainers.length; i++) {
+            // @ts-ignore
+            canvasContainers[i].style["padding-top"] = `${imageHeight / imageWidth * 100}%`;
+        }
+    }
+
+    async function resizeHandler (_event: UIEvent) {
+        await debouncedReziseEditor();
     }
 
     useEffect(() => {
         const setImageSize: () => Promise<void> = async () => {
             if (editorRef.current) {
                 try {
-                    const image: HTMLImageElement = await loadImage(imageUrl);
-
-                    const imageWidth: number = image.width;
-                    const imageHeight: number = image.height;
-
-                    const canvasContainers: HTMLCollectionOf<Element> = document.getElementsByClassName("tui-image-editor-canvas-container");
-                    for (let i: number = 0; i < canvasContainers.length; i++) {
-                        // @ts-ignore
-                        canvasContainers[i].style["padding-top"] = `${imageHeight / imageWidth * 100}%`;
+                    if (window) {
+                        window.addEventListener("resize", resizeHandler);
                     }
+
+                    await setCanvasSize();
 
                     await debouncedReziseEditor();
                 } catch (error) {
@@ -83,6 +89,11 @@ export const MemeImageEditor: React.FC = memo(() => {
         };
 
         setImageSize();
+
+
+        return () => {
+            window.removeEventListener("resize", resizeHandler);
+        }
 
     }, [editorRef.current]);
 

@@ -7,9 +7,9 @@ import { Home } from "../../home/home";
 import { Login } from "../../auth/login/login";
 import { Register } from "../../auth/register/register";
 import { EditMeme } from "../../memes/edit-meme/edit-meme";
-import { NotFound } from "../../common/not-found/not-found";
+import { NotFound } from "../../misc/not-found/not-found";
 import { default as classes } from "./main-section.module.scss";
-import { AnonymousOnlyRoute, ProtectedRoute } from "../../common/custom-routes/auth-routes";
+import { AnonymousOnlyRoute, ProtectedRoute } from "../../misc/custom-routes/auth-routes";
 
 export const MainSection: React.FC = memo(() => {
     return (

@@ -7,11 +7,11 @@ import { default as bootstrap } from "../../../common/styles/bootstrapGrid.modul
 import { StringHelpers } from "../../../helpers/string-helpers";
 import { ReduxStore } from "../../../types/redux-store";
 import { ValidationHelpers } from "../../../common/helpers/validation-helpers";
-import { FormErrorMessage } from "../../common/form-error-message/form-error-message";
+import { FormErrorMessage } from "../../misc/form-error-message/form-error-message";
 import { FormHelpers } from "../../../common/helpers/form-helpers";
 import { memo } from "react";
 import { BootstrapHelpers } from "../../../common/helpers/bootstrap-helpers";
-import { PageHeader } from "../../common/page-header/page-header";
+import { PageHeader } from "../../misc/page-header/page-header";
 
 export const Login: React.FC = memo(() => {
     const { register, handleSubmit, errors, getValues, setValue } = useForm({

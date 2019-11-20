@@ -3,15 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { Form, Input, Icon, Button, Spin } from "antd";
 import { memo } from "react";
 import { ReduxStore } from "../../../types/redux-store";
-import { FormErrorMessage } from "../../common/form-error-message/form-error-message";
+import { FormErrorMessage } from "../../misc/form-error-message/form-error-message";
 import useForm from "react-hook-form";
 import { FormHelpers } from "../../../common/helpers/form-helpers";
 import { StringHelpers } from "../../../helpers/string-helpers";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { AuthActions } from "../../../store/actions/auth-actions";
-import { AuthActionType } from "../../../store/action-types/auth/auth-actions-type";
 import { ValidationHelpers } from "../../../common/helpers/validation-helpers";
-import { PageHeader } from "../../common/page-header/page-header";
+import { PageHeader } from "../../misc/page-header/page-header";
 import { BootstrapHelpers } from "../../../common/helpers/bootstrap-helpers";
 
 export const Register: React.FC = memo(() => {
