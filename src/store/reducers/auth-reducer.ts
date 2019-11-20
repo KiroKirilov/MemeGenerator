@@ -19,7 +19,8 @@ export const authReducer: any = (state: AuthStore = initialState, action: AuthAc
         case AuthActionType.LOGIN_SUCCESS:
             return {
                 ...state,
-                loginError: undefined
+                loginError: undefined,
+                isLoading: false
             };
 
         case AuthActionType.REGISTER_ERROR:
@@ -31,7 +32,8 @@ export const authReducer: any = (state: AuthStore = initialState, action: AuthAc
         case AuthActionType.REGISTER_SUCCESS:
             return {
                 ...state,
-                registerError: undefined
+                registerError: undefined,
+                isLoading: false
             };
 
         case AuthActionType.IS_LOADING:

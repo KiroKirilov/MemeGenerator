@@ -45,7 +45,6 @@ export const NavBar: React.FC = memo(() => {
                     <Icon type="menu" />
                 </Button>
                 <Drawer
-                    title="Basic Drawer"
                     placement="right"
                     className="menu_drawer"
                     closable={false}

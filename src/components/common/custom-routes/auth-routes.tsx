@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Redirect, Route, RouteProps } from "react-router-dom";
-import { appRoutes } from "../../common/constants/app-routes";
 import { useSelector } from "react-redux";
-import { ReduxStore } from "../../types/redux-store";
 import { memo } from "react";
+import { ReduxStore } from "../../../types/redux-store";
+import { appRoutes } from "../../../common/constants/app-routes";
 
 export type ProtectedRouteProps = {
     component: React.Component | React.FC;

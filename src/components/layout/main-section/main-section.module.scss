@@ -1,0 +1,12 @@
+.mainContent {
+    //padding: 0px 0px 69px 0px;
+    padding: 0;
+    background-color: #f0f2f5;
+}
+
+@media (min-width: 576px) {
+    .mainContent {
+        //padding: 50px 50px 69px 50px;
+        padding: 50px 50px 0px 50px;
+    }
+}
