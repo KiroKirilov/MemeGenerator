@@ -10,6 +10,8 @@
     "@types/react-dom": "16.9.3",
     "@types/react-redux": "^7.1.5",
     "@types/react-router-dom": "^5.1.2",
+    "@uppy/core": "^1.6.0",
+    "@uppy/react": "^1.4.0",
     "antd": "^3.25.0",
     "awesome-debounce-promise": "^2.1.0",
     "concurrently": "^5.0.0",
