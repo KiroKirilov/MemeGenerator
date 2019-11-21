@@ -5,6 +5,7 @@ import { Button, Drawer, Icon } from 'antd';
 import "./nav-bar.scss";
 import { memo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import logo from "../../../assets/images/logo.png";
 
 export const NavBar: React.FC = memo(() => {
     const [visible, setVisible] = React.useState(false);
@@ -28,7 +29,9 @@ export const NavBar: React.FC = memo(() => {
 
         <nav className="menu">
             <div className="menu__logo">
-                <a href="">Logo</a>
+                <a href="">
+                    <img width={135} src={logo} />
+                </a>
             </div>
             <div className="menu__container">
                 <div className="menu_left">
