@@ -10,7 +10,10 @@ import "@uppy/dashboard/dist/style.css";
 import "@uppy/provider-views/dist/style.css";
 import { MemeTemplatePicker } from "../meme-template-picker/meme-template-picker";
 import { Dispatch } from "redux";
-import { Modal } from "antd";
+import { Modal, Button, Typography } from "antd";
+import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
+import { default as classes } from "./meme-upload-dashboard.module.scss";
+import { StringHelpers } from "../../../helpers/string-helpers";
 
 const uppy: Uppy.Uppy = Uppy({
     restrictions: {
@@ -29,28 +32,39 @@ export const MemeUploadDashboard: React.FC = memo(() => {
     }, []);
 
     return (
-        <div>
-            <div>
-                <button className="openButton">open me</button>
-                <Dashboard trigger=".openButton" inline={false} uppy={uppy} />
+        <div className={bootstrap.containerFluid}>
+            <div className={bootstrap.row}>
+                <div className={StringHelpers.joinClassNames(bootstrap.col12, bootstrap.dFlex, bootstrap.justifyContentCenter)}>
+                    <Button className={classes.memeUploadDashboardButton} type="primary" id="open-uppy" icon="upload">Upload your own</Button>
+
+                    <Dashboard trigger="#open-uppy" inline={false} uppy={uppy} />
+                </div>
             </div>
 
-            <div>
-                <button onClick={() => {
-                    setVisible(true);
-                }}>get templates</button>
+            <div className={bootstrap.row}>
+                <div className={StringHelpers.joinClassNames(bootstrap.col12, bootstrap.dFlex, bootstrap.justifyContentCenter)}>
+                    <Typography.Text style={{ marginTop: 10, marginBottom: 10 }} strong>or alternatively</Typography.Text>
+                </div>
             </div>
 
-            <div>
-                <Modal
-                    footer={null}
-                    title="Popular templates"
-                    visible={visible}
-                    onCancel={() => setVisible(false)}
-                    style={{ top: 20 }}
-                >
-                    <MemeTemplatePicker />
-                </Modal>
+            <div className={bootstrap.row}>
+                <div className={StringHelpers.joinClassNames(bootstrap.col12, bootstrap.dFlex, bootstrap.justifyContentCenter)}>
+                    <Button
+                        className={classes.memeUploadDashboardButton}
+                        onClick={() => setVisible(true)} icon="rise">
+                        Use a popular template
+                    </Button>
+
+                    <Modal
+                        footer={null}
+                        title="Popular templates"
+                        visible={visible}
+                        onCancel={() => setVisible(false)}
+                        style={{ top: 20 }}
+                    >
+                        <MemeTemplatePicker />
+                    </Modal>
+                </div>
             </div>
         </div>
     );
