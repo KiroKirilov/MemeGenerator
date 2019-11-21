@@ -1,4 +1,5 @@
 import { FirebaseError } from "./firebase-error";
+import { MemeTemplate } from "../models/memes/meme-template";
 
 export type SomeStore = {
     someProp: string;
@@ -11,9 +12,14 @@ export type AuthStore = {
     isLoading: boolean;
 };
 
+export type MemeTemplateStore = {
+    templates: MemeTemplate[];
+};
+
 export type ReduxStore = {
     some: SomeStore;
     auth: AuthStore;
+    memeTemplates: MemeTemplateStore;
     firestore: any;
     firebase: any;
 };

@@ -35,7 +35,7 @@ export const Register: React.FC = memo(() => {
     }
 
     const onSubmit = (data: any) => {
-        dispatch(AuthActions.startLoading())
+        dispatch(AuthActions.startLoading());
         dispatch(AuthActions.register(data));
     };
 
