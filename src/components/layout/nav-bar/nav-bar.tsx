@@ -4,8 +4,9 @@ import { LeftNav } from './left-nav';
 import { Button, Drawer, Icon } from 'antd';
 import "./nav-bar.scss";
 import { memo, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, NavLink } from 'react-router-dom';
 import logo from "../../../assets/images/logo.png";
+import { appRoutes } from '../../../common/constants/app-routes';
 
 export const NavBar: React.FC = memo(() => {
     const [visible, setVisible] = React.useState(false);
@@ -16,7 +17,7 @@ export const NavBar: React.FC = memo(() => {
         // onRouteChanged
         setVisible(false);
     }, [location]);
-  
+
 
     const showDrawer = () => {
         setVisible(true);
@@ -29,10 +30,11 @@ export const NavBar: React.FC = memo(() => {
 
         <nav className="menu">
             <div className="menu__logo">
-                <a href="">
+                <NavLink to={appRoutes.home}>
                     <img width={135} src={logo} />
-                </a>
+                </NavLink>
             </div>
+
             <div className="menu__container">
                 <div className="menu_left">
                     <LeftNav mode="horizontal" />
