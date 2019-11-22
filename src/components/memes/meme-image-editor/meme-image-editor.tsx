@@ -12,7 +12,7 @@ import "./meme-image-editor.scss";
 import { ImageEditorRef } from "../../../types/image-editor-reference";
 import DebouncePromise from "awesome-debounce-promise";
 
-const delayBeforeSearch: number = 300;
+const delayBeforeResize: number = 300;
 
 async function resizeImageEditor(): Promise<void> {
     const canvasContainers: HTMLCollectionOf<Element> = document.getElementsByClassName("tui-image-editor-canvas-container");
@@ -25,7 +25,7 @@ async function resizeImageEditor(): Promise<void> {
     }
 }
 
-const debouncedReziseEditor: () => Promise<void> = DebouncePromise(resizeImageEditor, delayBeforeSearch);
+const debouncedReziseEditor: () => Promise<void> = DebouncePromise(resizeImageEditor, delayBeforeResize);
 
 export const MemeImageEditor: React.FC = memo(() => {
     const blackTheme: any = {
