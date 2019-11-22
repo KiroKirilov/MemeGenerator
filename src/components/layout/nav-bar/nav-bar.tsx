@@ -19,13 +19,14 @@ export const NavBar: React.FC = memo(() => {
     }, [location]);
 
 
-    const showDrawer = () => {
+    function showDrawer(): void {
         setVisible(true);
-    };
+    }
 
-    const onClose = () => {
+    function onClose(): void {
         setVisible(false);
-    };
+    }
+
     return (
 
         <nav className="menu">

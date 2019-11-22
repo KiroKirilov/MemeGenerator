@@ -54,7 +54,7 @@ export const MemeImageEditor: React.FC = memo(() => {
         });
     }
 
-    async function setCanvasSize() {
+    async function setCanvasSize(): Promise<void> {
         const image: HTMLImageElement = await loadImage(imageUrl);
 
         const imageWidth: number = image.width;
@@ -67,7 +67,7 @@ export const MemeImageEditor: React.FC = memo(() => {
         }
     }
 
-    async function resizeHandler (_event: UIEvent) {
+    async function resizeHandler(_event: UIEvent): Promise<void> {
         await debouncedReziseEditor();
     }
 
@@ -93,7 +93,7 @@ export const MemeImageEditor: React.FC = memo(() => {
 
         return () => {
             window.removeEventListener("resize", resizeHandler);
-        }
+        };
 
     }, [editorRef.current]);
 

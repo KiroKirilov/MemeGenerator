@@ -34,10 +34,10 @@ export const Register: React.FC = memo(() => {
         dispatch(AuthActions.stopLoading());
     }
 
-    const onSubmit = (data: any) => {
+    function onSubmit(data: any): void {
         dispatch(AuthActions.startLoading());
         dispatch(AuthActions.register(data));
-    };
+    }
 
     return (
         <Spin spinning={isLoading} delay={100}>
