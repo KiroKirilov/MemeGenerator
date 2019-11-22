@@ -3,7 +3,9 @@ import { MemeTemplateActionPayload } from "../action-types/meme-template/meme-te
 import { MemeTemplateActionType } from "../action-types/meme-template/meme-template-actions-type";
 
 const initialState: MemeTemplateStore = {
-    templates: []
+    templates: [],
+    hasErrored: false,
+    isLoading: false
 };
 
 export const memeTemplateReducer: any = (state: MemeTemplateStore = initialState, action: MemeTemplateActionPayload): MemeTemplateStore => {
@@ -11,13 +13,23 @@ export const memeTemplateReducer: any = (state: MemeTemplateStore = initialState
         case MemeTemplateActionType.GET_ALL_SUCCESS:
             return {
                 ...state,
-                templates: action.templates
+                templates: action.templates,
+                hasErrored: false,
+                isLoading: false
             };
 
         case MemeTemplateActionType.GET_ALL_ERROR:
             return {
                 ...state,
-                templates: []
+                templates: [],
+                hasErrored: true,
+                isLoading: false
+            };
+
+        case MemeTemplateActionType.START_LOADING:
+            return {
+                ...state,
+                isLoading: true
             };
 
         default:

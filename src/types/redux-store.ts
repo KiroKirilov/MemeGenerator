@@ -14,12 +14,19 @@ export type AuthStore = {
 
 export type MemeTemplateStore = {
     templates: MemeTemplate[];
+    hasErrored: boolean;
+    isLoading: boolean;
+};
+
+export type MemeUploadStore = {
+    uploadedImageSrc?: string;
 };
 
 export type ReduxStore = {
     some: SomeStore;
     auth: AuthStore;
     memeTemplates: MemeTemplateStore;
+    memeUpload: MemeUploadStore;
     firestore: any;
     firebase: any;
 };

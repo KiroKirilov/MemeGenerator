@@ -17,12 +17,12 @@ export class MemeTemplateActions {
                     const response: Response = await fetch("https://api.imgflip.com/get_memes");
                     const templatesResponse: JsonResponse = await response.json();
                     if (templatesResponse.success) {
-                        const templates:  MemeTemplate[] = templatesResponse.data.memes;
-                        dispatch({ type: MemeTemplateActionType.GET_ALL_SUCCESS, templates});
+                        const templates: MemeTemplate[] = templatesResponse.data.memes;
+                        dispatch({ type: MemeTemplateActionType.GET_ALL_SUCCESS, templates });
                     }
                 }
             } catch (error) {
-                console.log(error);
+                dispatch({ type: MemeTemplateActionType.GET_ALL_ERROR });
             }
         };
     }
