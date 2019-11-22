@@ -1,3 +1,11 @@
 .memeTemplateCardRow {
     margin-bottom: 15px;
 }
+
+.memeTemplateCard {
+    border-color: #b0b0b0;
+
+    &:hover {
+        border-color: #8f8f8f;
+    }
+}
