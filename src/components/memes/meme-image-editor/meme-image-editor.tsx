@@ -72,25 +72,24 @@ export const MemeImageEditor: React.FC = memo(() => {
         await debouncedReziseEditor();
     }
 
-    useEffect(() => {
-        const setImageSize: () => Promise<void> = async () => {
-            if (editorRef.current) {
-                try {
-                    if (window) {
-                        window.addEventListener("resize", resizeHandler);
-                    }
-
-                    await setCanvasSize();
-
-                    await debouncedReziseEditor();
-                } catch (error) {
-                    // ¯\_(ツ)_/¯ too bad
+    async function setCorrectSizes(): Promise<void> {
+        if (editorRef.current) {
+            try {
+                if (window) {
+                    window.addEventListener("resize", resizeHandler);
                 }
+
+                await setCanvasSize();
+
+                await debouncedReziseEditor();
+            } catch (error) {
+                // ¯\_(ツ)_/¯ too bad
             }
-        };
+        }
+    };
 
-        setImageSize();
-
+    useEffect(() => {
+        setCorrectSizes();
 
         return () => {
             window.removeEventListener("resize", resizeHandler);
