@@ -4,9 +4,11 @@ import { MemeImageEditor } from "../meme-image-editor/meme-image-editor";
 import { StringHelpers } from "../../../helpers/string-helpers";
 import { memo } from "react";
 import { MemeUploadDashboard } from "../meme-upload-dashboard/meme-upload-dashboard";
+import { useSelector } from "react-redux";
+import { ReduxStore } from "../../../types/redux-store";
 
 export const EditMeme: React.FC = memo(() => {
-    const isUploaded = false;
+    const isUploaded = useSelector((store: ReduxStore) => !!store.memeUpload.uploadedImageSrc);
 
     return (
         <div className={bootstrap.containerFluid}>

@@ -9,6 +9,10 @@
 .tui-image-editor-header-buttons {
   float: none !important;
   text-align: center !important;
+
+  > div {
+    display: none !important;
+  }
 }
 
 .tui-image-editor {
@@ -23,6 +27,7 @@
   display: inline-block;
   width: 100% !important;
   height: 0  !important;
+  border: 1px solid #282828;
 }
 
 .tui-image-editor-header {

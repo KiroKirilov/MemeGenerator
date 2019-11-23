@@ -11,6 +11,8 @@ import { memo, useEffect } from "react";
 import "./meme-image-editor.scss";
 import { ImageEditorRef } from "../../../types/image-editor-reference";
 import DebouncePromise from "awesome-debounce-promise";
+import { useSelector } from "react-redux";
+import { ReduxStore } from "../../../types/redux-store";
 
 const delayBeforeResize: number = 300;
 
@@ -27,18 +29,17 @@ async function resizeImageEditor(): Promise<void> {
 
 const debouncedReziseEditor: () => Promise<void> = DebouncePromise(resizeImageEditor, delayBeforeResize);
 
-export const MemeImageEditor: React.FC = memo(() => {
-    const blackTheme: any = {
-        "menu.normalIcon.path": icond,
-        "menu.activeIcon.path": iconb,
-        "menu.disabledIcon.path": icona,
-        "menu.hoverIcon.path": iconc,
-        "submenu.normalIcon.path": icond,
-        "submenu.activeIcon.path": iconb,
-    };
+const blackTheme: any = {
+    "menu.normalIcon.path": icond,
+    "menu.activeIcon.path": iconb,
+    "menu.disabledIcon.path": icona,
+    "menu.hoverIcon.path": iconc,
+    "submenu.normalIcon.path": icond,
+    "submenu.activeIcon.path": iconb,
+};
 
-    const imageUrl: string = "https://www.gannett-cdn.com/presto/2019/07/13/PROC/7ae05c5c-67da-4402-983f-6a3fccb42328-TY_071119_BLAZE_RED_PANDA_SENECA_PARK_ZOO.jpg";
-    // const imageUrl: string = "https://cdn.blackmilkclothing.com/media/wysiwyg/Wallpapers/BM-Wallpapers-Oct_25-1.jpg";
+export const MemeImageEditor: React.FC = memo(() => {
+    const imageUrl: string = useSelector((store: ReduxStore) => store.memeUpload.uploadedImageSrc || "");
 
     const editorRef: React.RefObject<ImageEditorRef> = React.createRef<ImageEditorRef>();
 
