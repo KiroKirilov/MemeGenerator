@@ -41,5 +41,3 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
-
-// TODO: Add skeleton loading to template picker
