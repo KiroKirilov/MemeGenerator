@@ -20,6 +20,7 @@ export type MemeTemplateStore = {
 
 export type MemeUploadStore = {
     uploadedImageSrc?: string;
+    isInEdit: boolean;
 };
 
 export type ReduxStore = {

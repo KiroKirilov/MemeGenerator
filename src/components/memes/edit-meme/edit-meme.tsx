@@ -6,6 +6,7 @@ import { memo } from "react";
 import { MemeUploadDashboard } from "../meme-upload-dashboard/meme-upload-dashboard";
 import { useSelector } from "react-redux";
 import { ReduxStore } from "../../../types/redux-store";
+import { MemeImageViewer } from "../meme-image-viewer/meme-image-viewer";
 
 export const EditMeme: React.FC = memo(() => {
     const isUploaded = useSelector((store: ReduxStore) => !!store.memeUpload.uploadedImageSrc);
@@ -16,7 +17,7 @@ export const EditMeme: React.FC = memo(() => {
                 <div className={StringHelpers.joinClassNames(bootstrap.colxl8, bootstrap.colLg8, bootstrap.colMd8, bootstrap.colSm12)}>
                     {
                         isUploaded
-                        ? <MemeImageEditor />
+                        ? <MemeImageViewer />
                         : <MemeUploadDashboard />
                     }
                     

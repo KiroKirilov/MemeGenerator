@@ -4,8 +4,26 @@ import { MemeUploadActionPayload } from "../action-types/meme-upload/meme-upload
 export class MemeUploadActions {
     public static memeUploaded(uploadedImageSrc: string): MemeUploadActionPayload {
         return {
-            type: MemeUploadActionType.SET_UPLOADED_IMAGE,
+            type: MemeUploadActionType.MEME_UPLOADED,
             uploadedImageSrc
+        };
+    }
+
+    public static startEditing(): MemeUploadActionPayload {
+        return {
+            type: MemeUploadActionType.START_EDIT,
+        };
+    }
+
+    public static stopEditing(): MemeUploadActionPayload {
+        return {
+            type: MemeUploadActionType.STOP_EDIT,
+        };
+    }
+
+    public static resetImage(): MemeUploadActionPayload {
+        return {
+            type: MemeUploadActionType.RESET_IMAGE,
         };
     }
 }
