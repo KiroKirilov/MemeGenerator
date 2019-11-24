@@ -146,9 +146,9 @@ export const Register: React.FC = memo(() => {
 
                 <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
                     <div className={StringHelpers.joinClassNames(BootstrapHelpers.formFieldClasses, bootstrap.dFlex, bootstrap.justifyContentCenter)}>
-                        <Button type="primary" htmlType="submit" className="login-form-button">
+                        <Button icon="user-add" type="primary" htmlType="submit">
                             Register
-                    </Button>
+                        </Button>
                     </div>
 
                 </div>

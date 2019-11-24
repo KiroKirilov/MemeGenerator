@@ -24,6 +24,7 @@ export const NotFound: React.FC = memo(() => {
                     <div className={StringHelpers.joinClassNames(bootstrap.textCenter, classes.notFoundMessageContainer)}>
                         <div className={classes.notFoundMessage}>What are you doing here?</div>
                         <Button
+                            icon="home"
                             onClick={() => history.push(appRoutes.home)}
                             type="primary">
                             Go Back Home
