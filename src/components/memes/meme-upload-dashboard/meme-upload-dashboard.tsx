@@ -14,6 +14,7 @@ import { Modal, Button, Typography } from "antd";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { default as classes } from "./meme-upload-dashboard.module.scss";
 import { StringHelpers } from "../../../helpers/string-helpers";
+import { MemeUploadActions } from "../../../store/actions/meme-upload-actions";
 
 const uppy: Uppy.Uppy = Uppy({
     restrictions: {
@@ -23,9 +24,27 @@ const uppy: Uppy.Uppy = Uppy({
     autoProceed: true
 });
 
+function toBase64(file: File | Blob) {
+    return new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = error => reject(error);
+    });
+}
+
 export const MemeUploadDashboard: React.FC = memo(() => {
     const dispatch: Dispatch<any> = useDispatch();
     const [visible, setVisible] = useState<boolean>(false);
+
+    async function onImageUpload() {
+        var file = uppy.getFiles()[0];
+        var b64 = await toBase64(file.data);
+        dispatch(MemeUploadActions.memeUploaded(b64));
+    };
+
+    uppy.off("uplaod", onImageUpload);
+    uppy.on("upload", onImageUpload)
 
     useEffect(() => {
         dispatch(MemeTemplateActions.getPopularTemplates());
