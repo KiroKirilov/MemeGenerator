@@ -6,7 +6,7 @@ import { default as classes } from "./footer.module.scss";
 export const Footer: React.FC = memo(() => {
     return (
         <Layout.Footer className={classes.footerAtTheBottom} style={{ textAlign: "center" }}>
-            Ant Design ©2018 Created by Ant UED
+            Supreme Memes ©2019 Created by Kiro
         </Layout.Footer>
     );
 });
