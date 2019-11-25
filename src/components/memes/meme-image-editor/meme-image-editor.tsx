@@ -13,6 +13,7 @@ import { ImageEditorRef } from "../../../types/image-editor-reference";
 import DebouncePromise from "awesome-debounce-promise";
 import { useSelector } from "react-redux";
 import { ReduxStore } from "../../../types/redux-store";
+import { ImageHelpers } from "../../../common/helpers/image-helpers";
 
 const delayBeforeResize: number = 300;
 
@@ -43,20 +44,8 @@ export const MemeImageEditor: React.FC = memo(() => {
 
     const editorRef: React.RefObject<ImageEditorRef> = React.createRef<ImageEditorRef>();
 
-    function loadImage(imageSrc: string): Promise<HTMLImageElement> {
-        return new Promise((resolve, reject) => {
-            const image: HTMLImageElement = new Image();
-
-            image.onload = () => {
-                resolve(image);
-            };
-
-            image.src = imageSrc;
-        });
-    }
-
     async function setCanvasSize(): Promise<void> {
-        const image: HTMLImageElement = await loadImage(imageUrl);
+        const image: HTMLImageElement = await ImageHelpers.loadImage(imageUrl);
 
         const imageWidth: number = image.width;
         const imageHeight: number = image.height;
