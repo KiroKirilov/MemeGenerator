@@ -86,7 +86,7 @@ export const MemeImageEditor: React.FC = memo(() => {
                 // ¯\_(ツ)_/¯ too bad
             }
         }
-    };
+    }
 
     useEffect(() => {
         setCorrectSizes();
