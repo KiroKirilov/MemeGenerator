@@ -1,5 +1,5 @@
 import * as React from "react";
-import { memo } from "react";
+import { memo, createRef, useEffect } from "react";
 import { MemeImageEditor } from "../meme-image-editor/meme-image-editor";
 import { useSelector, useDispatch } from "react-redux";
 import { ReduxStore } from "../../../types/redux-store";
@@ -15,6 +15,13 @@ export const MemeImageViewer: React.FC = memo(() => {
     const uploadedImageSrc = useSelector((store: ReduxStore) => store.memeUpload.uploadedImageSrc || "");
     const isInEdit = useSelector((store: ReduxStore) => store.memeUpload.isInEdit);
     const dispatch = useDispatch();
+    const imageRef: React.RefObject<HTMLImageElement> = createRef<HTMLImageElement>();
+
+    useEffect(() => {
+        if (!!imageRef) {
+            debugger;
+        }
+    }, [imageRef.current]);
 
     return (
         <div>
@@ -22,7 +29,7 @@ export const MemeImageViewer: React.FC = memo(() => {
                 isInEdit
                     ? <MemeImageEditor />
                     : <div className={StringHelpers.joinClassNames(bootstrap.dFlex, bootstrap.justifyContentCenter)}>
-                        <img style={{
+                        <img ref={imageRef} style={{
                             maxWidth: "400px",
                             width: "100%",
                             height: "auto"
