@@ -1,5 +1,6 @@
 import { FirebaseError } from "./firebase-error";
 import { MemeTemplate } from "../models/memes/meme-template";
+import { ImageEditorRef } from "./image-editor-reference";
 
 export type SomeStore = {
     someProp: string;
@@ -21,6 +22,7 @@ export type MemeTemplateStore = {
 export type MemeUploadStore = {
     uploadedImageSrc?: string;
     isInEdit: boolean;
+    editorRef?: React.RefObject<ImageEditorRef>;
 };
 
 export type ReduxStore = {

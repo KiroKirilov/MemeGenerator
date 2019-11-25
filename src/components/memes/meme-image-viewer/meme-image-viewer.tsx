@@ -17,6 +17,7 @@ export const MemeImageViewer: React.FC = memo(() => {
 
     const uploadedImageSrc = useSelector((store: ReduxStore) => store.memeUpload.uploadedImageSrc || "");
     const isInEdit = useSelector((store: ReduxStore) => store.memeUpload.isInEdit);
+    const editorRef = useSelector((store: ReduxStore) => store.memeUpload.editorRef);
     const [ratio, setRation] = useState(0);
     const dispatch = useDispatch();
     const imageRef: React.RefObject<HTMLImageElement> = createRef<HTMLImageElement>();
@@ -64,7 +65,12 @@ export const MemeImageViewer: React.FC = memo(() => {
                         isInEdit
                             ? (<>
                                 <Button icon="save"
-                                    onClick={() => dispatch(MemeUploadActions.stopEditing())} type="primary">
+                                    onClick={() => {
+                                        if (editorRef && editorRef.current) {
+                                            const dataUrl: string = editorRef.current.getInstance().toDataURL();
+                                            dispatch(MemeUploadActions.memeUploaded(dataUrl));
+                                        }
+                                    }} type="primary">
                                     Save
                                 </Button>
 

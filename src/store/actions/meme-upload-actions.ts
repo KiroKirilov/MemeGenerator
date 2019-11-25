@@ -1,5 +1,6 @@
 import { MemeUploadActionType } from "../action-types/meme-upload/meme-upload-actions-type";
 import { MemeUploadActionPayload } from "../action-types/meme-upload/meme-upload-payload";
+import { ImageEditorRef } from "../../types/image-editor-reference";
 
 export class MemeUploadActions {
     public static memeUploaded(uploadedImageSrc: string): MemeUploadActionPayload {
@@ -24,6 +25,13 @@ export class MemeUploadActions {
     public static resetImage(): MemeUploadActionPayload {
         return {
             type: MemeUploadActionType.RESET_IMAGE,
+        };
+    }
+
+    public static editorLoaded(editorRef: React.RefObject<ImageEditorRef>): MemeUploadActionPayload {
+        return {
+            type: MemeUploadActionType.EDITOR_REF_LOADED,
+            editorRef
         };
     }
 }
