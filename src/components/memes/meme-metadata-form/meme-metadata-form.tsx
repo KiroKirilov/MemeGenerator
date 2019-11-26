@@ -11,11 +11,15 @@ import { FormHelpers } from "../../../common/helpers/form-helpers";
 import { StringHelpers } from "../../../helpers/string-helpers";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { useFirestoreConnect } from "react-redux-firebase";
+import { SelectValue } from "antd/lib/select";
+
+const { Option } = Select;
 
 export const MemeMetadataForm: React.FC = memo(() => {
     const { register, handleSubmit, errors, getValues, setValue } = useForm({
         mode: "onBlur"
     });
+
 
     // tODO: do not get from auth store!
     const memeUploadErrorMessage = useSelector((store: ReduxStore) => store.auth.loginError && store.auth.loginError.message);
@@ -23,7 +27,6 @@ export const MemeMetadataForm: React.FC = memo(() => {
     const firestore = useSelector((store: ReduxStore) => store.firestore);
     const tags = firestore.ordered.tags;
     const fetching: boolean = firestore.status.requesting.tags;
-    console.log(firestore);
     const values = getValues();
     const dispatch = useDispatch();
 
@@ -33,7 +36,10 @@ export const MemeMetadataForm: React.FC = memo(() => {
 
     const fields = {
         title: "title",
+        tags: "tags"
     };
+
+    register({ name: fields.tags }, { required: "Please select at least one tag." })
 
     if (memeUploadErrorMessage && isLoading) {
         dispatch(MemeUploadActions.stopLoading());
@@ -41,6 +47,14 @@ export const MemeMetadataForm: React.FC = memo(() => {
 
     function onSubmit(data: any): void {
         console.log(data);
+        debugger;
+    }
+
+    const children = [];
+    if (tags) {
+        for (const tag of tags) {
+            children.push(<Option key={tag.id}><Icon type="tag" /> {tag.name}</Option>);
+        }
     }
 
     return (
@@ -56,7 +70,7 @@ export const MemeMetadataForm: React.FC = memo(() => {
                             help={errors.email && errors.email.message}>
                             <Input
                                 onChange={(e) => setValue(fields.title, e.target.value)}
-                                value={values.email}
+                                value={values.title}
                                 prefix={<Icon type="font-size" />}
                                 placeholder="Title"
                                 name={fields.title}
@@ -68,19 +82,20 @@ export const MemeMetadataForm: React.FC = memo(() => {
 
                 <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
                     <div className={bootstrap.col12}>
+                        <Form.Item
+                            validateStatus={errors.email && "error"}
+                            help={errors.email && errors.email.message}>
                             <Select
                                 notFoundContent={fetching ? <Spin size="small" /> : null}
-                                style={{ width: "100%" }}
                                 mode="multiple"
-                                placeholder="Tags Mode">
-                                {
-                                    fetching || !firestore.ordered.tags
-                                        ? []
-                                        : firestore.ordered.tags.map((t: any) => (
-                                            <Select.Option key={t.id}>{t.name}</Select.Option>
-                                        ))}
-                                }
+                                style={{ width: '100%' }}
+                                placeholder="Please select"
+                                onChange={(val: SelectValue) => setValue(fields.tags, val)}
+                            >
+                                {children}
                             </Select>
+                        </Form.Item>
+
                     </div>
                 </div>
 
