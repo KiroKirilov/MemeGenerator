@@ -7,6 +7,7 @@ import { MemeUploadDashboard } from "../meme-upload-dashboard/meme-upload-dashbo
 import { useSelector } from "react-redux";
 import { ReduxStore } from "../../../types/redux-store";
 import { MemeImageViewer } from "../meme-image-viewer/meme-image-viewer";
+import { MemeMetadataForm } from "../meme-metadata-form/meme-metadata-form";
 
 export const EditMeme: React.FC = memo(() => {
     const isUploaded = useSelector((store: ReduxStore) => !!store.memeUpload.uploadedImageSrc);
@@ -20,11 +21,10 @@ export const EditMeme: React.FC = memo(() => {
                         ? <MemeImageViewer />
                         : <MemeUploadDashboard />
                     }
-                    
                 </div>
 
                 <div className={StringHelpers.joinClassNames(bootstrap.colxl4, bootstrap.colLg4, bootstrap.colMd4, bootstrap.colSm12)}>
-                    <div style={{ backgroundColor: "red" }}>Side bar here</div>
+                    <MemeMetadataForm />
                 </div>
             </div>
         </div>
