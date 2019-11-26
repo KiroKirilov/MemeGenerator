@@ -42,20 +42,21 @@ const blackTheme: any = {
 
 export const MemeImageEditor: React.FC = memo(() => {
     const imageUrl: string = useSelector((store: ReduxStore) => store.memeUpload.uploadedImageSrc || "");
+    const image: HTMLImageElement | undefined = useSelector((store: ReduxStore) => store.memeUpload.image);
 
     const editorRef: React.RefObject<ImageEditorRef> = React.createRef<ImageEditorRef>();
     const dispatch = useDispatch();
 
     async function setCanvasSize(): Promise<void> {
-        const image: HTMLImageElement = await ImageHelpers.loadImage(imageUrl);
+        if (image) {
+            const imageWidth: number = image.width;
+            const imageHeight: number = image.height;
 
-        const imageWidth: number = image.width;
-        const imageHeight: number = image.height;
-
-        const canvasContainers: HTMLCollectionOf<Element> = document.getElementsByClassName("tui-image-editor-canvas-container");
-        for (let i: number = 0; i < canvasContainers.length; i++) {
-            // @ts-ignore
-            canvasContainers[i].style["padding-top"] = `${imageHeight / imageWidth * 100}%`;
+            const canvasContainers: HTMLCollectionOf<Element> = document.getElementsByClassName("tui-image-editor-canvas-container");
+            for (let i: number = 0; i < canvasContainers.length; i++) {
+                // @ts-ignore
+                canvasContainers[i].style["padding-top"] = `${imageHeight / imageWidth * 100}%`;
+            }
         }
     }
 

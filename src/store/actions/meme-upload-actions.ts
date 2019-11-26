@@ -1,12 +1,19 @@
 import { MemeUploadActionType } from "../action-types/meme-upload/meme-upload-actions-type";
 import { MemeUploadActionPayload } from "../action-types/meme-upload/meme-upload-payload";
 import { ImageEditorRef } from "../../types/image-editor-reference";
+import { FunctionAction } from "../../types/function-action";
+import { ImageHelpers } from "../../common/helpers/image-helpers";
 
 export class MemeUploadActions {
-    public static memeUploaded(uploadedImageSrc: string): MemeUploadActionPayload {
-        return {
-            type: MemeUploadActionType.MEME_UPLOADED,
-            uploadedImageSrc
+    public static memeUploaded(uploadedImageSrc: string): FunctionAction {
+        return async (dispatch: any) => {
+            const image: HTMLImageElement = await ImageHelpers.loadImage(uploadedImageSrc);
+
+            dispatch({
+                type: MemeUploadActionType.MEME_UPLOADED,
+                uploadedImageSrc,
+                image
+            });
         };
     }
 
@@ -22,9 +29,9 @@ export class MemeUploadActions {
         };
     }
 
-    public static resetImage(): MemeUploadActionPayload {
+    public static resetState(): MemeUploadActionPayload {
         return {
-            type: MemeUploadActionType.RESET_IMAGE,
+            type: MemeUploadActionType.RESET_STATE,
         };
     }
 
@@ -32,6 +39,18 @@ export class MemeUploadActions {
         return {
             type: MemeUploadActionType.EDITOR_REF_LOADED,
             editorRef
+        };
+    }
+
+    public static startLoading(): MemeUploadActionPayload {
+        return {
+            type: MemeUploadActionType.START_LOADING,
+        };
+    }
+
+    public static stopLoading(): MemeUploadActionPayload {
+        return {
+            type: MemeUploadActionType.STOP_LOADING,
         };
     }
 }

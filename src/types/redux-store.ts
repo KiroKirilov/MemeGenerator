@@ -23,6 +23,7 @@ export type MemeUploadStore = {
     uploadedImageSrc?: string;
     isInEdit: boolean;
     editorRef?: React.RefObject<ImageEditorRef>;
+    image?: HTMLImageElement;
 };
 
 export type ReduxStore = {

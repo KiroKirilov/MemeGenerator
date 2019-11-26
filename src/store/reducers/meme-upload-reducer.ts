@@ -8,7 +8,8 @@ import { ImageEditorRef } from "../../types/image-editor-reference";
 const initialState: MemeUploadStore = {
     uploadedImageSrc: undefined,
     isInEdit: false,
-    editorRef: createRef<ImageEditorRef>()
+    editorRef: createRef<ImageEditorRef>(),
+    image: undefined
 };
 
 export const memeUploadReducer: any = (state: MemeUploadStore = initialState, action: MemeUploadActionPayload): MemeUploadStore => {
@@ -17,7 +18,8 @@ export const memeUploadReducer: any = (state: MemeUploadStore = initialState, ac
             return {
                 ...state,
                 uploadedImageSrc: action.uploadedImageSrc,
-                isInEdit: false
+                isInEdit: false,
+                image: action.image
             };
 
         case MemeUploadActionType.START_EDIT:
@@ -32,7 +34,7 @@ export const memeUploadReducer: any = (state: MemeUploadStore = initialState, ac
                 isInEdit: false
             };
 
-        case MemeUploadActionType.RESET_IMAGE:
+        case MemeUploadActionType.RESET_STATE:
             return initialState;
 
         case MemeUploadActionType.EDITOR_REF_LOADED:

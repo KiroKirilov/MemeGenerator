@@ -5,4 +5,5 @@ export type MemeUploadActionPayload = {
     type: MemeUploadActionType;
     uploadedImageSrc?: string;
     editorRef?: React.RefObject<ImageEditorRef>;
+    image?: HTMLImageElement;
 };

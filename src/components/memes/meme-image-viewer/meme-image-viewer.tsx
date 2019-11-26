@@ -16,16 +16,15 @@ export const MemeImageViewer: React.FC = memo(() => {
     const maxHeight = 550;
 
     const uploadedImageSrc = useSelector((store: ReduxStore) => store.memeUpload.uploadedImageSrc || "");
+    const image: HTMLImageElement | undefined = useSelector((store: ReduxStore) => store.memeUpload.image);
     const isInEdit = useSelector((store: ReduxStore) => store.memeUpload.isInEdit);
     const editorRef = useSelector((store: ReduxStore) => store.memeUpload.editorRef);
     const [ratio, setRation] = useState(0);
     const dispatch = useDispatch();
-    const imageRef: React.RefObject<HTMLImageElement> = createRef<HTMLImageElement>();
 
-    async function updateRatio() {
-        if (!!imageRef && !!imageRef.current) {
-            const image: HTMLImageElement = await ImageHelpers.loadImage(imageRef.current.src);
-            const ratio = image.width / image.height;
+    async function updateRatio(): Promise<void> {
+        if (image) {
+            const ratio: number = image.width / image.height;
             console.log(`Ratio: ${ratio}`);
             setRation(ratio);
         }
@@ -33,7 +32,7 @@ export const MemeImageViewer: React.FC = memo(() => {
 
     useEffect(() => {
         updateRatio();
-    }, [imageRef.current, imageRef.current ? imageRef.current.offsetHeight : 0, imageRef.current ? imageRef.current.offsetWidth : 0]);
+    }, []);
 
     return (
         <div>
@@ -42,7 +41,6 @@ export const MemeImageViewer: React.FC = memo(() => {
                     ? <MemeImageEditor />
                     : <div className={StringHelpers.joinClassNames(bootstrap.dFlex, bootstrap.justifyContentCenter)}>
                         <img
-                            ref={imageRef}
                             style={{
                                 maxWidth: `${maxHeight * ratio}px`,
                                 maxHeight: `${maxHeight}px`,
@@ -70,18 +68,20 @@ export const MemeImageViewer: React.FC = memo(() => {
                                             const dataUrl: string = editorRef.current.getInstance().toDataURL();
                                             dispatch(MemeUploadActions.memeUploaded(dataUrl));
                                         }
-                                    }} type="primary">
+                                    }}
+                                    type="primary"
+                                    className={classes.bgSuccess}>
                                     Save
                                 </Button>
 
-                                <Button icon="save" onClick={() => dispatch(MemeUploadActions.stopEditing())} type="primary">
+                                <Button icon="close" onClick={() => dispatch(MemeUploadActions.stopEditing())} type="primary">
                                     Cancel
                                 </Button>
                             </>)
                             : (<Button icon="edit" onClick={() => dispatch(MemeUploadActions.startEditing())} type="primary">Edit</Button>)
                     }
 
-                    <Button icon="delete" onClick={() => dispatch(MemeUploadActions.resetImage())} type="danger">Different image</Button>
+                    <Button icon="delete" onClick={() => dispatch(MemeUploadActions.resetState())} type="danger">Different image</Button>
 
                 </div>
 
