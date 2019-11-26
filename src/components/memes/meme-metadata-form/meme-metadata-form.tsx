@@ -1,6 +1,6 @@
 import * as React from "react";
 import { memo } from "react";
-import { Spin, Input, Form, Icon, Button } from "antd";
+import { Spin, Input, Form, Icon, Button, Select } from "antd";
 import { MemeUploadActions } from "../../../store/actions/meme-upload-actions";
 import { ReduxStore } from "../../../types/redux-store";
 import useForm from "react-hook-form";
@@ -10,18 +10,26 @@ import { FormErrorMessage } from "../../misc/form-error-message/form-error-messa
 import { FormHelpers } from "../../../common/helpers/form-helpers";
 import { StringHelpers } from "../../../helpers/string-helpers";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
+import { useFirestoreConnect } from "react-redux-firebase";
 
 export const MemeMetadataForm: React.FC = memo(() => {
     const { register, handleSubmit, errors, getValues, setValue } = useForm({
         mode: "onBlur"
     });
 
-    // TODO: do not get from auth store!
+    // tODO: do not get from auth store!
     const memeUploadErrorMessage = useSelector((store: ReduxStore) => store.auth.loginError && store.auth.loginError.message);
     const isLoading = useSelector((store: ReduxStore) => store.auth.isLoading);
-    const auth = useSelector((store: ReduxStore) => store.firebase.auth);
+    const firestore = useSelector((store: ReduxStore) => store.firestore);
+    const tags = firestore.ordered.tags;
+    const fetching: boolean = firestore.status.requesting.tags;
+    console.log(firestore);
     const values = getValues();
     const dispatch = useDispatch();
+
+    useFirestoreConnect([
+        { collection: "tags" }
+    ]);
 
     const fields = {
         title: "title",
@@ -55,6 +63,24 @@ export const MemeMetadataForm: React.FC = memo(() => {
                                 ref={FormHelpers.registerField(register as any)}
                             />
                         </Form.Item>
+                    </div>
+                </div>
+
+                <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
+                    <div className={bootstrap.col12}>
+                            <Select
+                                notFoundContent={fetching ? <Spin size="small" /> : null}
+                                style={{ width: "100%" }}
+                                mode="multiple"
+                                placeholder="Tags Mode">
+                                {
+                                    fetching || !firestore.ordered.tags
+                                        ? []
+                                        : firestore.ordered.tags.map((t: any) => (
+                                            <Select.Option key={t.id}>{t.name}</Select.Option>
+                                        ))}
+                                }
+                            </Select>
                     </div>
                 </div>
 
