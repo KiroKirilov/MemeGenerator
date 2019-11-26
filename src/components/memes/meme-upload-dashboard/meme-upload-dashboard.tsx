@@ -1,7 +1,7 @@
 import * as React from "react";
 import { memo, useState, useEffect } from "react";
 import { Dashboard } from "@uppy/react";
-import Uppy from "@uppy/core";
+import Uppy, { UppyFile } from "@uppy/core";
 import { useDispatch } from "react-redux";
 import { MemeTemplateActions } from "../../../store/actions/meme-template-actions";
 
@@ -24,7 +24,7 @@ const uppy: Uppy.Uppy = Uppy({
     autoProceed: true
 });
 
-function toBase64(file: File | Blob) {
+function toBase64(file: File | Blob): Promise<string> {
     return new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -37,11 +37,15 @@ export const MemeUploadDashboard: React.FC = memo(() => {
     const dispatch: Dispatch<any> = useDispatch();
     const [visible, setVisible] = useState<boolean>(false);
 
-    async function onImageUpload() {
-        var file = uppy.getFiles()[0];
-        var b64 = await toBase64(file.data);
+    async function onImageUpload(): Promise<void> {
+        const file: UppyFile<{}, {}> = uppy.getFiles()[0];
+        const b64: string = await toBase64(file.data);
+        const elements: HTMLCollectionOf<HTMLBodyElement> = document.getElementsByTagName("body");
+        if (elements && elements[0]) {
+            elements[0].classList.remove("uppy-Dashboard-isFixed");
+        }
         dispatch(MemeUploadActions.memeUploaded(b64));
-    };
+    }
 
     uppy.off("uplaod", onImageUpload);
     uppy.on("upload", onImageUpload)
@@ -54,7 +58,13 @@ export const MemeUploadDashboard: React.FC = memo(() => {
         <div className={bootstrap.containerFluid}>
             <div className={bootstrap.row}>
                 <div className={StringHelpers.joinClassNames(bootstrap.col12, bootstrap.dFlex, bootstrap.justifyContentCenter)}>
-                    <Button className={classes.memeUploadDashboardButton} type="primary" id="open-uppy" icon="upload">Upload your own</Button>
+                    <Button
+                        className={classes.memeUploadDashboardButton}
+                        type="primary"
+                        id="open-uppy"
+                        icon="upload">
+                        Upload your own
+                        </Button>
 
                     <Dashboard trigger="#open-uppy" inline={false} uppy={uppy} />
                 </div>
