@@ -1,3 +1,17 @@
+$success: #52c41a;
+$successHover: #73d13d;
+
 .imageActionButtons {
     margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.bgSuccess {
+    background-color: $success;
+    border-color: $success;
+
+    &:hover {
+        background-color: $successHover;
+        border-color: $successHover;
+    }
 }
