@@ -12,6 +12,7 @@ import { StringHelpers } from "../../../helpers/string-helpers";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { SelectValue } from "antd/lib/select";
+import { default as classes } from "./meme-metadata-form.module.scss";
 
 const { Option } = Select;
 
@@ -21,7 +22,7 @@ export const MemeMetadataForm: React.FC = memo(() => {
     });
 
 
-    // tODO: do not get from auth store!
+    // TODO: do not get from auth store!
     const memeUploadErrorMessage = useSelector((store: ReduxStore) => store.auth.loginError && store.auth.loginError.message);
     const isLoading = useSelector((store: ReduxStore) => store.auth.isLoading);
     const firestore = useSelector((store: ReduxStore) => store.firestore);
@@ -39,7 +40,9 @@ export const MemeMetadataForm: React.FC = memo(() => {
         tags: "tags"
     };
 
-    register({ name: fields.tags }, { required: "Please select at least one tag." })
+    register({ name: fields.tags }, {
+        validate: (value: any) => (!!value && value.length > 0) || "Please select at least one tag."
+    });
 
     if (memeUploadErrorMessage && isLoading) {
         dispatch(MemeUploadActions.stopLoading());
@@ -53,7 +56,7 @@ export const MemeMetadataForm: React.FC = memo(() => {
     const children = [];
     if (tags) {
         for (const tag of tags) {
-            children.push(<Option key={tag.id}><Icon type="tag" /> {tag.name}</Option>);
+            children.push(<Option key={tag.id}>{tag.name}</Option>);
         }
     }
 
@@ -66,15 +69,21 @@ export const MemeMetadataForm: React.FC = memo(() => {
                 <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
                     <div className={bootstrap.col12}>
                         <Form.Item
-                            validateStatus={errors.email && "error"}
-                            help={errors.email && errors.email.message}>
+                            validateStatus={errors.title && "error"}
+                            help={errors.title && errors.title.message}>
                             <Input
                                 onChange={(e) => setValue(fields.title, e.target.value)}
                                 value={values.title}
                                 prefix={<Icon type="font-size" />}
                                 placeholder="Title"
                                 name={fields.title}
-                                ref={FormHelpers.registerField(register as any)}
+                                ref={FormHelpers.registerField(register as any, {
+                                    required: "Please provide a title.",
+                                    maxLength: {
+                                        value: 30,
+                                        message: "The title must be shorter than 30 chracters"
+                                    }
+                                })}
                             />
                         </Form.Item>
                     </div>
@@ -83,17 +92,28 @@ export const MemeMetadataForm: React.FC = memo(() => {
                 <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
                     <div className={bootstrap.col12}>
                         <Form.Item
-                            validateStatus={errors.email && "error"}
-                            help={errors.email && errors.email.message}>
-                            <Select
-                                notFoundContent={fetching ? <Spin size="small" /> : null}
-                                mode="multiple"
-                                style={{ width: '100%' }}
-                                placeholder="Please select"
-                                onChange={(val: SelectValue) => setValue(fields.tags, val)}
-                            >
-                                {children}
-                            </Select>
+                            validateStatus={errors.tags && "error"}
+                            help={errors.tags && errors.tags.message}>
+                            <Input.Group compact>
+                                <Input
+                                    className={classes.tagPrefixIcon}
+                                    prefix={<Icon type="tag" />}
+                                    style={{ width: "7%" }}
+                                    readOnly
+                                    disabled
+                                />
+                                <Select
+                                    notFoundContent={fetching ? <Spin size="small" /> : null}
+                                    mode="multiple"
+                                    style={{ width: "93%" }}
+                                    placeholder="Tags"
+
+                                    onChange={(val: SelectValue) => setValue(fields.tags, val)}
+                                >
+                                    {children}
+                                </Select>
+                            </Input.Group>
+
                         </Form.Item>
 
                     </div>
