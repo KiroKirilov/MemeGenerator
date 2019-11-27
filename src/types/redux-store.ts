@@ -24,6 +24,8 @@ export type MemeUploadStore = {
     isInEdit: boolean;
     editorRef?: React.RefObject<ImageEditorRef>;
     image?: HTMLImageElement;
+    isLoading: boolean;
+    memeSubmitError?: FirebaseError;
 };
 
 export type ReduxStore = {

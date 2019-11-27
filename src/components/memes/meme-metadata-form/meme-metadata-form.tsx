@@ -5,7 +5,6 @@ import { MemeUploadActions } from "../../../store/actions/meme-upload-actions";
 import { ReduxStore } from "../../../types/redux-store";
 import useForm from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
-import { BootstrapHelpers } from "../../../common/helpers/bootstrap-helpers";
 import { FormErrorMessage } from "../../misc/form-error-message/form-error-message";
 import { FormHelpers } from "../../../common/helpers/form-helpers";
 import { StringHelpers } from "../../../helpers/string-helpers";
@@ -13,26 +12,32 @@ import { default as bootstrap } from "../../../common/styles/bootstrapGrid.modul
 import { useFirestoreConnect } from "react-redux-firebase";
 import { SelectValue } from "antd/lib/select";
 import { default as classes } from "./meme-metadata-form.module.scss";
+import { Tag } from "../../../models/memes/tag";
+import { Dispatch } from "redux";
+import { MemeMetadata } from "../../../models/memes/meme-metadata";
+import { collectionNames } from "../../../common/constants/collection-names";
 
 const { Option } = Select;
 
 export const MemeMetadataForm: React.FC = memo(() => {
-    const { register, handleSubmit, errors, getValues, setValue } = useForm({
+    const { register, handleSubmit, errors, getValues, setValue } = useForm<MemeMetadata>({
         mode: "onBlur"
     });
 
-
-    // TODO: do not get from auth store!
-    const memeUploadErrorMessage = useSelector((store: ReduxStore) => store.auth.loginError && store.auth.loginError.message);
-    const isLoading = useSelector((store: ReduxStore) => store.auth.isLoading);
-    const firestore = useSelector((store: ReduxStore) => store.firestore);
-    const tags = firestore.ordered.tags;
+    const memeUploadErrorMessage: string | undefined = useSelector((store: ReduxStore) =>
+        store.memeUpload.memeSubmitError && store.memeUpload.memeSubmitError.message);
+    const isLoading: boolean = useSelector((store: ReduxStore) => store.memeUpload.isLoading);
+    const firestore: any = useSelector((store: ReduxStore) => store.firestore);
+    const tags: Tag[] = firestore.ordered.tags;
     const fetching: boolean = firestore.status.requesting.tags;
-    const values = getValues();
-    const dispatch = useDispatch();
+    const values: MemeMetadata = getValues();
+    const dispatch: Dispatch<any> = useDispatch();
 
     useFirestoreConnect([
-        { collection: "tags" }
+        {
+            collection: collectionNames.tags,
+            orderBy: ["name", "asc"]
+        },
     ]);
 
     const fields = {
@@ -48,12 +53,12 @@ export const MemeMetadataForm: React.FC = memo(() => {
         dispatch(MemeUploadActions.stopLoading());
     }
 
-    function onSubmit(data: any): void {
+    function onSubmit(data: MemeMetadata): void {
         console.log(data);
         debugger;
     }
 
-    const children = [];
+    const children: JSX.Element[] = [];
     if (tags) {
         for (const tag of tags) {
             children.push(<Option key={tag.id}>{tag.name}</Option>);
@@ -107,8 +112,14 @@ export const MemeMetadataForm: React.FC = memo(() => {
                                     mode="multiple"
                                     style={{ width: "93%" }}
                                     placeholder="Tags"
-
                                     onChange={(val: SelectValue) => setValue(fields.tags, val)}
+                                    optionFilterProp="name"
+                                    filterOption={(value, option) => {
+                                        if (option.props.children) {
+                                            return (option.props.children as string).toLowerCase().indexOf(value.toLowerCase()) >= 0;
+                                        }
+                                        return false;
+                                    }}
                                 >
                                     {children}
                                 </Select>
@@ -130,7 +141,6 @@ export const MemeMetadataForm: React.FC = memo(() => {
                         </Button>
                     </div>
                 </div>
-
             </form>
 
         </Spin>

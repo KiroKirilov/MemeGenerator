@@ -9,7 +9,9 @@ const initialState: MemeUploadStore = {
     uploadedImageSrc: undefined,
     isInEdit: false,
     editorRef: createRef<ImageEditorRef>(),
-    image: undefined
+    image: undefined,
+    isLoading: false,
+    memeSubmitError: undefined
 };
 
 export const memeUploadReducer: any = (state: MemeUploadStore = initialState, action: MemeUploadActionPayload): MemeUploadStore => {
