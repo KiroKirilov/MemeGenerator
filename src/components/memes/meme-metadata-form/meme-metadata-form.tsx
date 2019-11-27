@@ -1,5 +1,5 @@
 import * as React from "react";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { Spin, Input, Form, Icon, Button, Select } from "antd";
 import { MemeUploadActions } from "../../../store/actions/meme-upload-actions";
 import { ReduxStore } from "../../../types/redux-store";
@@ -11,11 +11,11 @@ import { StringHelpers } from "../../../helpers/string-helpers";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { SelectValue } from "antd/lib/select";
-import { default as classes } from "./meme-metadata-form.module.scss";
 import { Tag } from "../../../models/memes/tag";
 import { Dispatch } from "redux";
 import { MemeMetadata } from "../../../models/memes/meme-metadata";
 import { collectionNames } from "../../../common/constants/collection-names";
+import { htmlElements } from "../../../common/constants/html-elements";
 
 const { Option } = Select;
 
@@ -27,6 +27,8 @@ export const MemeMetadataForm: React.FC = memo(() => {
     const memeUploadErrorMessage: string | undefined = useSelector((store: ReduxStore) =>
         store.memeUpload.memeSubmitError && store.memeUpload.memeSubmitError.message);
     const isLoading: boolean = useSelector((store: ReduxStore) => store.memeUpload.isLoading);
+    const imageInEdit: boolean = useSelector((store: ReduxStore) => store.memeUpload.isInEdit);
+    const imageSrc: string | undefined = useSelector((store: ReduxStore) => store.memeUpload.uploadedImageSrc);
     const firestore: any = useSelector((store: ReduxStore) => store.firestore);
     const tags: Tag[] = firestore.ordered.tags;
     const fetching: boolean = firestore.status.requesting.tags;
@@ -40,13 +42,35 @@ export const MemeMetadataForm: React.FC = memo(() => {
         },
     ]);
 
+    useEffect(() => {
+        const tagsPlaceholder = document.querySelector(".ant-select-selection__placeholder");
+        if (tagsPlaceholder) {
+            tagsPlaceholder.innerHTML = `${htmlElements.tagIcon} Tags`;
+        }
+    }, [])
+
     const fields = {
         title: "title",
-        tags: "tags"
+        tags: "tags",
+        image: "image"
     };
 
     register({ name: fields.tags }, {
         validate: (value: any) => (!!value && value.length > 0) || "Please select at least one tag."
+    });
+
+    register({ name: fields.image }, {
+        validate: (value: any) => {
+            if (imageInEdit) {
+                return "Please save or discard your changes first.";
+            }
+
+            if (!imageSrc) {
+                return "Please upload an image.";
+            }
+
+            return true;
+        }
     });
 
     if (memeUploadErrorMessage && isLoading) {
@@ -61,15 +85,28 @@ export const MemeMetadataForm: React.FC = memo(() => {
     const children: JSX.Element[] = [];
     if (tags) {
         for (const tag of tags) {
-            children.push(<Option key={tag.id}>{tag.name}</Option>);
+            children.push(<Option key={tag.id}><Icon type="tag" /> {tag.name}</Option>);
         }
     }
 
+    console.log(errors);
     return (
         <Spin spinning={isLoading} delay={100}>
             <form noValidate className={bootstrap.containerFluid} onSubmit={handleSubmit(onSubmit)}>
 
-                <FormErrorMessage showErrorMessage={!!memeUploadErrorMessage} errorMessage={memeUploadErrorMessage} />
+                <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
+                    <div className={bootstrap.col12}>
+                        <FormErrorMessage showErrorMessage={!!memeUploadErrorMessage} errorMessage={memeUploadErrorMessage} />
+                    </div>
+                </div>
+
+                <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
+                    <div className={bootstrap.col12}>
+                        <FormErrorMessage showErrorMessage={!!errors.image} errorMessage={errors.image ? errors.image.message : ""} />
+                    </div>
+                </div>
+
+                <input type="hidden" name="image" />
 
                 <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
                     <div className={bootstrap.col12}>
@@ -99,32 +136,22 @@ export const MemeMetadataForm: React.FC = memo(() => {
                         <Form.Item
                             validateStatus={errors.tags && "error"}
                             help={errors.tags && errors.tags.message}>
-                            <Input.Group compact>
-                                <Input
-                                    className={classes.tagPrefixIcon}
-                                    prefix={<Icon type="tag" />}
-                                    style={{ width: "7%" }}
-                                    readOnly
-                                    disabled
-                                />
-                                <Select
-                                    notFoundContent={fetching ? <Spin size="small" /> : null}
-                                    mode="multiple"
-                                    style={{ width: "93%" }}
-                                    placeholder="Tags"
-                                    onChange={(val: SelectValue) => setValue(fields.tags, val)}
-                                    optionFilterProp="name"
-                                    filterOption={(value, option) => {
-                                        if (option.props.children) {
-                                            return (option.props.children as string).toLowerCase().indexOf(value.toLowerCase()) >= 0;
-                                        }
-                                        return false;
-                                    }}
-                                >
-                                    {children}
-                                </Select>
-                            </Input.Group>
-
+                            <Select
+                                notFoundContent={fetching ? <Spin size="small" /> : null}
+                                mode="multiple"
+                                style={{ width: "100%" }}
+                                placeholder="Tags"
+                                onChange={(val: SelectValue) => setValue(fields.tags, val)}
+                                optionFilterProp="name"
+                                filterOption={(value, option) => {
+                                    if (option.props.children) {
+                                        return (option.props.children as string).toLowerCase().indexOf(value.toLowerCase()) >= 0;
+                                    }
+                                    return false;
+                                }}
+                            >
+                                {children}
+                            </Select>
                         </Form.Item>
 
                     </div>
