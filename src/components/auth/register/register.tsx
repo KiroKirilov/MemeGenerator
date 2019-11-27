@@ -45,7 +45,11 @@ export const Register: React.FC = memo(() => {
 
                 <PageHeader text="Register" />
 
-                <FormErrorMessage showErrorMessage={!!registerErrorMessage} errorMessage={registerErrorMessage} />
+                <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
+                    <div className={BootstrapHelpers.formFieldClasses}>
+                        <FormErrorMessage showErrorMessage={!!registerErrorMessage} errorMessage={registerErrorMessage} />
+                    </div>
+                </div>
 
                 <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
                     <div className={BootstrapHelpers.formFieldClasses}>

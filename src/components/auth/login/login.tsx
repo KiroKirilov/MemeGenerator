@@ -44,7 +44,11 @@ export const Login: React.FC = memo(() => {
 
                 <PageHeader text="Login" />
 
-                <FormErrorMessage showErrorMessage={!!loginErrorMessage} errorMessage={loginErrorMessage} />
+                <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
+                    <div className={BootstrapHelpers.formFieldClasses}>
+                        <FormErrorMessage showErrorMessage={!!loginErrorMessage} errorMessage={loginErrorMessage} />
+                    </div>
+                </div>
 
                 <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
                     <div className={BootstrapHelpers.formFieldClasses}>

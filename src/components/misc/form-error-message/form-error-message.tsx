@@ -13,16 +13,12 @@ export const FormErrorMessage: React.FC<FormErrorMessageProps> = memo((props: Fo
             {
                 !!props.showErrorMessage
                     ? (
-                        <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
-                            <div className={BootstrapHelpers.formFieldClasses}>
-                                <Alert
-                                    className={classes.loginErrorMessage}
-                                    message={props.errorMessage}
-                                    type="error"
-                                    showIcon
-                                />
-                            </div>
-                        </div>
+                        <Alert
+                            className={classes.loginErrorMessage}
+                            message={props.errorMessage}
+                            type="error"
+                            showIcon
+                        />
                     )
                     : null
             }
