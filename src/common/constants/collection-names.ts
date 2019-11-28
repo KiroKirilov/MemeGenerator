@@ -1,4 +1,5 @@
 export const collectionNames = {
     userProfiles: "users",
-    tags: "tags"
+    tags: "tags",
+    memes: "memes"
 }

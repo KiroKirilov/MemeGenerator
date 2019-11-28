@@ -9,6 +9,8 @@ import { FirebaseInstance } from "../../types/get-firestore-firebase";
 import { Reference } from "@firebase/storage-types";
 import { StringHelpers } from "../../common/helpers/string-helpers";
 import { ReduxStore } from "../../types/redux-store";
+import { Meme } from "../../models/memes/meme";
+import { collectionNames } from "../../common/constants/collection-names";
 
 export class MemeUploadActions {
     public static memeUploaded(uploadedImageSrc: string): FunctionAction {
@@ -77,6 +79,21 @@ export class MemeUploadActions {
                 const memeImageRef: Reference = storageRef.child(`memes/${userId}/${guid}.${fileExtension}`);
                 await memeImageRef.putString(dataUrl, "data_url").then();
                 const imageUrl: string = await memeImageRef.getDownloadURL();
+
+                const firestore: any = getFirestore();
+
+                const memeModel: Meme = {
+                    title: metadata.title,
+                    tags: metadata.tags,
+                    createdBy: firestore.doc(`users/${userId}`),
+                    createdOn: new Date(),
+                    imageUrl: imageUrl
+                };
+
+                await firestore
+                    .collection(collectionNames.memes)
+                    .add(memeModel);
+
                 debugger;
             } catch (error) {
                 console.error(error);

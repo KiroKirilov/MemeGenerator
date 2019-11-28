@@ -88,6 +88,13 @@ export const MemeMetadataForm: React.FC = memo(() => {
         }
     }
 
+    function handleTagsChange(val: SelectValue): void {
+        if (val) {
+            const selectedTags: Tag[] = tags.filter((tag: Tag) => (val as string[]).indexOf(tag.id) >= 0);
+            setValue(fields.tags, selectedTags);
+        }
+    }
+
     return (
         <form noValidate className={bootstrap.containerFluid} onSubmit={handleSubmit(onSubmit)}>
 
@@ -138,7 +145,7 @@ export const MemeMetadataForm: React.FC = memo(() => {
                             mode="multiple"
                             style={{ width: "100%" }}
                             placeholder="Tags"
-                            onChange={(val: SelectValue) => setValue(fields.tags, val)}
+                            onChange={handleTagsChange}
                             optionFilterProp="name"
                             filterOption={(value, option) => {
                                 if (option.props.children && (option.props.children as string[])[2]) {
