@@ -7,7 +7,7 @@ import useForm from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { FormErrorMessage } from "../../misc/form-error-message/form-error-message";
 import { FormHelpers } from "../../../common/helpers/form-helpers";
-import { StringHelpers } from "../../../helpers/string-helpers";
+import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { SelectValue } from "antd/lib/select";
@@ -43,11 +43,11 @@ export const MemeMetadataForm: React.FC = memo(() => {
     ]);
 
     useEffect(() => {
-        const tagsPlaceholder = document.querySelector(".ant-select-selection__placeholder");
+        const tagsPlaceholder: Element | null = document.querySelector(".ant-select-selection__placeholder");
         if (tagsPlaceholder) {
             tagsPlaceholder.innerHTML = `${htmlElements.tagIcon} Tags`;
         }
-    }, [])
+    }, []);
 
     const fields = {
         title: "title",
@@ -78,8 +78,7 @@ export const MemeMetadataForm: React.FC = memo(() => {
     }
 
     function onSubmit(data: MemeMetadata): void {
-        console.log(data);
-        debugger;
+        dispatch(MemeUploadActions.memeSubmitted(data));
     }
 
     const children: JSX.Element[] = [];
@@ -89,87 +88,83 @@ export const MemeMetadataForm: React.FC = memo(() => {
         }
     }
 
-    console.log(errors);
     return (
-        <Spin spinning={isLoading} delay={100}>
-            <form noValidate className={bootstrap.containerFluid} onSubmit={handleSubmit(onSubmit)}>
+        <form noValidate className={bootstrap.containerFluid} onSubmit={handleSubmit(onSubmit)}>
 
-                <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
-                    <div className={bootstrap.col12}>
-                        <FormErrorMessage showErrorMessage={!!memeUploadErrorMessage} errorMessage={memeUploadErrorMessage} />
-                    </div>
+            <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
+                <div className={bootstrap.col12}>
+                    <FormErrorMessage showErrorMessage={!!memeUploadErrorMessage} errorMessage={memeUploadErrorMessage} />
                 </div>
+            </div>
 
-                <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
-                    <div className={bootstrap.col12}>
-                        <FormErrorMessage showErrorMessage={!!errors.image} errorMessage={errors.image ? errors.image.message : ""} />
-                    </div>
+            <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
+                <div className={bootstrap.col12}>
+                    <FormErrorMessage showErrorMessage={!!errors.image} errorMessage={errors.image ? errors.image.message : ""} />
                 </div>
+            </div>
 
-                <input type="hidden" name="image" />
+            <input type="hidden" name="image" />
 
-                <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
-                    <div className={bootstrap.col12}>
-                        <Form.Item
-                            validateStatus={errors.title && "error"}
-                            help={errors.title && errors.title.message}>
-                            <Input
-                                onChange={(e) => setValue(fields.title, e.target.value)}
-                                value={values.title}
-                                prefix={<Icon type="font-size" />}
-                                placeholder="Title"
-                                name={fields.title}
-                                ref={FormHelpers.registerField(register as any, {
-                                    required: "Please provide a title.",
-                                    maxLength: {
-                                        value: 30,
-                                        message: "The title must be shorter than 30 chracters"
-                                    }
-                                })}
-                            />
-                        </Form.Item>
-                    </div>
+            <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
+                <div className={bootstrap.col12}>
+                    <Form.Item
+                        validateStatus={errors.title && "error"}
+                        help={errors.title && errors.title.message}>
+                        <Input
+                            onChange={(e) => setValue(fields.title, e.target.value)}
+                            value={values.title}
+                            prefix={<Icon type="font-size" />}
+                            placeholder="Title"
+                            name={fields.title}
+                            ref={FormHelpers.registerField(register as any, {
+                                required: "Please provide a title.",
+                                maxLength: {
+                                    value: 30,
+                                    message: "The title must be shorter than 30 chracters"
+                                }
+                            })}
+                        />
+                    </Form.Item>
                 </div>
+            </div>
 
-                <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
-                    <div className={bootstrap.col12}>
-                        <Form.Item
-                            validateStatus={errors.tags && "error"}
-                            help={errors.tags && errors.tags.message}>
-                            <Select
-                                notFoundContent={fetching ? <Spin size="small" /> : null}
-                                mode="multiple"
-                                style={{ width: "100%" }}
-                                placeholder="Tags"
-                                onChange={(val: SelectValue) => setValue(fields.tags, val)}
-                                optionFilterProp="name"
-                                filterOption={(value, option) => {
-                                    if (option.props.children) {
-                                        return (option.props.children as string).toLowerCase().indexOf(value.toLowerCase()) >= 0;
-                                    }
-                                    return false;
-                                }}
-                            >
-                                {children}
-                            </Select>
-                        </Form.Item>
+            <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
+                <div className={bootstrap.col12}>
+                    <Form.Item
+                        validateStatus={errors.tags && "error"}
+                        help={errors.tags && errors.tags.message}>
+                        <Select
+                            notFoundContent={fetching ? <Spin size="small" /> : null}
+                            mode="multiple"
+                            style={{ width: "100%" }}
+                            placeholder="Tags"
+                            onChange={(val: SelectValue) => setValue(fields.tags, val)}
+                            optionFilterProp="name"
+                            filterOption={(value, option) => {
+                                if (option.props.children && (option.props.children as string[])[2]) {
+                                    return (option.props.children as string[])[2].toLowerCase().indexOf(value.toLowerCase()) >= 0;
+                                }
+                                return false;
+                            }}
+                        >
+                            {children}
+                        </Select>
+                    </Form.Item>
 
-                    </div>
                 </div>
+            </div>
 
-                <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
-                    <div
-                        className={StringHelpers.joinClassNames(
-                            bootstrap.col12,
-                            bootstrap.dFlex,
-                            bootstrap.justifyContentCenter)}>
-                        <Button icon="enter" type="primary" htmlType="submit">
-                            Submit
+            <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
+                <div
+                    className={StringHelpers.joinClassNames(
+                        bootstrap.col12,
+                        bootstrap.dFlex,
+                        bootstrap.justifyContentCenter)}>
+                    <Button icon="enter" type="primary" htmlType="submit">
+                        Submit
                         </Button>
-                    </div>
                 </div>
-            </form>
-
-        </Spin>
+            </div>
+        </form>
     );
 });

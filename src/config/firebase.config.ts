@@ -2,7 +2,8 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/analytics";
-import  "firebase/database";
+import "firebase/database";
+import "firebase/storage";
 import { FirebaseConfig } from "../types/firebase-config";
 
 var firebaseConfig: FirebaseConfig = {

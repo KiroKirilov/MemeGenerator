@@ -45,6 +45,23 @@ export const memeUploadReducer: any = (state: MemeUploadStore = initialState, ac
                 editorRef: action.editorRef
             };
 
+        case MemeUploadActionType.MEME_SUBMITTED:
+            return {
+                ...state
+            };
+
+        case MemeUploadActionType.MEME_UPLOAD_LOADING:
+            return {
+                ...state,
+                isLoading: true
+            };
+
+        case MemeUploadActionType.MEME_UPLOAD_NOT_LOADING:
+            return {
+                ...state,
+                isLoading: false
+            };
+
         default:
             return state;
     }
