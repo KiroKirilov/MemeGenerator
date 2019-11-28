@@ -26,7 +26,7 @@ export const memeTemplateReducer: any = (state: MemeTemplateStore = initialState
                 isLoading: false
             };
 
-        case MemeTemplateActionType.START_LOADING:
+        case MemeTemplateActionType.TEMPLATES_LOADING:
             return {
                 ...state,
                 isLoading: true

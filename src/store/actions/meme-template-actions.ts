@@ -14,7 +14,7 @@ export class MemeTemplateActions {
                 if (store.memeTemplates.templates && store.memeTemplates.templates.length > 0) {
                     dispatch({ type: MemeTemplateActionType.GET_ALL_SUCCESS, templates: store.memeTemplates.templates });
                 } else {
-                    dispatch({ type: MemeTemplateActionType.START_LOADING });
+                    dispatch({ type: MemeTemplateActionType.TEMPLATES_LOADING });
                     const response: Response = await fetch("https://api.imgflip.com/get_memes");
                     const templatesResponse: JsonResponse = await response.json();
                     if (templatesResponse.success) {
