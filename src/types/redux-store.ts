@@ -26,6 +26,7 @@ export type MemeUploadStore = {
     image?: HTMLImageElement;
     isLoading: boolean;
     memeSubmitError?: FirebaseError;
+    successfullySubmited: boolean;
 };
 
 export type ReduxStore = {

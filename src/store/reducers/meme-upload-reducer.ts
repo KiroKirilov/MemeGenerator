@@ -3,7 +3,7 @@ import { MemeUploadActionType } from "../action-types/meme-upload/meme-upload-ac
 import { MemeUploadActionPayload } from "../action-types/meme-upload/meme-upload-payload";
 import { createRef } from "react";
 import { ImageEditorRef } from "../../types/image-editor-reference";
-
+import { LOCATION_CHANGE } from "react-router-redux";
 
 const initialState: MemeUploadStore = {
     uploadedImageSrc: undefined,
@@ -11,12 +11,13 @@ const initialState: MemeUploadStore = {
     editorRef: createRef<ImageEditorRef>(),
     image: undefined,
     isLoading: false,
-    memeSubmitError: undefined
+    memeSubmitError: undefined,
+    successfullySubmited: false
 };
 
 export const memeUploadReducer: any = (state: MemeUploadStore = initialState, action: MemeUploadActionPayload): MemeUploadStore => {
-    switch (action.type) {
-        case MemeUploadActionType.MEME_UPLOADED:
+    switch (action.type.toString()) {
+        case MemeUploadActionType.IMAGE_UPLOADED:
             return {
                 ...state,
                 uploadedImageSrc: action.uploadedImageSrc,
@@ -24,22 +25,22 @@ export const memeUploadReducer: any = (state: MemeUploadStore = initialState, ac
                 image: action.image
             };
 
-        case MemeUploadActionType.START_EDIT:
+        case MemeUploadActionType.START_IMAGE_EDIT:
             return {
                 ...state,
                 isInEdit: true
             };
 
-        case MemeUploadActionType.STOP_EDIT:
+        case MemeUploadActionType.STOP_IMAGE_EDIT:
             return {
                 ...state,
                 isInEdit: false
             };
 
-        case MemeUploadActionType.RESET_STATE:
+        case MemeUploadActionType.RESET_MEME_UPLOAD_STATE:
             return initialState;
 
-        case MemeUploadActionType.EDITOR_REF_LOADED:
+        case MemeUploadActionType.IMAGE_EDITOR_REF_LOADED:
             return {
                 ...state,
                 editorRef: action.editorRef
@@ -61,6 +62,15 @@ export const memeUploadReducer: any = (state: MemeUploadStore = initialState, ac
                 ...state,
                 isLoading: false
             };
+
+        case MemeUploadActionType.SUCCESSFULLY_SUBMITTED:
+            return {
+                ...state,
+                successfullySubmited: true
+            }
+
+        case LOCATION_CHANGE:
+            return initialState;
 
         default:
             return state;

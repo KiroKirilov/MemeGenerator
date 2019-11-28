@@ -18,7 +18,7 @@ export class MemeUploadActions {
             const image: HTMLImageElement = await ImageHelpers.loadImage(uploadedImageSrc);
 
             dispatch({
-                type: MemeUploadActionType.MEME_UPLOADED,
+                type: MemeUploadActionType.IMAGE_UPLOADED,
                 uploadedImageSrc,
                 image
             });
@@ -27,25 +27,25 @@ export class MemeUploadActions {
 
     public static startEditing(): MemeUploadActionPayload {
         return {
-            type: MemeUploadActionType.START_EDIT,
+            type: MemeUploadActionType.START_IMAGE_EDIT,
         };
     }
 
     public static stopEditing(): MemeUploadActionPayload {
         return {
-            type: MemeUploadActionType.STOP_EDIT,
+            type: MemeUploadActionType.STOP_IMAGE_EDIT,
         };
     }
 
     public static resetState(): MemeUploadActionPayload {
         return {
-            type: MemeUploadActionType.RESET_STATE,
+            type: MemeUploadActionType.RESET_MEME_UPLOAD_STATE,
         };
     }
 
     public static editorLoaded(editorRef: React.RefObject<ImageEditorRef>): MemeUploadActionPayload {
         return {
-            type: MemeUploadActionType.EDITOR_REF_LOADED,
+            type: MemeUploadActionType.IMAGE_EDITOR_REF_LOADED,
             editorRef
         };
     }
@@ -74,9 +74,9 @@ export class MemeUploadActions {
                 const guid: string = StringHelpers.generateGuid();
                 const fileExtension: string = ImageHelpers.getImageExtensionFromDataUrl(dataUrl);
                 const memeImageRef: Reference = getFirebase().storage().ref().child(`memes/${userId}/${guid}.${fileExtension}`);
-                await memeImageRef.putString(dataUrl, "data_url").then();
-                const imageUrl: string = await memeImageRef.getDownloadURL();
-
+                const uploadResult: any = await memeImageRef.putString(dataUrl, "data_url").then();
+                const imageUrl: string = await uploadResult.ref.getDownloadURL();
+                debugger;
                 const firestore: any = getFirestore();
 
                 const memeModel: Meme = {
@@ -91,10 +91,9 @@ export class MemeUploadActions {
                     .collection(collectionNames.memes)
                     .add(memeModel);
 
-                debugger;
+                dispatch({ type: MemeUploadActionType.SUCCESSFULLY_SUBMITTED });
             } catch (error) {
-                console.error(error);
-                debugger;
+                dispatch({ type: MemeUploadActionType.MEME_SUBMIT_ERRORED, error });
             }
         };
     }

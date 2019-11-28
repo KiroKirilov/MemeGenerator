@@ -149,7 +149,7 @@ export const MemeMetadataForm: React.FC = memo(() => {
                             optionFilterProp="name"
                             filterOption={(value, option) => {
                                 if (option.props.children && (option.props.children as string[])[2]) {
-                                    return (option.props.children as string[])[2].toLowerCase().indexOf(value.toLowerCase()) >= 0;
+                                    return (option.props.children as string[])[2].toLowerCase().indexOf(value.trim().toLowerCase()) >= 0;
                                 }
                                 return false;
                             }}
