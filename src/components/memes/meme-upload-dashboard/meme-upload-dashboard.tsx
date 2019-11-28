@@ -13,7 +13,7 @@ import { Dispatch } from "redux";
 import { Modal, Button, Typography } from "antd";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { default as classes } from "./meme-upload-dashboard.module.scss";
-import { StringHelpers } from "../../../helpers/string-helpers";
+import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { MemeUploadActions } from "../../../store/actions/meme-upload-actions";
 
 const uppy: Uppy.Uppy = Uppy({

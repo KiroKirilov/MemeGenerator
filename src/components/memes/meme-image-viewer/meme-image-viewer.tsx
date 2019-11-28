@@ -3,7 +3,7 @@ import { memo, createRef, useEffect, useState } from "react";
 import { MemeImageEditor } from "../meme-image-editor/meme-image-editor";
 import { useSelector, useDispatch } from "react-redux";
 import { ReduxStore } from "../../../types/redux-store";
-import { StringHelpers } from "../../../helpers/string-helpers";
+import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { default as classes } from "./meme-image-viewer.module.scss";
 import { BootstrapHelpers } from "../../../common/helpers/bootstrap-helpers";
@@ -25,7 +25,6 @@ export const MemeImageViewer: React.FC = memo(() => {
     async function updateRatio(): Promise<void> {
         if (image) {
             const ratio: number = image.width / image.height;
-            console.log(`Ratio: ${ratio}`);
             setRation(ratio);
         }
     }

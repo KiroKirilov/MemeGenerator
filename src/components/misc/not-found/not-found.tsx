@@ -1,7 +1,7 @@
 import * as React from "react";
 import { memo } from "react";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
-import { StringHelpers } from "../../../helpers/string-helpers";
+import { StringHelpers } from "../../../common/helpers/string-helpers";
 import notFound from "../../../assets/images/notFound.jpg";
 import { Button } from "antd";
 import { default as classes } from "./not-found.module.scss";

@@ -6,7 +6,7 @@ import { ReduxStore } from "../../../types/redux-store";
 import { FormErrorMessage } from "../../misc/form-error-message/form-error-message";
 import useForm from "react-hook-form";
 import { FormHelpers } from "../../../common/helpers/form-helpers";
-import { StringHelpers } from "../../../helpers/string-helpers";
+import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { AuthActions } from "../../../store/actions/auth-actions";
 import { ValidationHelpers } from "../../../common/helpers/validation-helpers";

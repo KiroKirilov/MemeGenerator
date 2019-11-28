@@ -4,7 +4,7 @@ import useForm from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthActions } from "../../../store/actions/auth-actions";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
-import { StringHelpers } from "../../../helpers/string-helpers";
+import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { ReduxStore } from "../../../types/redux-store";
 import { ValidationHelpers } from "../../../common/helpers/validation-helpers";
 import { FormErrorMessage } from "../../misc/form-error-message/form-error-message";

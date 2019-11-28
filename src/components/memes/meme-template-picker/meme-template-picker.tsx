@@ -7,7 +7,7 @@ import Meta from "antd/lib/card/Meta";
 import { MemeTemplate } from "../../../models/memes/meme-template";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { default as classes } from "./meme-template-picker.module.scss";
-import { StringHelpers } from "../../../helpers/string-helpers";
+import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { MemeUploadActions } from "../../../store/actions/meme-upload-actions";
 import Search from "antd/lib/input/Search";
 import DebouncePromise from "awesome-debounce-promise";
