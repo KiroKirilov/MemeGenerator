@@ -12,12 +12,9 @@ export const LeftNav: React.FC<NavProps> = memo((props: NavProps) => {
         <Menu
             selectedKeys={[location.pathname]}
             mode={props.mode}>
-            <Menu.Item key={appRoutes.home}>
-                <NavLink to={appRoutes.home}>Home</NavLink>
-            </Menu.Item>
 
-            <Menu.Item key={appRoutes.editor}>
-                <NavLink to={appRoutes.editor}>Editor</NavLink>
+            <Menu.Item key={appRoutes.submit}>
+                <NavLink to={appRoutes.submit}>Submit meme</NavLink>
             </Menu.Item>
         </Menu>
     );

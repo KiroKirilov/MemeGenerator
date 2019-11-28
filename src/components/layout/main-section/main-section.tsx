@@ -6,7 +6,7 @@ import { appRoutes } from "../../../common/constants/app-routes";
 import { Home } from "../../home/home";
 import { Login } from "../../auth/login/login";
 import { Register } from "../../auth/register/register";
-import { EditMeme } from "../../memes/edit-meme/edit-meme";
+import { SumbitMeme } from "../../memes/submit-meme/submit-meme";
 import { NotFound } from "../../misc/not-found/not-found";
 import { default as classes } from "./main-section.module.scss";
 import { AnonymousOnlyRoute, ProtectedRoute } from "../../misc/custom-routes/auth-routes";
@@ -19,7 +19,7 @@ export const MainSection: React.FC = memo(() => {
                     <Route exact path={appRoutes.home} component={Home} />
                     <AnonymousOnlyRoute path={appRoutes.register} component={Register} />
                     <AnonymousOnlyRoute path={appRoutes.login} component={Login} />
-                    <ProtectedRoute path={appRoutes.editor} component={EditMeme} />
+                    <ProtectedRoute path={appRoutes.submit} component={SumbitMeme} />
                     <Route component={NotFound} />
                 </Switch>
             </div>

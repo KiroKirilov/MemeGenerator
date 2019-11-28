@@ -8,11 +8,20 @@ import { useSelector } from "react-redux";
 import { ReduxStore } from "../../../types/redux-store";
 import { MemeImageViewer } from "../meme-image-viewer/meme-image-viewer";
 import { MemeMetadataForm } from "../meme-metadata-form/meme-metadata-form";
-import { Spin } from "antd";
+import { Spin, message } from "antd";
+import { useLocation, Redirect } from "react-router-dom";
+import { appRoutes } from "../../../common/constants/app-routes";
 
-export const EditMeme: React.FC = memo(() => {
+export const SumbitMeme: React.FC = memo(() => {
     const isUploaded: boolean = useSelector((store: ReduxStore) => !!store.memeUpload.uploadedImageSrc);
     const isLoading: boolean = useSelector((store: ReduxStore) => store.memeUpload.isLoading);
+    const successfullySubmited: boolean = useSelector((store: ReduxStore) => store.memeUpload.successfullySubmited);
+    const location = useLocation();
+
+    if (successfullySubmited) {
+        message.success("Successfully submitted meme!");
+        return <Redirect to={{ pathname: appRoutes.home, state: { from: location } }} />
+    }
 
     return (
         <Spin spinning={isLoading} delay={100}>

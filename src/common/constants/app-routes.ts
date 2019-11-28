@@ -2,6 +2,6 @@ export const appRoutes = {
     home: "/",
     login: "/login",
     register: "/register",
-    editor: "/editor",
+    submit: "/submit",
     profile: "/profile"
 }
