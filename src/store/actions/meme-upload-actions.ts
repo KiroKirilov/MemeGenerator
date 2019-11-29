@@ -76,7 +76,6 @@ export class MemeUploadActions {
                 const memeImageRef: Reference = getFirebase().storage().ref().child(`memes/${userId}/${guid}.${fileExtension}`);
                 const uploadResult: any = await memeImageRef.putString(dataUrl, "data_url").then();
                 const imageUrl: string = await uploadResult.ref.getDownloadURL();
-                debugger;
                 const firestore: any = getFirestore();
 
                 const memeModel: Meme = {
