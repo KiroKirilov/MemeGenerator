@@ -1,3 +1,22 @@
 .memeContainer {
     margin-bottom: 20px;
 }
+
+.memeList {
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        // set style to track
+        background: #555999;
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        // sets style to thumb
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 10px;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+    }
+}
