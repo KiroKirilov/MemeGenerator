@@ -2,6 +2,9 @@ export const appRoutes = {
     home: "/",
     login: "/login",
     register: "/register",
-    submit: "/submit",
-    profile: "/profile"
+    profile: "/profile",
+    memes: {
+        submit: "/memes/submit",
+        details: "/memes/details/:memeId",
+    }
 }
