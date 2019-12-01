@@ -10,6 +10,7 @@ import { Meme as MemeComponent } from '../meme/meme';
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { StringHelpers } from '../../../common/helpers/string-helpers';
 import "./meme-details.scss";
+import classes from '*.module.css';
 
 export const MemeDetails: React.FC = memo(() => {
     const { memeId } = useParams();
@@ -27,11 +28,7 @@ export const MemeDetails: React.FC = memo(() => {
     return (
         <div className={bootstrap.containerFluid}>
             <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.dFlex, bootstrap.justifyContentCenter)}>
-                <div className={StringHelpers.joinClassNames(
-                    bootstrap.colXl4,
-                    bootstrap.colLg4,
-                    bootstrap.colMd6,
-                    bootstrap.colSm12)}>
+                <div className={"detailsWrapper"}>
                     {
                         loading
                             ? <h1>Loading</h1>

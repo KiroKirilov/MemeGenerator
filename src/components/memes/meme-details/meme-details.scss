@@ -1,3 +1,12 @@
+@import "../../../common/styles//bootstrapGrid.module.scss";
+
 .ant-layout-content {
     height: 99.5% !important;
+}
+
+.detailsWrapper {
+    @extend .colXl4;
+    @extend .colLg4;
+    @extend .colMd6;
+    @extend .colSm12;
 }
