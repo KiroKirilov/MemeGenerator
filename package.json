@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@toast-ui/react-image-editor": "^1.0.1",
+    "@types/downloadjs": "^1.4.1",
     "@types/jest": "24.0.22",
     "@types/jquery": "^3.3.31",
     "@types/node": "12.12.6",
@@ -17,6 +18,7 @@
     "antd": "^3.25.0",
     "awesome-debounce-promise": "^2.1.0",
     "concurrently": "^5.0.0",
+    "downloadjs": "^1.4.7",
     "fabric": "^3.4.0",
     "firebase": "^7.2.3",
     "jquery": "^3.4.1",

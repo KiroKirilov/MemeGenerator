@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { ReduxStore } from "../../../types/redux-store";
 import { MemeImageViewer } from "../meme-image-viewer/meme-image-viewer";
 import { MemeMetadataForm } from "../meme-metadata-form/meme-metadata-form";
-import { Spin, message } from "antd";
+import { Spin, notification } from "antd";
 import { useLocation, Redirect } from "react-router-dom";
 import { appRoutes } from "../../../common/constants/app-routes";
 
@@ -19,7 +19,9 @@ export const SumbitMeme: React.FC = memo(() => {
     const location = useLocation();
 
     if (successfullySubmited) {
-        message.success("Successfully submitted meme!");
+        notification.success({
+            message: "Successfully submitted meme!"
+        });
         return <Redirect to={{ pathname: appRoutes.home, state: { from: location } }} />
     }
 

@@ -22,7 +22,7 @@ const App: React.FC = memo(() => {
 
               <MainSection />
 
-              <Footer />
+              {/* <Footer /> */}
             </>
           )
           : null}

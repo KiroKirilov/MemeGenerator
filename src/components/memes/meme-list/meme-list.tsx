@@ -10,6 +10,7 @@ import { default as bootstrap } from "../../../common/styles/bootstrapGrid.modul
 import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { default as classes } from "./meme-list.module.scss";
 
+
 export const MemeList: React.FC = memo(() => {
     const firestore: any = useSelector((store: ReduxStore) => store.firestore);
     const memes: Meme[] = firestore.ordered.memes;
@@ -17,13 +18,13 @@ export const MemeList: React.FC = memo(() => {
 
     useFirestoreConnect([
         {
-            collection: collectionNames.memes
+            collection: collectionNames.memes,
+            orderBy: ["createdOn", "desc"]
         },
     ]);
 
-    console.log(memes);
     return (
-        <div className={bootstrap.col12}>
+        <div className={StringHelpers.joinClassNames(bootstrap.col12, classes.memeList)}>
             {
                 fetching
                     ? <h1>Loading</h1>

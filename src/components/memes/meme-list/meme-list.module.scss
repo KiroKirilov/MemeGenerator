@@ -1,22 +1,35 @@
-.memeContainer {
-    margin-bottom: 20px;
-}
-
 .memeList {
-    &::-webkit-scrollbar {
-        width: 10px;
-    }
+  height: 80vh;
+  overflow-y: auto;
+  padding-left: 0px;
+  padding-right: 0px;
 
-    &::-webkit-scrollbar-track {
-        // set style to track
-        background: #555999;
-        border-radius: 10px;
-    }
+  .memeContainer {
+    margin-bottom: 20px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
 
-    &::-webkit-scrollbar-thumb {
-        // sets style to thumb
-        background: rgba(255, 255, 255, 0.5);
-        border-radius: 10px;
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
-    }
+  &::-webkit-scrollbar {
+    width: 14px;
+    height: 18px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 6px;
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+    background-color: #636363;
+    box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+  }
+  &::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
 }

@@ -13,8 +13,8 @@ export const LeftNav: React.FC<NavProps> = memo((props: NavProps) => {
             selectedKeys={[location.pathname]}
             mode={props.mode}>
 
-            <Menu.Item key={appRoutes.submit}>
-                <NavLink to={appRoutes.submit}>Submit meme</NavLink>
+            <Menu.Item key={appRoutes.memes.submit}>
+                <NavLink to={appRoutes.memes.submit}>Submit meme</NavLink>
             </Menu.Item>
         </Menu>
     );

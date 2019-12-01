@@ -125,6 +125,10 @@ export const MemeMetadataForm: React.FC = memo(() => {
                             name={fields.title}
                             ref={FormHelpers.registerField(register as any, {
                                 required: "Please provide a title.",
+                                minLength: {
+                                    value: 3,
+                                    message: "The title must be at least 3 chracters long"
+                                },
                                 maxLength: {
                                     value: 30,
                                     message: "The title must be shorter than 30 chracters"

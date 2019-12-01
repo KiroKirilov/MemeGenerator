@@ -10,15 +10,31 @@ const magnificPopupOptions: any = {
     image: {
         verticalFit: true,
     },
-    closeOnContentClick: true,
+    closeOnContentClick: false,
     closeBtnInside: false,
-    showCloseBtn: false,
+    showCloseBtn: true,
+    closeOnBgClick: true,
+    callbacks: {
+        imageLoadComplete: function () {
+            const imageJquery = $(".mfp-img");
+            imageJquery.css("cursor", "zoom-in");
+            imageJquery.on("click", (e) => {
+                const clickedImage = e.target;
+                clickedImage.style.maxHeight = "unset";
+                const currWidth = clickedImage.clientWidth;
+                clickedImage.style.width = (currWidth + 100) + "px";
+            })
+        },
+        close: function () {
+            $(".mfp-img").off("click");
+        }
+    }
 };
 
 export const ZoomableImage: React.FC<ZoomableImageProps> = memo((props: ZoomableImageProps) => {
 
     function bindImageZoom(): void {
-        $("img[data-gallary-image]").click(function(): void {
+        $("img[data-gallary-image]").click(function (): void {
             // @ts-ignore
             $(this).magnificPopup(magnificPopupOptions).magnificPopup("open");
         });
