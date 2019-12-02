@@ -50,6 +50,7 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
 
     async function rateMeme(ratingType: RatingType): Promise<void> {
         try {
+            // TODO: Dispatch an action instead of making a call to direbase
             const updatedRatings: Rating[] = getNewRatings(ratingType);
             await firestore.collection(collectionNames.memes).doc(props.meme.id).update({
                 id: props.meme.id,
