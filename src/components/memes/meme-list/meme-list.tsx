@@ -25,7 +25,10 @@ export const MemeList: React.FC = memo(() => {
         const queryMemes: Meme[] = [];
 
         querySnapshot.forEach((item) => {
-            queryMemes.push(item.data() as any);
+            queryMemes.push({
+                id: item.id,
+                ...item.data() as any
+            });
         });
 
         const newLastVisible: QueryDocumentSnapshot = querySnapshot.docs[querySnapshot.docs.length - 1];
@@ -68,7 +71,7 @@ export const MemeList: React.FC = memo(() => {
                         useWindow={false}
                         threshold={400}
                         initialLoad={false}
-                        loadMore={(page) => loadPage()}>
+                        loadMore={() => loadPage()}>
                         {
                             (memes || []).map((meme: Meme) => (
                                 <div key={meme.id} className={classes.memeContainer}>
