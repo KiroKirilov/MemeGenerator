@@ -17,27 +17,25 @@ import { default as classes } from "./meme-footer.module.scss";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 
 export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProps) => {
-    const auth = useSelector((store: ReduxStore) => store.firebase.auth);
-    const isAuthenticated = !auth.isEmpty;
+    const auth: any = useSelector((store: ReduxStore) => store.firebase.auth);
+    const isAuthenticated: boolean = !auth.isEmpty;
     const firestore: ExtendedFirestoreInstance = useFirestore();
 
-    async function downloadMeme() {
+    async function downloadMeme(): Promise<void> {
         try {
-            const imageB64 = await ImageHelpers.ensureDataUrl(props.meme.imageUrl);
+            const imageB64: string = await ImageHelpers.ensureDataUrl(props.meme.imageUrl);
             download(imageB64, `${StringHelpers.generateGuid()}.${ImageHelpers.getImageExtensionFromDataUrl(imageB64)}`);
         } catch (error) {
-            console.error(error);
-            debugger;
             notification.error({
                 message: "Couldn't download the image, please try again.",
             });
         }
     }
 
-    async function copyShareUrl() {
+    async function copyShareUrl(): Promise<void> {
         try {
-            const detailsPath = generatePath(appRoutes.memes.details, { memeId: props.meme.id });
-            const detailsUrl = `${window.location.protocol + "//" + window.location.host}${detailsPath}`;
+            const detailsPath: string = generatePath(appRoutes.memes.details, { memeId: props.meme.id });
+            const detailsUrl: string = `${window.location.protocol + "//" + window.location.host}${detailsPath}`;
             await navigator.clipboard.writeText(detailsUrl);
             notification.info({
                 message: "Copied!",
