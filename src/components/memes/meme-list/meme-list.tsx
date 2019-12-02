@@ -6,8 +6,6 @@ import { Meme } from "../../../models/memes/meme";
 import { collectionNames } from "../../../common/constants/collection-names";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { Meme as MemeComponent } from "../meme/meme";
-import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
-import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { default as classes } from "./meme-list.module.scss";
 
 
@@ -24,12 +22,12 @@ export const MemeList: React.FC = memo(() => {
     ]);
 
     return (
-        <div className={StringHelpers.joinClassNames(bootstrap.col12, classes.memeList)}>
+        <div className={classes.memeList}>
             {
                 fetching
                     ? <h1>Loading</h1>
                     : memes.map((meme: Meme) => (
-                        <div key={meme.id} className={StringHelpers.joinClassNames(bootstrap.col12, classes.memeContainer)}>
+                        <div key={meme.id} className={classes.memeContainer}>
                             <MemeComponent meme={meme} />
                         </div>))
             }

@@ -1,0 +1,26 @@
+.footerContainer {
+    background-color: #f0f2f5;
+
+    .actionIcon {
+        font-size: 25px;
+        cursor: pointer;
+    }
+
+    .score {
+        margin-left: 10px;
+        margin-right: 10px;
+        cursor: default;
+    }
+
+    .copyIcon {
+        margin-right: 10px;
+    }
+
+    .activeUpvote {
+        color: blue;
+    }
+
+    .activeDownvote {
+        color: red;
+    }
+}

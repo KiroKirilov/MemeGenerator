@@ -1,10 +1,14 @@
+@import "../../../common/styles/bootstrapGrid.module.scss";
+
 .memeList {
+  @extend .col12;
   height: 80vh;
   overflow-y: auto;
   padding-left: 0px;
   padding-right: 0px;
 
   .memeContainer {
+    @extend .col12;
     margin-bottom: 20px;
     padding-left: 0px;
     padding-right: 0px;
