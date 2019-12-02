@@ -95,7 +95,7 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
     }
 
     const currentUserRating: Rating = (props.meme.ratings || []).filter(r => r.userId === auth.uid)[0];
-    const currentUserRatingType: RatingType = currentUserRating ? currentUserRating.ratingType : RatingType.Negative;
+    const currentUserRatingType: RatingType = currentUserRating ? currentUserRating.ratingType : RatingType.Neutral;
 
     return (
         <div className={StringHelpers.joinClassNames(bootstrap.row, classes.footerContainer, bootstrap.dFlex, bootstrap.alignItemsCenter)}>
