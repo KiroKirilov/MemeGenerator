@@ -10,12 +10,13 @@ import { MemeHeader } from "../meme-header/meme-header";
 export const Meme: React.FC<MemeProps> = memo((props: MemeProps) => {
     return (
         <div>
-            <Card className={classes.memeCard}>
-                <MemeHeader title={props.meme.title} tags={props.meme.tags} />
+            <Card cover={<MemeImage imageUrl={props.meme.imageUrl} title={props.meme.title} />} className={classes.memeCard}>
 
-                <MemeImage imageUrl={props.meme.imageUrl} title={props.meme.title} />
+                <div className={classes.cardBody}>
+                    <MemeHeader title={props.meme.title} tags={props.meme.tags} />
+                    <MemeFooter meme={props.meme} />
+                </div>
 
-                <MemeFooter meme={props.meme} />
             </Card>
         </div>
     );

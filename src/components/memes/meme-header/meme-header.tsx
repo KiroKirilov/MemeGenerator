@@ -3,7 +3,7 @@ import { memo } from "react";
 import { MemeHeaderProps } from "./meme-header-props";
 import { default as classes } from "./meme-header.module.scss";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
-import { Tag as TagComponent } from "antd";
+import { Tag as TagComponent, Card } from "antd";
 import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { Tag } from "../../../models/memes/tag";
 
@@ -11,7 +11,7 @@ export const MemeHeader: React.FC<MemeHeaderProps> = memo((props: MemeHeaderProp
     return (
         <div className={StringHelpers.joinClassNames(bootstrap.row, classes.headerContainer)}>
             <div className={StringHelpers.joinClassNames(bootstrap.col12)}>
-                <div className={classes.cardTitle}>{props.title}</div>
+                <Card.Meta title={props.title} />
             </div>
 
             <div className={StringHelpers.joinClassNames(bootstrap.col12)}>

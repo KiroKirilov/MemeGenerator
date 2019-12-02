@@ -4,12 +4,12 @@
 }
 
 .headerContainer {
-    background-color: #f0f2f5;
     padding-bottom: 5px;
 }
 
 .tagsContainer {
     overflow-x: auto;
+    margin-top: 10px;
 
     &::-webkit-scrollbar {
         width: 14px;
