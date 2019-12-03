@@ -19,23 +19,13 @@ import { Meme } from "../../../models/memes/meme";
 
 export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProps) => {
     const auth: any = useSelector((store: ReduxStore) => store.firebase.auth);
-    const connectedMeme: Meme | undefined = useSelector((store: ReduxStore) => (store.firestore.ordered.memes || [])[0]);
     const isAuthenticated: boolean = !auth.isEmpty;
     const firestore: ExtendedFirestoreInstance = useFirestore();
 
-    console.log(connectedMeme);
-
-    useFirestoreConnect({
-        collection: collectionNames.memes,
-        doc: props.memeId
-    });
-
     async function downloadMeme(): Promise<void> {
         try {
-            if (connectedMeme) {
-                const imageB64: string = await ImageHelpers.ensureDataUrl(connectedMeme.imageUrl);
-                download(imageB64, `${StringHelpers.generateGuid()}.${ImageHelpers.getImageExtensionFromDataUrl(imageB64)}`);
-            }
+            const imageB64: string = await ImageHelpers.ensureDataUrl(props.meme.imageUrl);
+            download(imageB64, `${StringHelpers.generateGuid()}.${ImageHelpers.getImageExtensionFromDataUrl(imageB64)}`);
         } catch (error) {
             notification.error({
                 message: "Couldn't download the image, please try again.",
@@ -45,7 +35,7 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
 
     async function copyShareUrl(): Promise<void> {
         try {
-            const detailsPath: string = generatePath(appRoutes.memes.details, { memeId: props.memeId });
+            const detailsPath: string = generatePath(appRoutes.memes.details, { memeId: props.meme.id });
             const detailsUrl: string = `${window.location.protocol + "//" + window.location.host}${detailsPath}`;
             await navigator.clipboard.writeText(detailsUrl);
             notification.info({
@@ -64,8 +54,8 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
             // TODO: Dispatch an action instead of making a call to direbase
             const updatedRatings: Rating[] = getNewRatings(ratingType);
 
-            await firestore.collection(collectionNames.memes).doc(props.memeId).update({
-                id: props.memeId,
+            await firestore.collection(collectionNames.memes).doc(props.meme.id).update({
+                id: props.meme.id,
                 ratings: updatedRatings
             });
         } catch (error) {
@@ -76,10 +66,10 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
     }
 
     function getNewRatings(ratingType: RatingType): Rating[] {
-        if (connectedMeme && connectedMeme.ratings) {
+        if (props.meme.ratings) {
             let newRatingType: RatingType;
-            const currentRating: Rating = connectedMeme.ratings.filter((r) => r.userId === auth.uid)[0];
-            const otherRatings: Rating[] = connectedMeme.ratings.filter((r) => r.userId !== auth.uid);
+            const currentRating: Rating = props.meme.ratings.filter((r) => r.userId === auth.uid)[0];
+            const otherRatings: Rating[] = props.meme.ratings.filter((r) => r.userId !== auth.uid);
             if (!currentRating) {
                 newRatingType = ratingType;
             } else if (currentRating.ratingType === ratingType) {
@@ -101,11 +91,11 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
     }
 
     let score: number = 0;
-    if (connectedMeme && connectedMeme.ratings && connectedMeme.ratings.length > 0) {
-        score = connectedMeme.ratings.map(r => r.ratingType).reduce((a, b) => (a as number) + (b as number));
+    if (props.meme.ratings && props.meme.ratings.length > 0) {
+        score = props.meme.ratings.map(r => r.ratingType).reduce((a, b) => (a as number) + (b as number));
     }
 
-    const currentUserRating: Rating = ((connectedMeme && connectedMeme.ratings) || []).filter(r => r.userId === auth.uid)[0];
+    const currentUserRating: Rating = (props.meme.ratings || []).filter(r => r.userId === auth.uid)[0];
     const currentUserRatingType: RatingType = currentUserRating ? currentUserRating.ratingType : RatingType.Neutral;
 
     return (
