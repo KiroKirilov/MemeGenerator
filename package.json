@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@toast-ui/react-image-editor": "^1.0.1",
+    "@types/cors": "^2.8.6",
     "@types/downloadjs": "^1.4.1",
     "@types/jest": "24.0.22",
     "@types/jquery": "^3.3.31",

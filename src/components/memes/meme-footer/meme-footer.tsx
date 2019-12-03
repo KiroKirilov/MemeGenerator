@@ -15,7 +15,7 @@ import { collectionNames } from "../../../common/constants/collection-names";
 import { RatingType } from "../../../models/memes/rating-type";
 import { default as classes } from "./meme-footer.module.scss";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
-import { Meme } from "../../../models/memes/meme";
+import firebase from "../../../config/firebase.config";
 
 export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProps) => {
     const auth: any = useSelector((store: ReduxStore) => store.firebase.auth);
@@ -63,11 +63,16 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
             const updatedRatings: Rating[] = getNewRatings(ratingType);
 
             setMemeRatings(updatedRatings);
+            var f = await fetch("https://us-central1-meme-generator-e6065.cloudfunctions.net/rateMeme");
+            var json = await f.json();
+            console.log(json);
+            debugger;
             await firestore.collection(collectionNames.memes).doc(props.meme.id).update({
                 id: props.meme.id,
                 ratings: updatedRatings
             });
         } catch (error) {
+            debugger;
             setMemeRatings(oldRatings);
             notification.error({
                 message: "Couldn't submit your rating, please try again."
@@ -75,18 +80,24 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
         }
     }
 
+    function getNewRatingType(ratingType: RatingType): RatingType {
+        let newRatingType: RatingType;
+        const currentRating: Rating = memeRatings.filter((r) => r.userId === auth.uid)[0];
+        if (!currentRating) {
+            newRatingType = ratingType;
+        } else if (currentRating.ratingType === ratingType) {
+            newRatingType = RatingType.Neutral;
+        } else {
+            newRatingType = ratingType;
+        }
+
+        return newRatingType;
+    }
+
     function getNewRatings(ratingType: RatingType): Rating[] {
         if (memeRatings) {
-            let newRatingType: RatingType;
-            const currentRating: Rating = memeRatings.filter((r) => r.userId === auth.uid)[0];
+            let newRatingType: RatingType = getNewRatingType(ratingType);
             const otherRatings: Rating[] = memeRatings.filter((r) => r.userId !== auth.uid);
-            if (!currentRating) {
-                newRatingType = ratingType;
-            } else if (currentRating.ratingType === ratingType) {
-                newRatingType = RatingType.Neutral;
-            } else {
-                newRatingType = ratingType;
-            }
 
             return [...otherRatings, {
                 userId: auth.uid,
