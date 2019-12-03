@@ -4,24 +4,26 @@ import { ReduxStore } from "../../../types/redux-store";
 import { useSelector } from "react-redux";
 import { Meme } from "../../../models/memes/meme";
 import { collectionNames } from "../../../common/constants/collection-names";
-import { useFirestoreConnect, useFirestore, useFirebase } from "react-redux-firebase";
+import { useFirestore, ExtendedFirestoreInstance } from "react-redux-firebase";
 import { Meme as MemeComponent } from "../meme/meme";
 import { default as classes } from "./meme-list.module.scss";
 import InfiniteScroll from "react-infinite-scroller";
-import { QueryDocumentSnapshot, QuerySnapshot } from "@firebase/firestore-types";
+import { QueryDocumentSnapshot, QuerySnapshot, Query } from "@firebase/firestore-types";
+import { SortType } from "../../../models/meme-operations/sort-type";
 
 export const MemeList: React.FC = memo(() => {
     const [memes, setMemes] = useState<Meme[]>([]);
     const [lastVisible, setLastVisible] = useState<QueryDocumentSnapshot | null>(null);
+    const sortType: SortType = useSelector((store: ReduxStore) => store.memeOperations.sortType);
     const fetching: boolean = !memes;
-    const listContainer = React.createRef<HTMLDivElement>();
-    const firestore = useFirestore();
+    const listContainer: React.RefObject<HTMLDivElement> = React.createRef<HTMLDivElement>();
+    const firestore: ExtendedFirestoreInstance = useFirestore();
 
     useEffect(() => {
         loadInitial();
     }, []);
 
-    function updateMemes(querySnapshot: QuerySnapshot) {
+    function updateMemes(querySnapshot: QuerySnapshot): void {
         const queryMemes: Meme[] = [];
 
         querySnapshot.forEach((item) => {
@@ -36,26 +38,43 @@ export const MemeList: React.FC = memo(() => {
         setLastVisible(newLastVisible);
     }
 
-    async function loadInitial() {
-        const querySnapshot = await firestore
-            .collection(collectionNames.memes)
-            .orderBy("createdOn", "desc")
+    async function loadInitial(): Promise<void> {
+        const querySnapshot: QuerySnapshot = await getBaseQuery()
             .limit(3)
             .get();
 
         updateMemes(querySnapshot);
     }
 
-    async function loadPage() {
+    async function loadPage(): Promise<void> {
         if (lastVisible) {
-            const querySnapshot = await firestore
-                .collection(collectionNames.memes)
-                .orderBy("createdOn", "desc")
+            const querySnapshot: QuerySnapshot = await getBaseQuery()
                 .startAfter(lastVisible as any)
                 .limit(3)
                 .get();
 
             updateMemes(querySnapshot);
+        }
+    }
+
+    function getBaseQuery(): Query {
+        const query: Query = firestore
+        .collection(collectionNames.memes)
+        .orderBy("createdOn", "desc");
+
+        // TODO: use different queries for hot, all time and default!!!
+        switch (sortType) {
+            case SortType.New:
+                return query;
+
+            case SortType.Hot:
+                return query;
+
+            case SortType.AllTimeBest:
+                return query;
+
+            default:
+                return query;
         }
     }
 

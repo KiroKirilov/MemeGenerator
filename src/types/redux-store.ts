@@ -1,11 +1,7 @@
 import { FirebaseError } from "./firebase-error";
 import { MemeTemplate } from "../models/memes/meme-template";
 import { ImageEditorRef } from "./image-editor-reference";
-
-export type SomeStore = {
-    someProp: string;
-    anotherVal: string;
-};
+import { SortType } from "../models/meme-operations/sort-type";
 
 export type AuthStore = {
     loginError?: FirebaseError;
@@ -29,11 +25,15 @@ export type MemeUploadStore = {
     successfullySubmited: boolean;
 };
 
+export type MemeOperationsStore = {
+    sortType: SortType
+}
+
 export type ReduxStore = {
-    some: SomeStore;
     auth: AuthStore;
     memeTemplates: MemeTemplateStore;
     memeUpload: MemeUploadStore;
+    memeOperations: MemeOperationsStore;
     firestore: any;
     firebase: any;
 };

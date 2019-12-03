@@ -4,6 +4,7 @@ import "firebase/auth";
 import "firebase/analytics";
 import "firebase/database";
 import "firebase/storage";
+import "firebase/functions";
 import { FirebaseConfig } from "../types/firebase-config";
 
 var firebaseConfig: FirebaseConfig = {
@@ -22,5 +23,6 @@ var firebaseConfig: FirebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 firebase.firestore();
+firebase.functions();
 
 export default firebase;

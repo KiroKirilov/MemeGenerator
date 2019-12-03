@@ -13,8 +13,8 @@ export const Meme: React.FC<MemeProps> = memo((props: MemeProps) => {
             <Card cover={<MemeImage imageUrl={props.meme.imageUrl} title={props.meme.title} />} className={classes.memeCard}>
 
                 <div className={classes.cardBody}>
-                    <MemeHeader title={props.meme.title} tags={props.meme.tags} />
-                    <MemeFooter meme={props.meme} />
+                    <MemeHeader title={props.meme.title} tags={props.meme.tags} userPath={props.meme.createdBy.path} />
+                    <MemeFooter memeId={props.meme.id || ""} />
                 </div>
 
             </Card>

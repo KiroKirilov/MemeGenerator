@@ -83,7 +83,8 @@ export class MemeUploadActions {
                     tags: metadata.tags,
                     createdBy: firestore.doc(`users/${userId}`),
                     createdOn: new Date(),
-                    imageUrl: imageUrl
+                    imageUrl: imageUrl,
+                    score: 0
                 };
 
                 await firestore

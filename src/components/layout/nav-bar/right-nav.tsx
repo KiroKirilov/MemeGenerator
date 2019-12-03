@@ -34,8 +34,8 @@ export const RightNav: React.FC<NavProps> = memo((props: NavProps) => {
                 </Menu.Item>}
 
             {isAuthenticated && profile.isLoaded
-                ? <Menu.Item key={appRoutes.profile}>
-                    <NavLink to={appRoutes.profile}>{profile.username || "Profile"}</NavLink>
+                ? <Menu.Item key={appRoutes.profile.my}>
+                    <NavLink to={appRoutes.profile.my}>{profile.username || "Profile"}</NavLink>
                 </Menu.Item>
                 : null}
 

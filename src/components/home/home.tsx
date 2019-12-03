@@ -5,6 +5,7 @@ import { default as bootstrap } from "../../common/styles/bootstrapGrid.module.s
 import { StringHelpers } from "../../common/helpers/string-helpers";
 import StickyBox from "react-sticky-box";
 import { default as classes } from "./home.module.scss";
+import { MemeOperationsSidebar } from "../memes/meme-operations-sidebar/meme-operations-sidebar";
 
 export const Home: React.FC = memo(() => {
     return (
@@ -20,7 +21,7 @@ export const Home: React.FC = memo(() => {
                     bootstrap.justifyContentCenter,
                     bootstrap.alignItemsStart,
                     bootstrap.dFlex)} offsetTop={20} offsetBottom={20}>
-                    <div>Sidebar</div>
+                    <MemeOperationsSidebar />
                 </StickyBox>
 
 

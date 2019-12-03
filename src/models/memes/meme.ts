@@ -6,5 +6,6 @@ export type Meme = MemeMetadata & {
     createdBy: any,
     createdOn: Date,
     imageUrl: string,
-    ratings?: Rating[]
+    ratings?: Rating[],
+    score: number
 };
