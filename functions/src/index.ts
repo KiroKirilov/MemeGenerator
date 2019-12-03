@@ -3,6 +3,5 @@ import * as admin from "firebase-admin";
 admin.initializeApp(functions.config().firebase);
 
 exports.rateMeme = functions.region('europe-west1').https.onRequest((req, res) => {
-    console.log(req);
-    res.send(req);
+    res.send(req.query);
 });
