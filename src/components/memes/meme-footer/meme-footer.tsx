@@ -1,5 +1,5 @@
 import * as React from "react";
-import { memo } from "react";
+import { memo, useState, useEffect } from "react";
 import { Rating } from "../../../models/memes/rating";
 import { ImageHelpers } from "../../../common/helpers/image-helpers";
 import download from "downloadjs";
@@ -21,6 +21,13 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
     const auth: any = useSelector((store: ReduxStore) => store.firebase.auth);
     const isAuthenticated: boolean = !auth.isEmpty;
     const firestore: ExtendedFirestoreInstance = useFirestore();
+    const [memeRatings, setMemeRatings] = useState<Rating[]>([]);
+
+    useEffect(() => {
+        if (props.meme.ratings) {
+            setMemeRatings(props.meme.ratings);
+        }
+    }, []);
 
     async function downloadMeme(): Promise<void> {
         try {
@@ -50,15 +57,18 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
     }
 
     async function rateMeme(ratingType: RatingType): Promise<void> {
+        const oldRatings: Rating[] = [...memeRatings];
         try {
             // TODO: Dispatch an action instead of making a call to direbase
             const updatedRatings: Rating[] = getNewRatings(ratingType);
 
+            setMemeRatings(updatedRatings);
             await firestore.collection(collectionNames.memes).doc(props.meme.id).update({
                 id: props.meme.id,
                 ratings: updatedRatings
             });
         } catch (error) {
+            setMemeRatings(oldRatings);
             notification.error({
                 message: "Couldn't submit your rating, please try again."
             });
@@ -66,10 +76,10 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
     }
 
     function getNewRatings(ratingType: RatingType): Rating[] {
-        if (props.meme.ratings) {
+        if (memeRatings) {
             let newRatingType: RatingType;
-            const currentRating: Rating = props.meme.ratings.filter((r) => r.userId === auth.uid)[0];
-            const otherRatings: Rating[] = props.meme.ratings.filter((r) => r.userId !== auth.uid);
+            const currentRating: Rating = memeRatings.filter((r) => r.userId === auth.uid)[0];
+            const otherRatings: Rating[] = memeRatings.filter((r) => r.userId !== auth.uid);
             if (!currentRating) {
                 newRatingType = ratingType;
             } else if (currentRating.ratingType === ratingType) {
@@ -91,11 +101,11 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
     }
 
     let score: number = 0;
-    if (props.meme.ratings && props.meme.ratings.length > 0) {
-        score = props.meme.ratings.map(r => r.ratingType).reduce((a, b) => (a as number) + (b as number));
+    if (memeRatings && memeRatings.length > 0) {
+        score = memeRatings.map(r => r.ratingType).reduce((a, b) => (a as number) + (b as number));
     }
 
-    const currentUserRating: Rating = (props.meme.ratings || []).filter(r => r.userId === auth.uid)[0];
+    const currentUserRating: Rating = (memeRatings || []).filter(r => r.userId === auth.uid)[0];
     const currentUserRatingType: RatingType = currentUserRating ? currentUserRating.ratingType : RatingType.Neutral;
 
     return (
