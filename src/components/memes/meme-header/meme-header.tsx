@@ -23,7 +23,7 @@ export const MemeHeader: React.FC<MemeHeaderProps> = memo((props: MemeHeaderProp
 
     async function loadCreator(): Promise<void> {
         try {
-            const user: DocumentSnapshot = await firestore.doc("users/ckTMqSD5uieJ8VwmkjARmsPx0Qn1").get();
+            const user: DocumentSnapshot = await firestore.doc(props.userPath).get();
             const userData: DocumentData | undefined = user.data();
             if (userData) {
                 setUser({

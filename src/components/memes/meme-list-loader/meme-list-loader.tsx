@@ -8,8 +8,8 @@ export const MemeListLoader: React.FC = memo(() => {
     return (
         <div>
             {
-                [...Array(NumberHelpers.getRandomInt(3, 7))].map(() => (
-                    <div className={classes.memeLoaderContainer}>
+                [...Array(NumberHelpers.getRandomInt(3, 7))].map((_item, index: number) => (
+                    <div key={index} className={classes.memeLoaderContainer}>
                         <MemeLoader />
                     </div>
                 ))
