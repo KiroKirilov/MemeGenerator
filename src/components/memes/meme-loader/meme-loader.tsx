@@ -23,6 +23,19 @@ export const MemeLoader: React.FC = memo(() => {
                     <Skeleton width="65px" widthRandomness={0.4} height="15px" />
                     <Skeleton width="65px" widthRandomness={0.4} height="15px" />
                 </div>
+
+                <div className={classes.iconsLoader}>
+                    <div>
+                        <Skeleton width="30px" borderRadius="50%" widthRandomness={0} height="30px" />
+                        <Skeleton width="20px" widthRandomness={0} height="30px" />
+                        <Skeleton width="30px" borderRadius="50%" widthRandomness={0} height="30px" />
+                    </div>
+
+                    <div>
+                        <Skeleton width="30px" widthRandomness={0} height="30px" />
+                        <Skeleton width="30px" widthRandomness={0} height="30px" />
+                    </div>
+                </div>
             </div>
         </div>
     );

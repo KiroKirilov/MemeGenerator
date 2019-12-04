@@ -31,11 +31,11 @@ exports.rateMeme = functions.https.onCall(async (data, context) => {
     const newRatings = getNewRatings(meme, context.auth.uid, data.ratingType);
     const score = newRatings.map((r: any) => r.ratingType).reduce((a: number, b: number) => a + b);
 
-    await firestore.collection("memes").doc(data.memeId).update({
+    const writeResult = await firestore.collection("memes").doc(data.memeId).update({
         id: data.memeId,
         ratings: newRatings,
         score
     });
 
-    return meme;
+    return writeResult;
 });

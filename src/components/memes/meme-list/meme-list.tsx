@@ -11,13 +11,13 @@ import InfiniteScroll from "react-infinite-scroller";
 import { QueryDocumentSnapshot, QuerySnapshot, Query } from "@firebase/firestore-types";
 import { SortType } from "../../../models/meme-operations/sort-type";
 import { defaultValues } from "../../../common/constants/default-values";
-import { MemeLoader } from "../meme-loader/meme-loader";
+import { MemeListLoader } from "../meme-list-loader/meme-list-loader";
 
 export const MemeList: React.FC = memo(() => {
-    const [memes, setMemes] = useState<Meme[]>([]);
+    const [memes, setMemes] = useState<Meme[] | null>(null);
     const [lastVisible, setLastVisible] = useState<QueryDocumentSnapshot | null>(null);
     const sortType: SortType = useSelector((store: ReduxStore) => store.memeOperations.sortType);
-    const fetching: boolean = !memes || memes.length === 0;
+    const fetching: boolean = !memes;
     const listContainer: React.RefObject<HTMLDivElement> = React.createRef<HTMLDivElement>();
     const firestore: ExtendedFirestoreInstance = useFirestore();
 
@@ -40,8 +40,9 @@ export const MemeList: React.FC = memo(() => {
         if (clearPrev) {
             newMemes = [...queryMemes];
         } else {
-            newMemes = [...memes];
-            const memeIds: (string | undefined)[] = memes.map(m => m.id);
+            const currentMemes = memes || [];
+            newMemes = [...currentMemes];
+            const memeIds: (string | undefined)[] = currentMemes.map(m => m.id);
 
             for (const queryMeme of queryMemes) {
                 if (memeIds.indexOf(queryMeme.id) < 0) {
@@ -88,7 +89,7 @@ export const MemeList: React.FC = memo(() => {
 
         const queryDate: Date = new Date();
         const currentHours: number = queryDate.getHours();
-        queryDate.setHours(currentHours - 1);
+        queryDate.setHours(currentHours - 24);
 
         const hotQuery: Query = firestore
             .collection(collectionNames.memes)
@@ -112,12 +113,12 @@ export const MemeList: React.FC = memo(() => {
 
     return (
         <div ref={listContainer} className={classes.memeList}>
-            <div className={classes.memeContainer}>
-                <MemeLoader />
-            </div>
+
             {
                 fetching
-                    ? <h1>Loading</h1>
+                    ? <div className={classes.memeContainer}>
+                        <MemeListLoader />
+                    </div>
                     : <InfiniteScroll
                         hasMore={true}
                         getScrollParent={() => listContainer.current}

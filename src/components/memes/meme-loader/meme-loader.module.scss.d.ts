@@ -430,6 +430,7 @@ export const alignSelfXlStretch: string;
 export const imageLoaderRow: string;
 export const footerLoaderRow: string;
 export const tagsLoader: string;
+export const iconsLoader: string;
 export default {} as {
   container: string,
   containerFluid: string,
@@ -863,4 +864,5 @@ export default {} as {
   imageLoaderRow: string,
   footerLoaderRow: string,
   tagsLoader: string,
+  iconsLoader: string,
 }
