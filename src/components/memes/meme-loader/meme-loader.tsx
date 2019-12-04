@@ -16,12 +16,12 @@ export const MemeLoader: React.FC = memo(() => {
                 <Skeleton width="100%" widthRandomness={0.5} height="15px" />
 
                 <div className={classes.tagsLoader}>
-                    <Skeleton width="65px" widthRandomness={0.7} height="15px" />
-                    <Skeleton width="65px" widthRandomness={0.7} height="15px" />
-                    <Skeleton width="65px" widthRandomness={0.7} height="15px" />
-                    <Skeleton width="65px" widthRandomness={0.7} height="15px" />
-                    <Skeleton width="65px" widthRandomness={0.7} height="15px" />
-                    <Skeleton width="65px" widthRandomness={0.7} height="15px" />
+                    <Skeleton width="65px" widthRandomness={0.4} height="15px" />
+                    <Skeleton width="65px" widthRandomness={0.4} height="15px" />
+                    <Skeleton width="65px" widthRandomness={0.4} height="15px" />
+                    <Skeleton width="65px" widthRandomness={0.4} height="15px" />
+                    <Skeleton width="65px" widthRandomness={0.4} height="15px" />
+                    <Skeleton width="65px" widthRandomness={0.4} height="15px" />
                 </div>
             </div>
         </div>
