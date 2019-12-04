@@ -59,18 +59,19 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
     async function rateMeme(ratingType: RatingType): Promise<void> {
         const oldRatings: Rating[] = [...memeRatings];
         try {
-            // TODO: Dispatch an action instead of making a call to direbase
             const updatedRatings: Rating[] = getNewRatings(ratingType);
+            const newRatingType: RatingType = getNewRatingType(ratingType);
 
             setMemeRatings(updatedRatings);
-            var f = await fetch("https://us-central1-meme-generator-e6065.cloudfunctions.net/rateMeme");
-            var json = await f.json();
-            console.log(json);
+
+            const params: any = {
+                memeId: props.meme.id,
+                ratingType: newRatingType
+            };
+            const callable: firebase.functions.HttpsCallable = firebase.functions().httpsCallable("rateMeme");
+            const response: firebase.functions.HttpsCallableResult = await callable(params);
+            console.log(response.data);
             debugger;
-            await firestore.collection(collectionNames.memes).doc(props.meme.id).update({
-                id: props.meme.id,
-                ratings: updatedRatings
-            });
         } catch (error) {
             debugger;
             setMemeRatings(oldRatings);

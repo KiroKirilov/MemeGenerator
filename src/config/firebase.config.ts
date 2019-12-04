@@ -23,6 +23,6 @@ var firebaseConfig: FirebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 firebase.firestore();
-firebase.functions();
+firebase.functions().useFunctionsEmulator("http://localhost:5000");
 
 export default firebase;
