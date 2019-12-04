@@ -12,6 +12,8 @@ import { AuthActions } from "../../../store/actions/auth-actions";
 import { ValidationHelpers } from "../../../common/helpers/validation-helpers";
 import { PageHeader } from "../../misc/page-header/page-header";
 import { BootstrapHelpers } from "../../../common/helpers/bootstrap-helpers";
+import { appRoutes } from "../../../common/constants/app-routes";
+import { NavLink } from "react-router-dom";
 
 export const Register: React.FC = memo(() => {
     const { register, handleSubmit, errors, getValues, setValue, watch } = useForm({
@@ -154,7 +156,14 @@ export const Register: React.FC = memo(() => {
                             Register
                         </Button>
                     </div>
+                </div>
 
+                <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
+                    <div className={StringHelpers.joinClassNames(BootstrapHelpers.formFieldClasses, bootstrap.dFlex, bootstrap.justifyContentCenter)}>
+                        <div style={{ marginTop: "10px" }}>
+                            Already have an account? <NavLink to={appRoutes.login}>Login</NavLink>
+                        </div>
+                    </div>
                 </div>
             </form>
         </Spin>

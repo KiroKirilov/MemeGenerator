@@ -10,20 +10,22 @@ import { default as classes } from "./meme-list.module.scss";
 import InfiniteScroll from "react-infinite-scroller";
 import { QueryDocumentSnapshot, QuerySnapshot, Query } from "@firebase/firestore-types";
 import { SortType } from "../../../models/meme-operations/sort-type";
+import { defaultValues } from "../../../common/constants/default-values";
+import { MemeLoader } from "../meme-loader/meme-loader";
 
 export const MemeList: React.FC = memo(() => {
     const [memes, setMemes] = useState<Meme[]>([]);
     const [lastVisible, setLastVisible] = useState<QueryDocumentSnapshot | null>(null);
     const sortType: SortType = useSelector((store: ReduxStore) => store.memeOperations.sortType);
-    const fetching: boolean = !memes;
+    const fetching: boolean = !memes || memes.length === 0;
     const listContainer: React.RefObject<HTMLDivElement> = React.createRef<HTMLDivElement>();
     const firestore: ExtendedFirestoreInstance = useFirestore();
 
     useEffect(() => {
         loadInitial();
-    }, []);
+    }, [sortType]);
 
-    function updateMemes(querySnapshot: QuerySnapshot): void {
+    function updateMemes(querySnapshot: QuerySnapshot, clearPrev: boolean = false): void {
         const queryMemes: Meme[] = [];
 
         querySnapshot.forEach((item) => {
@@ -34,23 +36,41 @@ export const MemeList: React.FC = memo(() => {
         });
 
         const newLastVisible: QueryDocumentSnapshot = querySnapshot.docs[querySnapshot.docs.length - 1];
-        setMemes([...memes, ...queryMemes]);
+        let newMemes: Meme[] = [];
+        if (clearPrev) {
+            newMemes = [...queryMemes];
+        } else {
+            newMemes = [...memes];
+            const memeIds: (string | undefined)[] = memes.map(m => m.id);
+
+            for (const queryMeme of queryMemes) {
+                if (memeIds.indexOf(queryMeme.id) < 0) {
+                    newMemes.push(queryMeme);
+                }
+            }
+        }
+
+        if (sortType === SortType.Hot) {
+            newMemes = newMemes.sort((a: Meme, b: Meme) => b.score - a.score);
+        }
+
+        setMemes(newMemes);
         setLastVisible(newLastVisible);
     }
 
     async function loadInitial(): Promise<void> {
         const querySnapshot: QuerySnapshot = await getBaseQuery()
-            .limit(3)
+            .limit(defaultValues.memesPerLoad)
             .get();
 
-        updateMemes(querySnapshot);
+        updateMemes(querySnapshot, true);
     }
 
     async function loadPage(): Promise<void> {
         if (lastVisible) {
             const querySnapshot: QuerySnapshot = await getBaseQuery()
                 .startAfter(lastVisible as any)
-                .limit(3)
+                .limit(defaultValues.memesPerLoad)
                 .get();
 
             updateMemes(querySnapshot);
@@ -58,28 +78,43 @@ export const MemeList: React.FC = memo(() => {
     }
 
     function getBaseQuery(): Query {
-        const query: Query = firestore
-        .collection(collectionNames.memes)
-        .orderBy("createdOn", "desc");
+        const newQuery: Query = firestore
+            .collection(collectionNames.memes)
+            .orderBy("createdOn", "desc");
 
-        // TODO: use different queries for hot, all time and default!!!
+        const allTimeBestQuery: Query = firestore
+            .collection(collectionNames.memes)
+            .orderBy("score", "desc");
+
+        const queryDate: Date = new Date();
+        const currentHours: number = queryDate.getHours();
+        queryDate.setHours(currentHours - 1);
+
+        const hotQuery: Query = firestore
+            .collection(collectionNames.memes)
+            .orderBy("createdOn")
+            .where("createdOn", ">", queryDate);
+
         switch (sortType) {
             case SortType.New:
-                return query;
+                return newQuery;
 
             case SortType.Hot:
-                return query;
+                return hotQuery;
 
             case SortType.AllTimeBest:
-                return query;
+                return allTimeBestQuery;
 
             default:
-                return query;
+                return hotQuery;
         }
     }
 
     return (
         <div ref={listContainer} className={classes.memeList}>
+            <div className={classes.memeContainer}>
+                <MemeLoader />
+            </div>
             {
                 fetching
                     ? <h1>Loading</h1>
@@ -88,7 +123,7 @@ export const MemeList: React.FC = memo(() => {
                         getScrollParent={() => listContainer.current}
                         pageStart={0}
                         useWindow={false}
-                        threshold={400}
+                        threshold={800}
                         initialLoad={false}
                         loadMore={() => loadPage()}>
                         {

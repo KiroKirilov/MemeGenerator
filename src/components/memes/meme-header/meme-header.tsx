@@ -8,9 +8,10 @@ import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { Tag } from "../../../models/memes/tag";
 import { useFirestore, ExtendedFirestoreInstance } from "react-redux-firebase";
 import { DocumentSnapshot, DocumentData } from "@firebase/firestore-types";
-import { generatePath } from "react-router-dom";
+import { generatePath, NavLink } from "react-router-dom";
 import { appRoutes } from "../../../common/constants/app-routes";
 import { MemeHeaderState } from "./meme-header-state";
+import moment from "moment";
 
 export const MemeHeader: React.FC<MemeHeaderProps> = memo((props: MemeHeaderProps) => {
     const firestore: ExtendedFirestoreInstance = useFirestore();
@@ -34,6 +35,13 @@ export const MemeHeader: React.FC<MemeHeaderProps> = memo((props: MemeHeaderProp
             // ¯\_(ツ)_/¯
         }
     }
+
+    // get offset to be used in with seconds. * 60 becuase it's in minutes by default and we need it in seconds
+    const offset: number = new Date().getTimezoneOffset();
+    const date: Date = new Date(1970, 0, 1);
+    date.setSeconds(props.createdOn.seconds - offset * 60);
+    const submittedString: string = moment(date).fromNow();
+
     return (
         <div className={StringHelpers.joinClassNames(bootstrap.row, classes.headerContainer)}>
             <div className={StringHelpers.joinClassNames(bootstrap.col12)}>
@@ -43,7 +51,7 @@ export const MemeHeader: React.FC<MemeHeaderProps> = memo((props: MemeHeaderProp
             {
                 user && user.username
                     ? <div className={classes.userProfileLink}>
-                        by <a href={generatePath(appRoutes.profile.user, { userId: user.id })}>{user.username}</a>
+                        submitted {submittedString} by <NavLink to={generatePath(appRoutes.profile.user, { userId: user.id })}>{user.username}</NavLink>
                     </div>
                     : null
             }

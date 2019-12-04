@@ -64,16 +64,20 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
 
             setMemeRatings(updatedRatings);
 
-            const params: any = {
-                memeId: props.meme.id,
-                ratingType: newRatingType
-            };
-            const callable: firebase.functions.HttpsCallable = firebase.functions().httpsCallable("rateMeme");
-            const response: firebase.functions.HttpsCallableResult = await callable(params);
-            console.log(response.data);
-            debugger;
+            // TODO: call cloud function instead 
+            // const params: any = {
+            //     memeId: props.meme.id,
+            //     ratingType: newRatingType
+            // };
+            // const callable: firebase.functions.HttpsCallable = firebase.functions().httpsCallable("rateMeme");
+            // await callable(params);
+            const newScore: number = updatedRatings.map(r => r.ratingType).reduce((a, b) => (a as number) + (b as number));
+            await firestore.collection(collectionNames.memes).doc(props.meme.id).update({
+                id: props.meme.id,
+                ratings: updatedRatings,
+                score: newScore
+            });
         } catch (error) {
-            debugger;
             setMemeRatings(oldRatings);
             notification.error({
                 message: "Couldn't submit your rating, please try again."

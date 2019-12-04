@@ -1,0 +1,33 @@
+@import "../../../common/styles/bootstrapGrid.module.scss";
+
+.memeLoaderContainer {
+    @extend .containerFluid;
+    border-radius: 2px;
+    border: 1px solid #b0b0b0;
+
+    .imageLoaderRow {
+        padding: 15px;     
+        padding-bottom: 0px;   
+        border-bottom: 2px solid #949494;
+    }
+
+    .footerLoaderRow {
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 5px;
+        padding-bottom: 0px;
+    }
+
+    .tagsLoader {
+        span {
+            margin-right: 5px;
+        }
+    }
+
+    .loaderRow {
+        @extend .row;
+        span {
+            width: 100%;
+        }
+    }
+}

@@ -12,6 +12,8 @@ import { FormHelpers } from "../../../common/helpers/form-helpers";
 import { memo } from "react";
 import { BootstrapHelpers } from "../../../common/helpers/bootstrap-helpers";
 import { PageHeader } from "../../misc/page-header/page-header";
+import { appRoutes } from "../../../common/constants/app-routes";
+import { NavLink } from "react-router-dom";
 
 export const Login: React.FC = memo(() => {
     const { register, handleSubmit, errors, getValues, setValue } = useForm({
@@ -103,6 +105,14 @@ export const Login: React.FC = memo(() => {
                         <Button icon="login" type="primary" htmlType="submit">
                             Log in
                         </Button>
+                    </div>
+                </div>
+
+                <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
+                    <div className={StringHelpers.joinClassNames(BootstrapHelpers.formFieldClasses, bootstrap.dFlex, bootstrap.justifyContentCenter)}>
+                        <div style={{ marginTop: "10px" }}>
+                            Don't have an account? <NavLink to={appRoutes.register}>Register</NavLink>
+                        </div>
                     </div>
                 </div>
 

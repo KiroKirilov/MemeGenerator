@@ -4,25 +4,21 @@ import * as admin from "firebase-admin";
 //const corsHandler = cors({origin: true});
 admin.initializeApp(functions.config().firebase);
 
-// enum RatingType {
-//     Negative = -1,
-//     Neutral = 0,
-//     Positive = 1
-// }
+function getNewRatings(meme: any, uid: string, ratingType: any) {
+    if (meme.ratings) {
+        const otherRatings: any[] = meme.ratings.filter((r: any) => r.userId !== uid);
 
-// function getNewRatingType(ratingType: RatingType, memeRatings: any[], uid: string): RatingType {
-//     let newRatingType: RatingType;
-//     const currentRating = memeRatings.filter((r) => r.userId === uid)[0];
-//     if (!currentRating) {
-//         newRatingType = ratingType;
-//     } else if (currentRating.ratingType === ratingType) {
-//         newRatingType = RatingType.Neutral;
-//     } else {
-//         newRatingType = ratingType;
-//     }
-
-//     return newRatingType;
-// }
+        return [...otherRatings, {
+            userId: uid,
+            ratingType: ratingType,
+        }];
+    } else {
+        return [{
+            userId: uid,
+            ratingType: ratingType,
+        }];
+    }
+}
 
 exports.rateMeme = functions.https.onCall(async (data, context) => {
     if (!context.auth || !context.auth.uid) {
@@ -30,20 +26,16 @@ exports.rateMeme = functions.https.onCall(async (data, context) => {
     }
 
     const firestore = admin.firestore();
-    const meme = await firestore.doc(`memes/${data.memeId}`).get();
+    const memeSnapshot = await firestore.doc(`memes/${data.memeId}`).get();
+    const meme: any = memeSnapshot.data();
+    const newRatings = getNewRatings(meme, context.auth.uid, data.ratingType);
+    const score = newRatings.map((r: any) => r.ratingType).reduce((a: number, b: number) => a + b);
+
+    await firestore.collection("memes").doc(data.memeId).update({
+        id: data.memeId,
+        ratings: newRatings,
+        score
+    });
+
     return meme;
-
-    // const newRatingType = getNewRatingType(data.ratingType,);
-
-    // await firestore.collection("memes").doc(data.memeId).update({
-    //     id: data.memeId,
-    //     ratings: updatedRatings
-    // })
-    // const returnObj = {
-    //     params: data.params,
-    //     query: data.query,
-    //     data,
-    //     nibba: "nibba"
-    // }
-    // return returnObj; 
 });

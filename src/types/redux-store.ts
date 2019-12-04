@@ -22,7 +22,7 @@ export type MemeUploadStore = {
     image?: HTMLImageElement;
     isLoading: boolean;
     memeSubmitError?: FirebaseError;
-    successfullySubmited: boolean;
+    memeSuccessfullySubmited: boolean;
 };
 
 export type MemeOperationsStore = {

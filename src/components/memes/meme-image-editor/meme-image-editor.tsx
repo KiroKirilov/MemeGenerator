@@ -13,8 +13,8 @@ import { ImageEditorRef } from "../../../types/image-editor-reference";
 import DebouncePromise from "awesome-debounce-promise";
 import { useSelector, useDispatch } from "react-redux";
 import { ReduxStore } from "../../../types/redux-store";
-import { ImageHelpers } from "../../../common/helpers/image-helpers";
 import { MemeUploadActions } from "../../../store/actions/meme-upload-actions";
+import { FucntionHelpers } from "../../../common/helpers/funtions-helpers";
 
 const delayBeforeResize: number = 300;
 
@@ -74,9 +74,10 @@ export const MemeImageEditor: React.FC = memo(() => {
 
                 await setCanvasSize();
 
-                await debouncedReziseEditor();
+                await FucntionHelpers.repeatPromise(3, 100, async () => await debouncedReziseEditor());
             } catch (error) {
                 // ¯\_(ツ)_/¯ too bad
+                console.error(error);
             }
         }
     }

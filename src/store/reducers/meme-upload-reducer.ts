@@ -3,7 +3,6 @@ import { MemeUploadActionType } from "../action-types/meme-upload/meme-upload-ac
 import { MemeUploadActionPayload } from "../action-types/meme-upload/meme-upload-payload";
 import { createRef } from "react";
 import { ImageEditorRef } from "../../types/image-editor-reference";
-import { LOCATION_CHANGE } from "react-router-redux";
 
 const initialState: MemeUploadStore = {
     uploadedImageSrc: undefined,
@@ -12,7 +11,7 @@ const initialState: MemeUploadStore = {
     image: undefined,
     isLoading: false,
     memeSubmitError: undefined,
-    successfullySubmited: false
+    memeSuccessfullySubmited: false
 };
 
 export const memeUploadReducer: any = (state: MemeUploadStore = initialState, action: MemeUploadActionPayload): MemeUploadStore => {
@@ -66,11 +65,8 @@ export const memeUploadReducer: any = (state: MemeUploadStore = initialState, ac
         case MemeUploadActionType.SUCCESSFULLY_SUBMITTED:
             return {
                 ...state,
-                successfullySubmited: true
-            }
-
-        case LOCATION_CHANGE:
-            return initialState;
+                memeSuccessfullySubmited: true
+            };
 
         default:
             return state;
