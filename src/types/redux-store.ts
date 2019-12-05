@@ -2,6 +2,7 @@ import { FirebaseError } from "./firebase-error";
 import { MemeTemplate } from "../models/memes/meme-template";
 import { ImageEditorRef } from "./image-editor-reference";
 import { SortType } from "../models/meme-operations/sort-type";
+import { Tag } from "../models/memes/tag";
 
 export type AuthStore = {
     loginError?: FirebaseError;
@@ -26,8 +27,9 @@ export type MemeUploadStore = {
 };
 
 export type MemeOperationsStore = {
-    sortType: SortType
-}
+    sortType: SortType;
+    tagFilters: Tag[];
+};
 
 export type ReduxStore = {
     auth: AuthStore;

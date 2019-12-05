@@ -80,7 +80,7 @@ export class MemeUploadActions {
 
                 const memeModel: Meme = {
                     title: metadata.title,
-                    tags: metadata.tags,
+                    tags: metadata.tags.map(t => t.name) as any[],
                     createdBy: firestore.doc(`users/${userId}`),
                     createdOn: new Date(),
                     imageUrl: imageUrl,

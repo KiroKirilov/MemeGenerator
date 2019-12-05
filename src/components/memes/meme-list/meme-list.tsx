@@ -12,11 +12,13 @@ import { QueryDocumentSnapshot, QuerySnapshot, Query } from "@firebase/firestore
 import { SortType } from "../../../models/meme-operations/sort-type";
 import { defaultValues } from "../../../common/constants/default-values";
 import { MemeListLoader } from "../meme-list-loader/meme-list-loader";
+import { Tag } from "../../../models/memes/tag";
 
 export const MemeList: React.FC = memo(() => {
     const [memes, setMemes] = useState<Meme[] | null>(null);
     const [lastVisible, setLastVisible] = useState<QueryDocumentSnapshot | null>(null);
     const sortType: SortType = useSelector((store: ReduxStore) => store.memeOperations.sortType);
+    const filterTags: Tag[] = useSelector((store: ReduxStore) => store.memeOperations.tagFilters);
     const fetching: boolean = !memes;
     const listContainer: React.RefObject<HTMLDivElement> = React.createRef<HTMLDivElement>();
     const firestore: ExtendedFirestoreInstance = useFirestore();
@@ -40,7 +42,7 @@ export const MemeList: React.FC = memo(() => {
         if (clearPrev) {
             newMemes = [...queryMemes];
         } else {
-            const currentMemes = memes || [];
+            const currentMemes: Meme[] = memes || [];
             newMemes = [...currentMemes];
             const memeIds: (string | undefined)[] = currentMemes.map(m => m.id);
 
@@ -79,20 +81,24 @@ export const MemeList: React.FC = memo(() => {
     }
 
     function getBaseQuery(): Query {
-        const newQuery: Query = firestore
-            .collection(collectionNames.memes)
+        const baseQuery: Query = firestore
+        .collection(collectionNames.memes);
+
+        if (filterTags && filterTags.length > 0) {
+            baseQuery.where("tags", "array-contains-any" as any, filterTags.map(t => t.name));
+        }
+
+        const newQuery: Query = baseQuery
             .orderBy("createdOn", "desc");
 
-        const allTimeBestQuery: Query = firestore
-            .collection(collectionNames.memes)
+        const allTimeBestQuery: Query = baseQuery
             .orderBy("score", "desc");
 
         const queryDate: Date = new Date();
         const currentHours: number = queryDate.getHours();
         queryDate.setHours(currentHours - 24);
 
-        const hotQuery: Query = firestore
-            .collection(collectionNames.memes)
+        const hotQuery: Query = baseQuery
             .orderBy("createdOn")
             .where("createdOn", ">", queryDate);
 

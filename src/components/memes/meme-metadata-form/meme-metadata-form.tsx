@@ -16,6 +16,7 @@ import { Dispatch } from "redux";
 import { MemeMetadata } from "../../../models/memes/meme-metadata";
 import { collectionNames } from "../../../common/constants/collection-names";
 import { htmlElements } from "../../../common/constants/html-elements";
+import { TagPicker } from "../../tags/tag-picker/tag-picker";
 
 const { Option } = Select;
 
@@ -29,9 +30,6 @@ export const MemeMetadataForm: React.FC = memo(() => {
     const isLoading: boolean = useSelector((store: ReduxStore) => store.memeUpload.isLoading);
     const imageInEdit: boolean = useSelector((store: ReduxStore) => store.memeUpload.isInEdit);
     const imageSrc: string | undefined = useSelector((store: ReduxStore) => store.memeUpload.uploadedImageSrc);
-    const firestore: any = useSelector((store: ReduxStore) => store.firestore);
-    const tags: Tag[] = firestore.ordered.tags;
-    const fetching: boolean = firestore.status.requesting.tags;
     const values: MemeMetadata = getValues();
     const dispatch: Dispatch<any> = useDispatch();
 
@@ -41,13 +39,6 @@ export const MemeMetadataForm: React.FC = memo(() => {
             orderBy: ["name", "asc"]
         },
     ]);
-
-    useEffect(() => {
-        const tagsPlaceholder: Element | null = document.querySelector(".ant-select-selection__placeholder");
-        if (tagsPlaceholder) {
-            tagsPlaceholder.innerHTML = `${htmlElements.tagIcon} Tags`;
-        }
-    }, []);
 
     const fields = {
         title: "title",
@@ -81,14 +72,7 @@ export const MemeMetadataForm: React.FC = memo(() => {
         dispatch(MemeUploadActions.memeSubmitted(data));
     }
 
-    const children: JSX.Element[] = [];
-    if (tags) {
-        for (const tag of tags) {
-            children.push(<Option key={tag.id}><Icon type="tag" /> {tag.name}</Option>);
-        }
-    }
-
-    function handleTagsChange(val: SelectValue): void {
+    function handleTagsChange(val: SelectValue, tags: Tag[]): void {
         if (val) {
             const selectedTags: Tag[] = tags.filter((tag: Tag) => (val as string[]).indexOf(tag.id) >= 0);
             setValue(fields.tags, selectedTags);
@@ -141,27 +125,11 @@ export const MemeMetadataForm: React.FC = memo(() => {
 
             <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
                 <div className={bootstrap.col12}>
-                    <Form.Item
-                        validateStatus={errors.tags && "error"}
-                        help={errors.tags && errors.tags.message}>
-                        <Select
-                            notFoundContent={fetching ? <Spin size="small" /> : null}
-                            mode="multiple"
-                            style={{ width: "100%" }}
-                            placeholder="Tags"
-                            onChange={handleTagsChange}
-                            optionFilterProp="name"
-                            filterOption={(value, option) => {
-                                if (option.props.children && (option.props.children as string[])[2]) {
-                                    return (option.props.children as string[])[2].toLowerCase().indexOf(value.trim().toLowerCase()) >= 0;
-                                }
-                                return false;
-                            }}
-                        >
-                            {children}
-                        </Select>
-                    </Form.Item>
-
+                    <TagPicker
+                        onChange={(val, _opts, tags) => handleTagsChange(val as any, tags)}
+                        validateStatus={errors.title && "error"}
+                        help={errors.title && errors.title.message}
+                    />
                 </div>
             </div>
 
