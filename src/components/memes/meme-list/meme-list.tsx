@@ -25,7 +25,7 @@ export const MemeList: React.FC = memo(() => {
 
     useEffect(() => {
         loadInitial();
-    }, [sortType]);
+    }, [sortType, filterTags]);
 
     function updateMemes(querySnapshot: QuerySnapshot, clearPrev: boolean = false): void {
         const queryMemes: Meme[] = [];
@@ -81,11 +81,12 @@ export const MemeList: React.FC = memo(() => {
     }
 
     function getBaseQuery(): Query {
-        const baseQuery: Query = firestore
-        .collection(collectionNames.memes);
+        let baseQuery: Query = firestore
+            .collection(collectionNames.memes);
 
         if (filterTags && filterTags.length > 0) {
-            baseQuery.where("tags", "array-contains-any" as any, filterTags.map(t => t.name));
+            const tagNames = filterTags.map(t => t.name);
+            baseQuery = baseQuery.where("tags", "array-contains-any" as any, tagNames);
         }
 
         const newQuery: Query = baseQuery

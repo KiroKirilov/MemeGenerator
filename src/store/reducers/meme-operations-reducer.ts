@@ -5,18 +5,18 @@ import { MemeOperationActionType } from "../action-types/meme-operations/meme-op
 
 const initialState: MemeOperationsStore = {
     sortType: SortType.Hot,
-    tagFilters: []
+    tagFilters: [],
 };
 
 export const memeOperationsReducer: any = (state: MemeOperationsStore = initialState, action: MemeOperationsActionPayload): MemeOperationsStore => {
     switch (action.type) {
-        case MemeOperationActionType.SORT_UPDATED:
+        case MemeOperationActionType.SORT_TYPE_CHANGED:
             return {
                 ...state,
                 sortType: action.sortType || SortType.Hot
             };
 
-        case MemeOperationActionType.TAG_FILTER_UPDATED:
+        case MemeOperationActionType.TAG_FILTER_CHANGED:
             return {
                 ...state,
                 tagFilters: action.tagFilters || []

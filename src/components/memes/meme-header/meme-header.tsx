@@ -60,7 +60,7 @@ export const MemeHeader: React.FC<MemeHeaderProps> = memo((props: MemeHeaderProp
             <div className={StringHelpers.joinClassNames(bootstrap.col12)}>
                 <div className={StringHelpers.joinClassNames(classes.tagsContainer, bootstrap.dFlex)}>
                     {
-                        props.tags.map((tag: Tag) => (<TagComponent key={tag.id}>{tag.name}</TagComponent>))
+                        props.tags.map((tag: string) => (<TagComponent key={tag}>{tag}</TagComponent>))
                     }
                 </div>
             </div>

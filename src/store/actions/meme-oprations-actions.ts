@@ -5,10 +5,10 @@ import { Tag } from "../../models/memes/tag";
 
 export class MemeOperationsActions {
     public static sortTypeChanged(sortType: SortType): MemeOperationsActionPayload {
-        return { type: MemeOperationActionType.SORT_UPDATED, sortType: sortType };
+        return { type: MemeOperationActionType.SORT_TYPE_CHANGED, sortType: sortType };
     }
 
     public static tagFiltersChanged(tagFilters: Tag[]): MemeOperationsActionPayload {
-        return { type: MemeOperationActionType.TAG_FILTER_UPDATED, tagFilters: tagFilters };
+        return { type: MemeOperationActionType.TAG_FILTER_CHANGED, tagFilters: tagFilters };
     }
 }
