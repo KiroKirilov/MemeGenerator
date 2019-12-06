@@ -13,6 +13,9 @@ import { SortType } from "../../../models/meme-operations/sort-type";
 import { defaultValues } from "../../../common/constants/default-values";
 import { MemeListLoader } from "../meme-list-loader/meme-list-loader";
 import { Tag } from "../../../models/memes/tag";
+import { Empty, Button } from "antd";
+import { useHistory } from "react-router-dom";
+import { appRoutes } from "../../../common/constants/app-routes";
 
 export const MemeList: React.FC = memo(() => {
     const [memes, setMemes] = useState<Meme[] | null>(null);
@@ -22,6 +25,7 @@ export const MemeList: React.FC = memo(() => {
     const fetching: boolean = !memes;
     const listContainer: React.RefObject<HTMLDivElement> = React.createRef<HTMLDivElement>();
     const firestore: ExtendedFirestoreInstance = useFirestore();
+    const history = useHistory();
 
     useEffect(() => {
         loadInitial();
@@ -85,7 +89,7 @@ export const MemeList: React.FC = memo(() => {
             .collection(collectionNames.memes);
 
         if (filterTags && filterTags.length > 0) {
-            const tagNames = filterTags.map(t => t.name);
+            const tagNames: string[] = filterTags.map(t => t.name);
             baseQuery = baseQuery.where("tags", "array-contains-any" as any, tagNames);
         }
 
@@ -126,21 +130,33 @@ export const MemeList: React.FC = memo(() => {
                     ? <div className={classes.memeContainer}>
                         <MemeListLoader />
                     </div>
-                    : <InfiniteScroll
-                        hasMore={true}
-                        getScrollParent={() => listContainer.current}
-                        pageStart={0}
-                        useWindow={false}
-                        threshold={800}
-                        initialLoad={false}
-                        loadMore={() => loadPage()}>
-                        {
-                            (memes || []).map((meme: Meme) => (
-                                <div key={meme.id} className={classes.memeContainer}>
-                                    <MemeComponent meme={meme} />
-                                </div>))
-                        }
-                    </InfiniteScroll>
+                    : memes && memes.length > 0
+                        ? <InfiniteScroll
+                            hasMore={true}
+                            getScrollParent={() => listContainer.current}
+                            pageStart={0}
+                            useWindow={false}
+                            threshold={800}
+                            initialLoad={false}
+                            loadMore={() => loadPage()}>
+                            {
+                                (memes || []).map((meme: Meme) => (
+                                    <div key={meme.id} className={classes.memeContainer}>
+                                        <MemeComponent meme={meme} />
+                                    </div>))
+                            }
+                        </InfiniteScroll>
+                        : <Empty description={
+                            <div>
+                                <div>There are no memes, which match your filters.</div>
+                                <Button
+                                    icon="home"
+                                    onClick={() => history.push(appRoutes.memes.submit)}
+                                    type="primary">
+                                    Submit one!
+                                </Button>
+                            </div>
+                        } />
             }
         </div>
     );
