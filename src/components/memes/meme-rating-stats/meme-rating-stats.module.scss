@@ -1,0 +1,14 @@
+.statsContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    i {
+        font-size: 23px;
+        margin-right: 5px;
+    }
+}
+
+.iconContainer {
+    display: flex;
+    align-items: center;
+}
