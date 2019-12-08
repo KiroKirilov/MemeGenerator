@@ -40,7 +40,8 @@ export class AuthActions {
                 const newUserInfo: UserCredential = await firebase.auth().createUserWithEmailAndPassword(model.email, model.password);
                 const userId: any = newUserInfo.user ? newUserInfo.user.uid : null;
                 await firestore.collection(collectionNames.userProfiles).doc(userId).set({
-                    username: model.username
+                    username: model.username,
+                    avatarUrl: null
                 });
 
                 dispatch({ type: AuthActionType.REGISTER_SUCCESS });

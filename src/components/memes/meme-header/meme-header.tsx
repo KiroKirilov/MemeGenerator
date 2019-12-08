@@ -5,7 +5,6 @@ import { default as classes } from "./meme-header.module.scss";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { Tag as TagComponent, Card } from "antd";
 import { StringHelpers } from "../../../common/helpers/string-helpers";
-import { Tag } from "../../../models/memes/tag";
 import { useFirestore, ExtendedFirestoreInstance } from "react-redux-firebase";
 import { DocumentSnapshot, DocumentData } from "@firebase/firestore-types";
 import { generatePath, NavLink } from "react-router-dom";
@@ -51,7 +50,7 @@ export const MemeHeader: React.FC<MemeHeaderProps> = memo((props: MemeHeaderProp
             {
                 user && user.username
                     ? <div className={classes.userProfileLink}>
-                        submitted {submittedString} by <NavLink to={generatePath(appRoutes.profile.user, { userId: user.id })}>{user.username}</NavLink>
+                        submitted {submittedString} by <NavLink to={generatePath(appRoutes.user, { userId: user.id })}>{user.username}</NavLink>
                     </div>
                     : null
             }

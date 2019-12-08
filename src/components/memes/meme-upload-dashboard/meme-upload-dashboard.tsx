@@ -15,40 +15,11 @@ import { default as bootstrap } from "../../../common/styles/bootstrapGrid.modul
 import { default as classes } from "./meme-upload-dashboard.module.scss";
 import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { MemeUploadActions } from "../../../store/actions/meme-upload-actions";
-
-const uppy: Uppy.Uppy = Uppy({
-    restrictions: {
-        maxNumberOfFiles: 1,
-        allowedFileTypes: ["image/*"]
-    },
-    autoProceed: true
-});
-
-function toBase64(file: File | Blob): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = error => reject(error);
-    });
-}
+import { ImageUploader } from "../../misc/image-uploader/image-uploader";
 
 export const MemeUploadDashboard: React.FC = memo(() => {
     const dispatch: Dispatch<any> = useDispatch();
     const [visible, setVisible] = useState<boolean>(false);
-
-    async function onImageUpload(): Promise<void> {
-        const file: UppyFile<{}, {}> = uppy.getFiles()[0];
-        const b64: string = await toBase64(file.data);
-        const elements: HTMLCollectionOf<HTMLBodyElement> = document.getElementsByTagName("body");
-        if (elements && elements[0]) {
-            elements[0].classList.remove("uppy-Dashboard-isFixed");
-        }
-        dispatch(MemeUploadActions.memeUploaded(b64));
-    }
-
-    uppy.off("uplaod", onImageUpload);
-    uppy.on("upload", onImageUpload)
 
     useEffect(() => {
         dispatch(MemeTemplateActions.getPopularTemplates());
@@ -58,15 +29,9 @@ export const MemeUploadDashboard: React.FC = memo(() => {
         <div className={bootstrap.containerFluid}>
             <div className={bootstrap.row}>
                 <div className={StringHelpers.joinClassNames(bootstrap.col12, bootstrap.dFlex, bootstrap.justifyContentCenter)}>
-                    <Button
-                        className={classes.memeUploadDashboardButton}
-                        type="primary"
-                        id="open-uppy"
-                        icon="upload">
-                        Upload your own
-                        </Button>
-
-                    <Dashboard trigger="#open-uppy" inline={false} uppy={uppy} />
+                    <ImageUploader
+                        buttonClasses={classes.memeUploadDashboardButton}
+                        onFileUploaded={(b64: string) => dispatch(MemeUploadActions.memeUploaded(b64))} />
                 </div>
             </div>
 

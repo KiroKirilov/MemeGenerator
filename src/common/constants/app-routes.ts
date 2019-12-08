@@ -6,8 +6,5 @@ export const appRoutes = {
         submit: "/memes/submit",
         details: "/memes/details/:memeId",
     },
-    profile: {
-        my: "/profile/my",
-        user: "/profile/:userId"
-    }
+    user: "/profile/:userId?"
 }

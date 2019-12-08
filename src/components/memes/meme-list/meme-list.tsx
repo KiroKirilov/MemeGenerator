@@ -16,8 +16,9 @@ import { Tag } from "../../../models/memes/tag";
 import { Empty, Button } from "antd";
 import { useHistory } from "react-router-dom";
 import { appRoutes } from "../../../common/constants/app-routes";
+import { MemeListProps } from "./meme-list-props";
 
-export const MemeList: React.FC = memo(() => {
+export const MemeList: React.FC<MemeListProps> = memo((props: MemeListProps) => {
     const [memes, setMemes] = useState<Meme[] | null>(null);
     const [lastVisible, setLastVisible] = useState<QueryDocumentSnapshot | null>(null);
     const sortType: SortType = useSelector((store: ReduxStore) => store.memeOperations.sortType);
@@ -26,6 +27,8 @@ export const MemeList: React.FC = memo(() => {
     const listContainer: React.RefObject<HTMLDivElement> = React.createRef<HTMLDivElement>();
     const firestore: ExtendedFirestoreInstance = useFirestore();
     const history = useHistory();
+    const auth = useSelector((store: ReduxStore) => store.firebase.auth);
+    const isAuthenticated = !auth.isEmpty;
 
     useEffect(() => {
         loadInitial();
@@ -93,6 +96,11 @@ export const MemeList: React.FC = memo(() => {
             baseQuery = baseQuery.where("tags", "array-contains-any" as any, tagNames);
         }
 
+        if (props.userId) {
+            const userRef = firestore.collection(collectionNames.userProfiles).doc(props.userId);
+            baseQuery = baseQuery.where("createdBy", "==", userRef);
+        }
+
         const newQuery: Query = baseQuery
             .orderBy("createdOn", "desc");
 
@@ -147,15 +155,19 @@ export const MemeList: React.FC = memo(() => {
                             }
                         </InfiniteScroll>
                         : <Empty description={
-                            <div>
-                                <div>There are no memes, which match your filters.</div>
-                                <Button
-                                    icon="home"
-                                    onClick={() => history.push(appRoutes.memes.submit)}
-                                    type="primary">
-                                    Submit one!
+                            <span>
+                                <span style={{ display: "block" }}>There are no memes, which match your filters.</span>
+                                {
+                                    isAuthenticated
+                                        ? <Button
+                                            icon="home"
+                                            onClick={() => history.push(appRoutes.memes.submit)}
+                                            type="primary">
+                                            Submit one!
                                 </Button>
-                            </div>
+                                        : null
+                                }
+                            </span>
                         } />
             }
         </div>

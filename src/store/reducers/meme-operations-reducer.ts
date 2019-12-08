@@ -22,6 +22,9 @@ export const memeOperationsReducer: any = (state: MemeOperationsStore = initialS
                 tagFilters: action.tagFilters || []
             };
 
+        case MemeOperationActionType.RESET_MEME_OPERAITONS:
+            return initialState;
+
         default:
             return state;
     }

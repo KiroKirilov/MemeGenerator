@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Menu } from "antd";
 import { NavProps } from "./nav-props";
-import { NavLink, useLocation, useHistory } from "react-router-dom";
+import { NavLink, useLocation, useHistory, generatePath } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { ReduxStore } from "../../../types/redux-store";
 import { AuthActions } from "../../../store/actions/auth-actions";
@@ -16,6 +16,7 @@ export const RightNav: React.FC<NavProps> = memo((props: NavProps) => {
     const dispatch = useDispatch();
 
     const isAuthenticated = !auth.isEmpty;
+    const userProfilePath = generatePath(appRoutes.user, { userId: auth.uid });
 
     return (
         <Menu
@@ -34,8 +35,8 @@ export const RightNav: React.FC<NavProps> = memo((props: NavProps) => {
                 </Menu.Item>}
 
             {isAuthenticated && profile.isLoaded
-                ? <Menu.Item key={appRoutes.profile.my}>
-                    <NavLink to={appRoutes.profile.my}>{profile.username || "Profile"}</NavLink>
+                ? <Menu.Item key={userProfilePath}>
+                    <NavLink to={userProfilePath}>{profile.username || "Profile"}</NavLink>
                 </Menu.Item>
                 : null}
 

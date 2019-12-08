@@ -11,4 +11,8 @@ export class MemeOperationsActions {
     public static tagFiltersChanged(tagFilters: Tag[]): MemeOperationsActionPayload {
         return { type: MemeOperationActionType.TAG_FILTER_CHANGED, tagFilters: tagFilters };
     }
+
+    public static resetMemeOperations() {
+        return { type: MemeOperationActionType.RESET_MEME_OPERAITONS };
+    }
 }
