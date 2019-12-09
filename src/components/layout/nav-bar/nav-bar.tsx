@@ -37,9 +37,9 @@ export const NavBar: React.FC = memo(() => {
             </div>
 
             <div className="menu__container">
-                <div className="menu_left">
+                {/* <div className="menu_left">
                     <LeftNav mode="horizontal" />
-                </div>
+                </div> */}
                 <div className="menu_rigth">
                     <RightNav mode="horizontal" />
                 </div>
@@ -57,8 +57,8 @@ export const NavBar: React.FC = memo(() => {
                     onClose={onClose}
                     visible={visible}
                 >
-                    <LeftNav mode="inline" />
-                    <RightNav mode="inline" />
+                    {/* <LeftNav isInDrawer={true} mode="inline" /> */}
+                    <RightNav isInDrawer={true} mode="inline" />
                 </Drawer>
             </div>
         </nav>

@@ -10,6 +10,7 @@ import classes from "./user-avatar.module.scss";
 import { UserProfileActions } from "../../../store/actions/user-profile-actions";
 import bootstrap from "../../../common/styles/bootstrapGrid.module.scss";
 import { StringHelpers } from "../../../common/helpers/string-helpers";
+import { defaultValues } from "../../../common/constants/default-values";
 
 export const UserAvatar: React.FC<UserAvatarProps> = memo((props: UserAvatarProps) => {
     const auth = useSelector((store: ReduxStore) => store.firebase.auth);
@@ -53,12 +54,16 @@ export const UserAvatar: React.FC<UserAvatarProps> = memo((props: UserAvatarProp
                             )}
                             onLoad={() => setImageLoaded(true)}
                             imageClasses={classes.avatarImage}
+                            imageStyles={{
+                                width: `${props.size || defaultValues.avatarSize}px`,
+                                height: `${props.size || defaultValues.avatarSize}px`
+                            }}
                             imageSrc={props.avatarUrl}
                             alt="user avatar" />
                         : null
                 }
 
-                <Avatar size={50} style={{
+                <Avatar size={props.size || defaultValues.avatarSize} style={{
                     ...props.style,
                     overflow: "visible",
                 }}

@@ -1,3 +1,4 @@
 export const defaultValues = {
-    memesPerLoad: 6
+    memesPerLoad: 6,
+    avatarSize: 50
 };

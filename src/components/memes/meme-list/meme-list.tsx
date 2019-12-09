@@ -21,9 +21,9 @@ import { MemeListProps } from "./meme-list-props";
 export const MemeList: React.FC<MemeListProps> = memo((props: MemeListProps) => {
     const [memes, setMemes] = useState<Meme[] | null>(null);
     const [lastVisible, setLastVisible] = useState<QueryDocumentSnapshot | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
     const sortType: SortType = useSelector((store: ReduxStore) => store.memeOperations.sortType);
     const filterTags: Tag[] = useSelector((store: ReduxStore) => store.memeOperations.tagFilters);
-    const fetching: boolean = !memes;
     const listContainer: React.RefObject<HTMLDivElement> = React.createRef<HTMLDivElement>();
     const firestore: ExtendedFirestoreInstance = useFirestore();
     const history = useHistory();
@@ -66,9 +66,11 @@ export const MemeList: React.FC<MemeListProps> = memo((props: MemeListProps) => 
 
         setMemes(newMemes);
         setLastVisible(newLastVisible);
+        setIsLoading(false);
     }
 
     async function loadInitial(): Promise<void> {
+        setIsLoading(true);
         const querySnapshot: QuerySnapshot = await getBaseQuery()
             .limit(defaultValues.memesPerLoad)
             .get();
@@ -134,7 +136,7 @@ export const MemeList: React.FC<MemeListProps> = memo((props: MemeListProps) => 
         <div ref={listContainer} className={classes.memeList}>
 
             {
-                fetching
+                isLoading
                     ? <div className={classes.memeContainer}>
                         <MemeListLoader />
                     </div>

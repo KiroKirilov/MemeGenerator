@@ -44,6 +44,10 @@ export const RightNav: React.FC<NavProps> = memo((props: NavProps) => {
                         <UserAvatar
                             hideRemove={true}
                             userId={auth.uid}
+                            size={props.isInDrawer ? 37 : undefined}
+                            style={{
+                                marginRight: props.isInDrawer ? "10px" : undefined
+                            }}
                             avatarUrl={profile.avatarUrl}
                             username={profile.username}
                             disableChange={true} />
@@ -51,6 +55,15 @@ export const RightNav: React.FC<NavProps> = memo((props: NavProps) => {
                     </div>
                 </Menu.Item>
                 : null}
+
+            {
+                isAuthenticated
+                    ? <Menu.Item key={appRoutes.memes.submit}>
+                        <NavLink to={appRoutes.memes.submit}>Submit meme</NavLink>
+                    </Menu.Item>
+                    : null
+            }
+
 
             {isAuthenticated
                 ? <Menu.Item key="auth">

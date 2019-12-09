@@ -5,4 +5,5 @@ export type UserAvatarProps = {
     username: string;
     avatarUrl?: string
     hideRemove?: boolean
+    size?: number;
 };

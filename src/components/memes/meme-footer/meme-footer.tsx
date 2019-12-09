@@ -20,7 +20,6 @@ import firebase from "../../../config/firebase.config";
 export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProps) => {
     const auth: any = useSelector((store: ReduxStore) => store.firebase.auth);
     const isAuthenticated: boolean = !auth.isEmpty;
-    const firestore: ExtendedFirestoreInstance = useFirestore();
     const [memeRatings, setMemeRatings] = useState<Rating[]>([]);
 
     useEffect(() => {
@@ -60,6 +59,10 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
         const detailsPath: string = generatePath(appRoutes.memes.details, { memeId: props.meme.id });
         const detailsUrl: string = `${window.location.protocol + "//" + window.location.host}${detailsPath}`;
         window.open(detailsUrl, "_blank");
+    }
+
+    function deleteMeme() {
+        console.log("will delete");
     }
 
     async function rateMeme(ratingType: RatingType): Promise<void> {
@@ -150,7 +153,13 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
             </div>
 
             <div className={StringHelpers.joinClassNames(bootstrap.col6, bootstrap.dFlex, bootstrap.flexRowReverse)}>
-                <Icon onClick={downloadMeme} className={classes.actionIcon} type="download" />
+                <Tooltip title="Delete this meme">
+                    <Icon style={{ color: "red", marginLeft: "10px" }} onClick={deleteMeme} className={classes.actionIcon} type="delete" />
+                </Tooltip>
+
+                <Tooltip title="Download a copy of this meme">
+                    <Icon onClick={downloadMeme} className={classes.actionIcon} type="download" />
+                </Tooltip>
 
                 <Tooltip title="Copy url for sharing">
                     <Icon

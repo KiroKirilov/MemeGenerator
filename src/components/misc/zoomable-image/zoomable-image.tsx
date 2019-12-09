@@ -43,9 +43,9 @@ export const ZoomableImage: React.FC<ZoomableImageProps> = memo((props: Zoomable
     useEffect(() => {
         bindImageZoom();
     }, []);
-
+    
     return (
-        <div className={props.containerClasses}>
+        <div style={props.containerStyles} className={props.containerClasses}>
             <img onLoad={(e) => {
                 if (props.onLoad) {
                     props.onLoad(e);
@@ -57,8 +57,9 @@ export const ZoomableImage: React.FC<ZoomableImageProps> = memo((props: Zoomable
                 }
             }}
             style={{
-                cursor: "zoom-in"
-            }} data-gallary-image data-mfp-src={props.imageSrc} className={props.imageClasses} src={props.imageSrc} alt={props.alt} />
+                cursor: "zoom-in",
+                ...(props.imageStyles || {})
+            }} data-gallary-image data-mfp-src={props.imageSrc}  className={props.imageClasses} src={props.imageSrc} alt={props.alt} />
         </div>
     );
 });
