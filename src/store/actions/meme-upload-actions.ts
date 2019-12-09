@@ -18,7 +18,7 @@ export class MemeUploadActions {
             const image: HTMLImageElement = await ImageHelpers.loadImage(uploadedImageSrc);
 
             dispatch({
-                type: MemeUploadActionType.IMAGE_UPLOADED,
+                type: MemeUploadActionType.MEME_IMAGE_UPLOADED,
                 uploadedImageSrc,
                 image
             });

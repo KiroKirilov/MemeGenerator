@@ -17,8 +17,8 @@ export class ImageHelpers {
     }
 
     public static getImageExtensionFromUrl(url: string): any {
-        const afterDot = url.split('.').pop() || "";
-        return afterDot.split(/\#|\?/)[0];;
+        const afterDot: string = url.split(".").pop() || "";
+        return afterDot.split(/\#|\?/)[0];
     }
 
     public static async ensureDataUrl(imageSrc: string): Promise<string> {

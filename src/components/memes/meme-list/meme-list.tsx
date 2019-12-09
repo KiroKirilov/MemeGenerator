@@ -32,7 +32,7 @@ export const MemeList: React.FC<MemeListProps> = memo((props: MemeListProps) => 
 
     useEffect(() => {
         loadInitial();
-    }, [sortType, filterTags]);
+    }, [sortType, filterTags, props.userId]);
 
     function updateMemes(querySnapshot: QuerySnapshot, clearPrev: boolean = false): void {
         const queryMemes: Meme[] = [];

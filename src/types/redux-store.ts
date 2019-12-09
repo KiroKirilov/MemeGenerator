@@ -3,6 +3,7 @@ import { MemeTemplate } from "../models/memes/meme-template";
 import { ImageEditorRef } from "./image-editor-reference";
 import { SortType } from "../models/meme-operations/sort-type";
 import { Tag } from "../models/memes/tag";
+import { UserMetadata } from "../models/user/user-metadata";
 
 export type AuthStore = {
     loginError?: FirebaseError;
@@ -31,11 +32,18 @@ export type MemeOperationsStore = {
     tagFilters: Tag[];
 };
 
+export type UserProfileStore = {
+    userMetadata?: UserMetadata;
+    userProfileLoading: boolean;
+    avatarChangeError?: FirebaseError;
+};
+
 export type ReduxStore = {
     auth: AuthStore;
     memeTemplates: MemeTemplateStore;
     memeUpload: MemeUploadStore;
     memeOperations: MemeOperationsStore;
+    userProfile: UserProfileStore;
     firestore: any;
     firebase: any;
 };

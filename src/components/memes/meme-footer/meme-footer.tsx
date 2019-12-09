@@ -51,9 +51,15 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
             });
         } catch (error) {
             notification.error({
-                message: "Couldn't copy url, pelase try again.",
+                message: "Couldn't copy url, please try again.",
             });
         }
+    }
+
+    function openDetailsInNewTab(): void {
+        const detailsPath: string = generatePath(appRoutes.memes.details, { memeId: props.meme.id });
+        const detailsUrl: string = `${window.location.protocol + "//" + window.location.host}${detailsPath}`;
+        window.open(detailsUrl, "_blank");
     }
 
     async function rateMeme(ratingType: RatingType): Promise<void> {
@@ -71,7 +77,6 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
             const callable: firebase.functions.HttpsCallable = firebase.functions().httpsCallable("rateMeme");
             await callable(params);
         } catch (error) {
-            debugger;
             setMemeRatings(oldRatings);
             notification.error({
                 message: "Couldn't submit your rating, please try again."
@@ -152,6 +157,13 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
                         onClick={copyShareUrl}
                         className={StringHelpers.joinClassNames(classes.actionIcon, classes.copyIcon)}
                         type="copy" />
+                </Tooltip>
+
+                <Tooltip title="View details in new tab">
+                    <Icon
+                        onClick={openDetailsInNewTab}
+                        className={StringHelpers.joinClassNames(classes.actionIcon, classes.copyIcon)}
+                        type="monitor" />
                 </Tooltip>
             </div>
         </div>

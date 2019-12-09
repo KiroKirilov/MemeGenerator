@@ -46,7 +46,17 @@ export const ZoomableImage: React.FC<ZoomableImageProps> = memo((props: Zoomable
 
     return (
         <div className={props.containerClasses}>
-            <img style={{
+            <img onLoad={(e) => {
+                if (props.onLoad) {
+                    props.onLoad(e);
+                }
+            }} 
+            onError={(e) => {
+                if (props.onError) {
+                    props.onError(e);
+                }
+            }}
+            style={{
                 cursor: "zoom-in"
             }} data-gallary-image data-mfp-src={props.imageSrc} className={props.imageClasses} src={props.imageSrc} alt={props.alt} />
         </div>

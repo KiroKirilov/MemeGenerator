@@ -15,10 +15,7 @@ import { Tag } from "../../../models/memes/tag";
 import { Dispatch } from "redux";
 import { MemeMetadata } from "../../../models/memes/meme-metadata";
 import { collectionNames } from "../../../common/constants/collection-names";
-import { htmlElements } from "../../../common/constants/html-elements";
 import { TagPicker } from "../../tags/tag-picker/tag-picker";
-
-const { Option } = Select;
 
 export const MemeMetadataForm: React.FC = memo(() => {
     const { register, handleSubmit, errors, getValues, setValue } = useForm<MemeMetadata>({
@@ -75,7 +72,7 @@ export const MemeMetadataForm: React.FC = memo(() => {
     function handleTagsChange(val: SelectValue, tags: Tag[]): void {
         if (val) {
             const selectedTags: Tag[] = tags.filter((tag: Tag) => (val as string[]).indexOf(tag.id) >= 0);
-            setValue(fields.tags, selectedTags);
+            setValue(fields.tags, selectedTags.map(t => t.name));
         }
     }
 

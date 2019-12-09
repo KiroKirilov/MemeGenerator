@@ -7,6 +7,7 @@ import { ReduxStore } from "../../../types/redux-store";
 import { AuthActions } from "../../../store/actions/auth-actions";
 import { appRoutes } from "../../../common/constants/app-routes";
 import { memo } from "react";
+import { UserAvatar } from "../../user/user-avatar/user-avatar";
 
 export const RightNav: React.FC<NavProps> = memo((props: NavProps) => {
     const auth = useSelector((store: ReduxStore) => store.firebase.auth);
@@ -36,7 +37,18 @@ export const RightNav: React.FC<NavProps> = memo((props: NavProps) => {
 
             {isAuthenticated && profile.isLoaded
                 ? <Menu.Item key={userProfilePath}>
-                    <NavLink to={userProfilePath}>{profile.username || "Profile"}</NavLink>
+                    <div style={{
+                        display: "flex",
+                        alignItems: "center"
+                    }}>
+                        <UserAvatar
+                            hideRemove={true}
+                            userId={auth.uid}
+                            avatarUrl={profile.avatarUrl}
+                            username={profile.username}
+                            disableChange={true} />
+                        <NavLink to={userProfilePath}>{profile.username || "Profile"}</NavLink>
+                    </div>
                 </Menu.Item>
                 : null}
 

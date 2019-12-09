@@ -8,7 +8,7 @@ import { ReduxStore } from "../../../types/redux-store";
 import { MemeImageViewer } from "../meme-image-viewer/meme-image-viewer";
 import { MemeMetadataForm } from "../meme-metadata-form/meme-metadata-form";
 import { Spin, notification } from "antd";
-import { useLocation, Redirect, useHistory } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { appRoutes } from "../../../common/constants/app-routes";
 import { MemeUploadActions } from "../../../store/actions/meme-upload-actions";
 

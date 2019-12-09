@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { memo } from 'react';
+import * as React from "react";
+import { memo } from "react";
 import bootstrap from "../../../common/styles/bootstrapGrid.module.scss";
 import classes from "./meme-viewer.module.scss";
 import StickyBox from "react-sticky-box";
-import { StringHelpers } from '../../../common/helpers/string-helpers';
-import { MemeOperations } from '../meme-operations/meme-operations';
-import { MemeList } from '../meme-list/meme-list';
-import { MemeViewerProps } from './meme-viewer-props';
+import { StringHelpers } from "../../../common/helpers/string-helpers";
+import { MemeOperations } from "../meme-operations/meme-operations";
+import { MemeList } from "../meme-list/meme-list";
+import { MemeViewerProps } from "./meme-viewer-props";
 
 export const MemeViewer: React.FC<MemeViewerProps> = memo((props: MemeViewerProps) => {
     return (

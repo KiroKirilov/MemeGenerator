@@ -13,7 +13,7 @@ export const MemeSortOperations: React.FC = memo(() => {
     const sortType: SortType = useSelector((store: ReduxStore) => store.memeOperations.sortType);
 
     return (
-        <Button.Group size="default">
+        <Button.Group className={classes.sortOperationsWrapper} size="default">
             <Button
                 onClick={() => dispatch(MemeOperationsActions.sortTypeChanged(SortType.Hot))}
                 type={sortType === SortType.Hot ? "primary" : "default"}>

@@ -1,6 +1,6 @@
-import { ExtendedFirebaseInstance, ExtendedAuthInstance, ExtendedStorageInstance } from "react-redux-firebase";
+import { ExtendedFirebaseInstance, ExtendedAuthInstance, ExtendedStorageInstance, ExtendedFirestoreInstance } from "react-redux-firebase";
 
-export type GetFirestore = { getFirestore: () => any };
+export type GetFirestore = { getFirestore: () => ExtendedFirestoreInstance };
 
 export type FirebaseInstance = ExtendedFirebaseInstance & ExtendedAuthInstance & ExtendedStorageInstance;
 

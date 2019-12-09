@@ -1,20 +1,21 @@
-import * as React from 'react';
-import { memo } from 'react';
-import Uppy, { UppyFile } from '@uppy/core';
-import { ImageUploaderProps } from './image-uploader-props';
-import { FileHelpers } from '../../../common/helpers/file-helpers';
-import { Button } from 'antd';
-import { Dashboard } from '@uppy/react';
-
-const uppy: Uppy.Uppy = Uppy({
-    restrictions: {
-        maxNumberOfFiles: 1,
-        allowedFileTypes: ["image/*"]
-    },
-    autoProceed: true
-});
+import * as React from "react";
+import { memo, useState } from "react";
+import Uppy, { UppyFile } from "@uppy/core";
+import { ImageUploaderProps } from "./image-uploader-props";
+import { FileHelpers } from "../../../common/helpers/file-helpers";
+import { Button } from "antd";
+import { DashboardModal } from "@uppy/react";
 
 export const ImageUploader: React.FC<ImageUploaderProps> = memo((props: ImageUploaderProps) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const uppy: Uppy.Uppy = Uppy({
+        restrictions: {
+            maxNumberOfFiles: 1,
+            allowedFileTypes: ["image/*"]
+        },
+        autoProceed: true
+    });
     async function onImageUpload(): Promise<void> {
         const file: UppyFile<{}, {}> = uppy.getFiles()[0];
         const b64: string = await FileHelpers.toBase64(file.data);
@@ -23,6 +24,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = memo((props: ImageUpl
             elements[0].classList.remove("uppy-Dashboard-isFixed");
         }
         uppy.reset();
+        setIsOpen(false);
         if (props.onFileUploaded) {
             props.onFileUploaded(b64);
         }
@@ -35,13 +37,13 @@ export const ImageUploader: React.FC<ImageUploaderProps> = memo((props: ImageUpl
         <div>
             <Button
                 className={props.buttonClasses}
-                type="primary"
-                id="open-uppy"
-                icon="upload">
+                type={props.buttonType || "primary"}
+                onClick={() => setIsOpen(true)}
+                icon={props.buttonIcon || "upload"}>
                 {props.buttonText || "Upload your own"}
             </Button>
 
-            <Dashboard trigger="#open-uppy" inline={false} uppy={uppy} />
+            <DashboardModal open={isOpen} inline={false} uppy={uppy} />
         </div>
     );
 });

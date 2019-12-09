@@ -16,7 +16,7 @@ const initialState: MemeUploadStore = {
 
 export const memeUploadReducer: any = (state: MemeUploadStore = initialState, action: MemeUploadActionPayload): MemeUploadStore => {
     switch (action.type.toString()) {
-        case MemeUploadActionType.IMAGE_UPLOADED:
+        case MemeUploadActionType.MEME_IMAGE_UPLOADED:
             return {
                 ...state,
                 uploadedImageSrc: action.uploadedImageSrc,

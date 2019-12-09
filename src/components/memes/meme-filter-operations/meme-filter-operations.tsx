@@ -22,7 +22,7 @@ export const MemeFilterOperations: React.FC = memo(() => {
     }
 
     return (
-        <div>
+        <div style={{ width: "60%", margin: "auto" }}>
             <TagPicker
                 onChange={(val, _opts, tags) => handleTagsChange(val as any, tags)}
                 placeholder="Filter by tags"

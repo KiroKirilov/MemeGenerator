@@ -12,7 +12,7 @@ export class MemeOperationsActions {
         return { type: MemeOperationActionType.TAG_FILTER_CHANGED, tagFilters: tagFilters };
     }
 
-    public static resetMemeOperations() {
+    public static resetMemeOperations(): MemeOperationsActionPayload {
         return { type: MemeOperationActionType.RESET_MEME_OPERAITONS };
     }
 }

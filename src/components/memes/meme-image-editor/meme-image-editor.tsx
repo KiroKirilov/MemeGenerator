@@ -77,7 +77,6 @@ export const MemeImageEditor: React.FC = memo(() => {
                 await FucntionHelpers.repeatPromise(3, 100, async () => await debouncedReziseEditor());
             } catch (error) {
                 // ¯\_(ツ)_/¯ too bad
-                console.error(error);
             }
         }
     }
