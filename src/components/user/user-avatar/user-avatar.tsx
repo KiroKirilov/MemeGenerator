@@ -25,6 +25,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = memo((props: UserAvatarProp
         notification.error({
             message: "Couldn't update your avatar, please try again.",
         });
+        dispatch(UserProfileActions.errorHandled());
     }
 
     function handleImageUploaded(b64: string): void {

@@ -77,4 +77,8 @@ export class UserProfileActions {
     public static resetState(): UserProfileActionPayload {
         return { type: UserProfileActionType.RESET_USER_PROFILE_STATE };
     }
+
+    public static errorHandled(): UserProfileActionPayload {
+        return { type: UserProfileActionType.AVATAR_CHANGE_ERROR_HANDLED };
+    }
 }

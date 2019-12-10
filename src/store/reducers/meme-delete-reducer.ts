@@ -22,6 +22,12 @@ export const memeDeleteReducer: any = (state: MemeDeleteStore = initialState, ac
                 memeDeleteError: true
             };
 
+        case MemeDeleteActionType.MEME_DELETE_ERROR_HANDLED:
+            return {
+                ...state,
+                memeDeleteError: false
+            };
+
         default:
             return state;
     }

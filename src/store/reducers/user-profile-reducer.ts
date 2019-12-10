@@ -50,6 +50,12 @@ export const userProfileReducer: any = (state: UserProfileStore = initialState, 
                 avatarChangeError: action.avatarChangeError
             };
 
+        case UserProfileActionType.AVATAR_CHANGE_ERROR_HANDLED:
+            return {
+                ...state,
+                avatarChangeError: undefined
+            };
+
         case UserProfileActionType.RESET_USER_PROFILE_STATE:
             return initialState;
 

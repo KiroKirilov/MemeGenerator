@@ -18,7 +18,9 @@ import firebase from "../../../config/firebase.config";
 import { MemeDeleteActions } from "../../../store/actions/meme-delete-actions";
 
 export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProps) => {
+    console.log(props.meme);
     const auth: any = useSelector((store: ReduxStore) => store.firebase.auth);
+    const deletionError: boolean = useSelector((store: ReduxStore) => store.memeDelete.memeDeleteError);
     const isAuthenticated: boolean = !auth.isEmpty;
     const [memeRatings, setMemeRatings] = useState<Rating[]>([]);
     const dispatch = useDispatch();
@@ -28,6 +30,13 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
             setMemeRatings(props.meme.ratings);
         }
     }, []);
+
+    if (deletionError) {
+        notification.error({
+            message: "Couldn't delete the meme, please try again.",
+        });
+        dispatch(MemeDeleteActions.errorHandled());
+    }
 
     async function downloadMeme(): Promise<void> {
         try {
@@ -153,27 +162,31 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
             </div>
 
             <div className={StringHelpers.joinClassNames(bootstrap.col6, bootstrap.dFlex, bootstrap.flexRowReverse)}>
-                <Popconfirm
-                    title=""
-                    icon={null}
-                    okText="Yeet it"
-                    cancelText="Keep it"
-                    okButtonProps={{
-                        type: "danger",
-                        icon: "delete",
-                        className:classes.deletePopoverButton
-                    }}
-                    cancelButtonProps={{
-                        type: "default",
-                        icon: "stop",
-                        className:classes.deletePopoverButton
-                    }}
+                {
+                    auth.uid === props.meme.createdBy.id
+                        ? <Popconfirm
+                            title=""
+                            icon={null}
+                            okText="Yeet it"
+                            cancelText="Keep it"
+                            okButtonProps={{
+                                type: "danger",
+                                icon: "delete",
+                                className: classes.deletePopoverButton
+                            }}
+                            cancelButtonProps={{
+                                type: "default",
+                                icon: "stop",
+                                className: classes.deletePopoverButton
+                            }}
 
-                    onConfirm={deleteMeme}
+                            onConfirm={deleteMeme}
 
-                >
-                    <Icon style={{ color: "red", marginLeft: "10px" }} className={classes.actionIcon} type="delete" />
-                </Popconfirm>
+                        >
+                            <Icon style={{ color: "red", marginLeft: "10px" }} className={classes.actionIcon} type="delete" />
+                        </Popconfirm>
+                        : null
+                }
 
                 <Tooltip title="Download a copy of this meme">
                     <Icon onClick={downloadMeme} className={classes.actionIcon} type="download" />
