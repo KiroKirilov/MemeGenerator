@@ -10,7 +10,6 @@ export class MemeDeleteActions {
         return async (dispatch: any, getState: GetState, { getFirebase, getFirestore }) => {
             try {
                 const firestore: ExtendedFirestoreInstance = getFirestore();
-                throw "oopsie";
                 await firestore.collection(collectionNames.memes).doc(memeId).delete();
                 dispatch({ type: MemeDeleteActionType.MEME_DELETED, memeId: memeId });
             } catch (error) {
