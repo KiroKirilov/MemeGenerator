@@ -23,3 +23,29 @@
         color: #FF8b60;
     }
 }
+
+.deletePopoverButton {
+    width: 105px !important;
+}
+
+div[class*='ant-popover-message'] {
+    display: none
+}
+
+div[class*='ant-popover-buttons'] {
+    margin-top: 4px;
+}
+
+@media (max-width: 990px) {
+    div[class*='ant-popover-buttons'] {
+        margin-top: 4px;
+        margin-right: 4px;
+        width: 113px;
+    }
+
+    .deletePopoverButton {
+        width: 105px !important;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+}

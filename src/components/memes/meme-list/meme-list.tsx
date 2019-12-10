@@ -24,6 +24,7 @@ export const MemeList: React.FC<MemeListProps> = memo((props: MemeListProps) => 
     const [isLoading, setIsLoading] = useState(false);
     const sortType: SortType = useSelector((store: ReduxStore) => store.memeOperations.sortType);
     const filterTags: Tag[] = useSelector((store: ReduxStore) => store.memeOperations.tagFilters);
+    const deletedMemeId: string | undefined = useSelector((store: ReduxStore) => store.memeDelete.deletedMemeId);
     const listContainer: React.RefObject<HTMLDivElement> = React.createRef<HTMLDivElement>();
     const firestore: ExtendedFirestoreInstance = useFirestore();
     const history = useHistory();
@@ -32,7 +33,7 @@ export const MemeList: React.FC<MemeListProps> = memo((props: MemeListProps) => 
 
     useEffect(() => {
         loadInitial();
-    }, [sortType, filterTags, props.userId]);
+    }, [sortType, filterTags, props.userId, deletedMemeId]);
 
     function updateMemes(querySnapshot: QuerySnapshot, clearPrev: boolean = false): void {
         const queryMemes: Meme[] = [];

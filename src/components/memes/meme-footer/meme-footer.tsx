@@ -5,10 +5,9 @@ import { ImageHelpers } from "../../../common/helpers/image-helpers";
 import download from "downloadjs";
 import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { MemeFooterProps } from "./meme-footer-props";
-import { ExtendedFirestoreInstance, useFirestore, useFirebase, useFirestoreConnect } from "react-redux-firebase";
 import { ReduxStore } from "../../../types/redux-store";
-import { useSelector } from "react-redux";
-import { notification, Icon, Tooltip } from "antd";
+import { useSelector, useDispatch } from "react-redux";
+import { notification, Icon, Tooltip, Popconfirm } from "antd";
 import { appRoutes } from "../../../common/constants/app-routes";
 import { generatePath } from "react-router-dom";
 import { collectionNames } from "../../../common/constants/collection-names";
@@ -16,11 +15,13 @@ import { RatingType } from "../../../models/memes/rating-type";
 import { default as classes } from "./meme-footer.module.scss";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import firebase from "../../../config/firebase.config";
+import { MemeDeleteActions } from "../../../store/actions/meme-delete-actions";
 
 export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProps) => {
     const auth: any = useSelector((store: ReduxStore) => store.firebase.auth);
     const isAuthenticated: boolean = !auth.isEmpty;
     const [memeRatings, setMemeRatings] = useState<Rating[]>([]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (props.meme.ratings) {
@@ -61,18 +62,17 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
         window.open(detailsUrl, "_blank");
     }
 
-    function deleteMeme() {
-        console.log("will delete");
+    function deleteMeme(): void {
+        dispatch(MemeDeleteActions.memeDeleted(props.meme.id || ""));
     }
 
     async function rateMeme(ratingType: RatingType): Promise<void> {
         const oldRatings: Rating[] = [...memeRatings];
         try {
             const updatedRatings: Rating[] = getNewRatings(ratingType);
-            const newRatingType: RatingType = getNewRatingType(ratingType);
-
             setMemeRatings(updatedRatings);
 
+            const newRatingType: RatingType = getNewRatingType(ratingType);
             const params: any = {
                 memeId: props.meme.id,
                 ratingType: newRatingType
@@ -153,9 +153,27 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
             </div>
 
             <div className={StringHelpers.joinClassNames(bootstrap.col6, bootstrap.dFlex, bootstrap.flexRowReverse)}>
-                <Tooltip title="Delete this meme">
-                    <Icon style={{ color: "red", marginLeft: "10px" }} onClick={deleteMeme} className={classes.actionIcon} type="delete" />
-                </Tooltip>
+                <Popconfirm
+                    title=""
+                    icon={null}
+                    okText="Yeet it"
+                    cancelText="Keep it"
+                    okButtonProps={{
+                        type: "danger",
+                        icon: "delete",
+                        className:classes.deletePopoverButton
+                    }}
+                    cancelButtonProps={{
+                        type: "default",
+                        icon: "stop",
+                        className:classes.deletePopoverButton
+                    }}
+
+                    onConfirm={deleteMeme}
+
+                >
+                    <Icon style={{ color: "red", marginLeft: "10px" }} className={classes.actionIcon} type="delete" />
+                </Popconfirm>
 
                 <Tooltip title="Download a copy of this meme">
                     <Icon onClick={downloadMeme} className={classes.actionIcon} type="download" />

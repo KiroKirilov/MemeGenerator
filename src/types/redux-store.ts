@@ -38,12 +38,18 @@ export type UserProfileStore = {
     avatarChangeError?: FirebaseError;
 };
 
+export type MemeDeleteStore = {
+    deletedMemeId?: string;
+    memeDeleteError: boolean;
+};
+
 export type ReduxStore = {
     auth: AuthStore;
     memeTemplates: MemeTemplateStore;
     memeUpload: MemeUploadStore;
     memeOperations: MemeOperationsStore;
     userProfile: UserProfileStore;
+    memeDelete: MemeDeleteStore;
     firestore: any;
     firebase: any;
 };

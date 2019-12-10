@@ -4,6 +4,7 @@ export const score: string;
 export const copyIcon: string;
 export const activeUpvote: string;
 export const activeDownvote: string;
+export const deletePopoverButton: string;
 export default {} as {
   footerContainer: string,
   actionIcon: string,
@@ -11,4 +12,5 @@ export default {} as {
   copyIcon: string,
   activeUpvote: string,
   activeDownvote: string,
+  deletePopoverButton: string,
 }
