@@ -38,7 +38,11 @@ export const UserAvatar: React.FC<UserAvatarProps> = memo((props: UserAvatarProp
 
     return (
         <div>
-            <div>
+            <div style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+            }}>
                 {
                     props.hideRemove || !props.avatarUrl || props.userId !== currentUserId
                         ? null
@@ -57,7 +61,8 @@ export const UserAvatar: React.FC<UserAvatarProps> = memo((props: UserAvatarProp
                             imageClasses={classes.avatarImage}
                             imageStyles={{
                                 width: `${props.size || defaultValues.avatarSize}px`,
-                                height: `${props.size || defaultValues.avatarSize}px`
+                                height: `${props.size || defaultValues.avatarSize}px`,
+                                ...props.style,
                             }}
                             imageSrc={props.avatarUrl}
                             alt="user avatar" />
@@ -68,10 +73,10 @@ export const UserAvatar: React.FC<UserAvatarProps> = memo((props: UserAvatarProp
                     ...props.style,
                     overflow: "visible",
                 }}
-                className={StringHelpers.joinClassNames(
-                    imageLoaded && props.avatarUrl ? bootstrap.dNone : "",
-                    props.userId !== currentUserId ? classes.otherUserAvatar : ""
-                )}>
+                    className={StringHelpers.joinClassNames(
+                        imageLoaded && props.avatarUrl ? bootstrap.dNone : "",
+                        props.userId !== currentUserId ? classes.otherUserAvatar : ""
+                    )}>
                     {firstLetter}
                 </Avatar>
             </div>
@@ -86,6 +91,6 @@ export const UserAvatar: React.FC<UserAvatarProps> = memo((props: UserAvatarProp
                         buttonText="Change" />
                     : null
             }
-        </div>
+        </div >
     );
 });

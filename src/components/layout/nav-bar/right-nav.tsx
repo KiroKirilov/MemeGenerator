@@ -41,16 +41,19 @@ export const RightNav: React.FC<NavProps> = memo((props: NavProps) => {
                         display: "flex",
                         alignItems: "center"
                     }}>
-                        <UserAvatar
-                            hideRemove={true}
-                            userId={auth.uid}
-                            size={props.isInDrawer ? 37 : undefined}
-                            style={{
-                                marginRight: props.isInDrawer ? "10px" : undefined
-                            }}
-                            avatarUrl={profile.avatarUrl}
-                            username={profile.username}
-                            disableChange={true} />
+                        <NavLink style={{ padding: 0 }} to={userProfilePath}>
+                            <UserAvatar
+                                hideRemove={true}
+                                userId={auth.uid}
+                                size={props.isInDrawer ? 37 : undefined}
+                                style={{
+                                    marginRight: props.isInDrawer ? "10px" : undefined
+                                }}
+                                avatarUrl={profile.avatarUrl}
+                                username={profile.username}
+                                disableChange={true} />
+                        </NavLink>
+
                         <NavLink to={userProfilePath}>{profile.username || "Profile"}</NavLink>
                     </div>
                 </Menu.Item>
