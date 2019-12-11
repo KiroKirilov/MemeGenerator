@@ -72,7 +72,7 @@ export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProp
     }
 
     function deleteMeme(): void {
-        dispatch(MemeDeleteActions.memeDeleted(props.meme.id || ""));
+        dispatch(MemeDeleteActions.memeDeleted(props.meme));
     }
 
     async function rateMeme(ratingType: RatingType): Promise<void> {

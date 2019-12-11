@@ -73,7 +73,8 @@ export class MemeUploadActions {
                 const userId: string = store.firebase.auth.uid;
                 const guid: string = StringHelpers.generateGuid();
                 const fileExtension: string = ImageHelpers.getImageExtensionFromDataUrl(dataUrl);
-                const memeImageRef: Reference = getFirebase().storage().ref().child(`memes/${userId}/${guid}.${fileExtension}`);
+                const storageLocation: string = `memes/${userId}/${guid}.${fileExtension}`;
+                const memeImageRef: Reference = getFirebase().storage().ref().child(storageLocation);
                 const uploadResult: any = await memeImageRef.putString(dataUrl, "data_url").then();
                 const imageUrl: string = await uploadResult.ref.getDownloadURL();
                 const firestore: any = getFirestore();
@@ -84,7 +85,8 @@ export class MemeUploadActions {
                     createdBy: firestore.doc(`users/${userId}`),
                     createdOn: new Date(),
                     imageUrl: imageUrl,
-                    score: 0
+                    score: 0,
+                    storageLocation: storageLocation
                 };
 
                 await firestore

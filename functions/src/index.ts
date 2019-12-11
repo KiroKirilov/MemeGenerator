@@ -39,5 +39,3 @@ exports.rateMeme = functions.https.onCall(async (data, context) => {
 
     return writeResult;
 });
-
-// TODO: Pass avatar size and fix sidebar issue

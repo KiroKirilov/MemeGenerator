@@ -9,4 +9,5 @@ export type Meme = MemeMetadata & {
     imageUrl: string,
     ratings?: Rating[],
     score: number
+    storageLocation: string
 };
