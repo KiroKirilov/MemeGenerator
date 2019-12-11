@@ -1,7 +1,7 @@
 import * as React from "react";
-import { memo } from "react";
+import { memo, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
-import { Layout } from "antd";
+import { Layout, Spin } from "antd";
 import { appRoutes } from "../../../common/constants/app-routes";
 import { Login } from "../../auth/login/login";
 import { Register } from "../../auth/register/register";
@@ -17,15 +17,17 @@ export const MainSection: React.FC = memo(() => {
     return (
         <Layout.Content className={classes.mainContent}>
             <div style={{ background: "#fff", padding: 12, minHeight: "79.5vh" }}>
-                <Switch>
-                    <Route exact path={appRoutes.home} component={Home} />
-                    <AnonymousOnlyRoute path={appRoutes.register} component={Register} />
-                    <AnonymousOnlyRoute path={appRoutes.login} component={Login} />
-                    <ProtectedRoute path={appRoutes.memes.submit} component={SumbitMeme} />
-                    <Route path={appRoutes.memes.details} component={MemeDetails} />
-                    <Route path={appRoutes.user} component={UserProfile} />
-                    <Route component={NotFound} />
-                </Switch>
+                <Suspense fallback={<Spin size="large" />}>
+                    <Switch>
+                        <Route exact path={appRoutes.home} component={Home} />
+                        <AnonymousOnlyRoute path={appRoutes.register} component={Register} />
+                        <AnonymousOnlyRoute path={appRoutes.login} component={Login} />
+                        <ProtectedRoute path={appRoutes.memes.submit} component={SumbitMeme} />
+                        <Route path={appRoutes.memes.details} component={MemeDetails} />
+                        <Route path={appRoutes.user} component={UserProfile} />
+                        <Route component={NotFound} />
+                    </Switch>
+                </Suspense>
             </div>
         </Layout.Content>
     );

@@ -11,6 +11,7 @@ import { Spin, notification } from "antd";
 import { useLocation, useHistory } from "react-router-dom";
 import { appRoutes } from "../../../common/constants/app-routes";
 import { MemeUploadActions } from "../../../store/actions/meme-upload-actions";
+import { PageHeader } from "../../misc/page-header/page-header";
 
 export const SumbitMeme: React.FC = memo(() => {
     const isUploaded: boolean = useSelector((store: ReduxStore) => !!store.memeUpload.uploadedImageSrc);
@@ -37,6 +38,9 @@ export const SumbitMeme: React.FC = memo(() => {
     return (
         <Spin spinning={isLoading} delay={100}>
             <div className={bootstrap.containerFluid}>
+
+            <PageHeader text="Submit a meme" />
+
                 <div className={bootstrap.row}>
                     <div className={StringHelpers.joinClassNames(bootstrap.colxl8, bootstrap.colLg8, bootstrap.colMd8, bootstrap.colSm12)}>
                         {
