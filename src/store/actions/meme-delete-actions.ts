@@ -9,6 +9,7 @@ export class MemeDeleteActions {
     public static memeDeleted(memeId: string): FunctionAction {
         return async (dispatch: any, getState: GetState, { getFirebase, getFirestore }) => {
             try {
+                // TODO: Delete image from storage as well
                 const firestore: ExtendedFirestoreInstance = getFirestore();
                 await firestore.collection(collectionNames.memes).doc(memeId).delete();
                 dispatch({ type: MemeDeleteActionType.MEME_DELETED, memeId: memeId });

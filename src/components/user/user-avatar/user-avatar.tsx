@@ -91,6 +91,6 @@ export const UserAvatar: React.FC<UserAvatarProps> = memo((props: UserAvatarProp
                         buttonText="Change" />
                     : null
             }
-        </div >
+        </div>
     );
 });
