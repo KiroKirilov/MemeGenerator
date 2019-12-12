@@ -16,19 +16,22 @@ import { Dispatch } from "redux";
 import { MemeMetadata } from "../../../models/memes/meme-metadata";
 import { collectionNames } from "../../../common/constants/collection-names";
 import { TagPicker } from "../../tags/tag-picker/tag-picker";
+import { FirebaseError } from "../../../types/firebase-error";
 
 export const MemeMetadataForm: React.FC = memo(() => {
     const { register, handleSubmit, errors, getValues, setValue } = useForm<MemeMetadata>({
         mode: "onBlur"
     });
 
-    const memeUploadErrorMessage: string | undefined = useSelector((store: ReduxStore) =>
-        store.memeUpload.memeSubmitError && store.memeUpload.memeSubmitError.message);
+    const memeUploadError: FirebaseError | undefined = useSelector((store: ReduxStore) =>
+        store.memeUpload.memeSubmitError);
     const isLoading: boolean = useSelector((store: ReduxStore) => store.memeUpload.isLoading);
     const imageInEdit: boolean = useSelector((store: ReduxStore) => store.memeUpload.isInEdit);
     const imageSrc: string | undefined = useSelector((store: ReduxStore) => store.memeUpload.uploadedImageSrc);
     const values: MemeMetadata = getValues();
     const dispatch: Dispatch<any> = useDispatch();
+    const profile = useSelector((store: ReduxStore) => store.firebase.profile);
+    const userId = useSelector((store: ReduxStore) => store.firebase.auth.uid);
 
     useFirestoreConnect([
         {
@@ -61,12 +64,15 @@ export const MemeMetadataForm: React.FC = memo(() => {
         }
     });
 
-    if (memeUploadErrorMessage && isLoading) {
+    if (memeUploadError && isLoading) {
         dispatch(MemeUploadActions.stopLoading());
     }
 
     function onSubmit(data: MemeMetadata): void {
-        dispatch(MemeUploadActions.memeSubmitted(data));
+        dispatch(MemeUploadActions.memeSubmitted(data, {
+            id: userId,
+            username: profile.username
+        }));
     }
 
     function handleTagsChange(val: SelectValue, tags: Tag[]): void {
@@ -81,7 +87,7 @@ export const MemeMetadataForm: React.FC = memo(() => {
 
             <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.justifyContentCenter)}>
                 <div className={bootstrap.col12}>
-                    <FormErrorMessage showErrorMessage={!!memeUploadErrorMessage} errorMessage={memeUploadErrorMessage} />
+                    <FormErrorMessage showErrorMessage={!!memeUploadError} errorMessage={memeUploadError && memeUploadError.message} />
                 </div>
             </div>
 

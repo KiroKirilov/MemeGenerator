@@ -16,7 +16,7 @@ export const Meme: React.FC<MemeProps> = memo((props: MemeProps) => {
                     <MemeHeader
                         title={props.meme.title}
                         tags={props.meme.tags}
-                        userPath={props.meme.createdBy.path}
+                        createdBy={props.meme.createdBy}
                         // @ts-ignore
                         createdOn={props.meme.createdOn} />
 

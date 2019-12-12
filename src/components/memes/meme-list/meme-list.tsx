@@ -100,8 +100,7 @@ export const MemeList: React.FC<MemeListProps> = memo((props: MemeListProps) => 
         }
 
         if (props.userId) {
-            const userRef = firestore.collection(collectionNames.userProfiles).doc(props.userId);
-            baseQuery = baseQuery.where("createdBy", "==", userRef);
+            baseQuery = baseQuery.where("createdBy.id", "==", props.userId);
         }
 
         const newQuery: Query = baseQuery

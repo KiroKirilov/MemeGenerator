@@ -10,6 +10,9 @@ import { QuerySnapshot } from "@firebase/firestore-types";
 import { CacheHelpers } from "../../../common/helpers/cache-helpers";
 import { cacheConstants } from "../../../common/constants/cache-constants";
 import { ArrayHelpers } from "../../../common/helpers/array-helpers";
+import { GroupableMeme } from "../../../models/memes/groupable-meme";
+import { FirebaseDate } from "../../../types/firebase-date";
+import { DateHelpers } from "../../../common/helpers/date-helpers";
 
 export const TopUsers: React.FC = memo(() => {
     const [memes, setMemes] = useState<Meme[] | null>(null);
@@ -28,8 +31,22 @@ export const TopUsers: React.FC = memo(() => {
             () => getAllMemes(),
             forceUpdate);
 
-        const groupedMemes = ArrayHelpers.groupBy(memes, "createdBy");
+        const groupableMemes: GroupableMeme[] = memes.map(m => ({
+            creatorUsername: m.createdBy.username,
+            creatorId: m.createdBy.id,
+            score: m.score,
+            ratings: m.ratings || [],
+            createdOn: DateHelpers.fbDateToDate(m.createdOn as FirebaseDate)
+        }));
+
+        const startDate: Date = new Date();
+        const currentHours: number = startDate.getHours();
+        startDate.setHours(currentHours - 24);
+        const groupedMemes = ArrayHelpers.groupBy(groupableMemes, "creatorUsername");
+        const groupedTodayMemes = ArrayHelpers.groupBy(groupableMemes.filter(m => m.createdOn > startDate), "creatorUsername");
+
         console.log(groupedMemes);
+        console.log(groupedTodayMemes);
 
         setSyncing(false);
         setMemes(memes);
@@ -42,7 +59,7 @@ export const TopUsers: React.FC = memo(() => {
             const data: any = ref.data();
             memes.push({
                 id: ref.id,
-                createdBy: data.createdBy.id,
+                createdBy: data.createdBy,
                 createdOn: data.createdOn,
                 imageUrl: data.imageUrl,
                 ratings: data.ratings,

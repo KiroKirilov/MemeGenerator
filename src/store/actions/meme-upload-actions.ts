@@ -11,6 +11,7 @@ import { StringHelpers } from "../../common/helpers/string-helpers";
 import { ReduxStore } from "../../types/redux-store";
 import { Meme } from "../../models/memes/meme";
 import { collectionNames } from "../../common/constants/collection-names";
+import { MemeSubmitter } from "../../models/user/meme-submitter";
 
 export class MemeUploadActions {
     public static memeUploaded(uploadedImageSrc: string): FunctionAction {
@@ -62,7 +63,7 @@ export class MemeUploadActions {
         };
     }
 
-    public static memeSubmitted(metadata: MemeMetadata): FunctionAction {
+    public static memeSubmitted(metadata: MemeMetadata, submitter: MemeSubmitter): FunctionAction {
         return async (dispatch: any, getState: GetState, { getFirebase, getFirestore }) => {
             try {
                 dispatch(MemeUploadActions.startLoading());
@@ -73,8 +74,9 @@ export class MemeUploadActions {
                 const userId: string = store.firebase.auth.uid;
                 const guid: string = StringHelpers.generateGuid();
                 const fileExtension: string = ImageHelpers.getImageExtensionFromDataUrl(dataUrl);
+                const firebase = getFirebase();
                 const storageLocation: string = `memes/${userId}/${guid}.${fileExtension}`;
-                const memeImageRef: Reference = getFirebase().storage().ref().child(storageLocation);
+                const memeImageRef: Reference = firebase.storage().ref().child(storageLocation);
                 const uploadResult: any = await memeImageRef.putString(dataUrl, "data_url").then();
                 const imageUrl: string = await uploadResult.ref.getDownloadURL();
                 const firestore: any = getFirestore();
@@ -82,7 +84,7 @@ export class MemeUploadActions {
                 const memeModel: Meme = {
                     title: metadata.title,
                     tags: metadata.tags,
-                    createdBy: firestore.doc(`users/${userId}`),
+                    createdBy: submitter,
                     createdOn: new Date(),
                     imageUrl: imageUrl,
                     score: 0,
@@ -95,7 +97,7 @@ export class MemeUploadActions {
 
                 dispatch({ type: MemeUploadActionType.SUCCESSFULLY_SUBMITTED });
             } catch (error) {
-                dispatch({ type: MemeUploadActionType.MEME_SUBMIT_ERRORED, error });
+                dispatch({ type: MemeUploadActionType.MEME_SUBMIT_ERRORED, memeUploadError: error });
             }
         };
     }

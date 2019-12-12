@@ -68,6 +68,13 @@ export const memeUploadReducer: any = (state: MemeUploadStore = initialState, ac
                 memeSuccessfullySubmited: true
             };
 
+        case MemeUploadActionType.MEME_SUBMIT_ERRORED:
+            return {
+                ...state,
+                isLoading: false,
+                memeSubmitError: action.memeUploadError
+            };
+
         default:
             return state;
     }
