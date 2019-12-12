@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { memo } from 'react';
-import { PageHeaderProps } from './page-header-props';
+import * as React from "react";
+import { memo } from "react";
+import { PageHeaderProps } from "./page-header-props";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
-import { BootstrapHelpers } from '../../../common/helpers/bootstrap-helpers';
+import { BootstrapHelpers } from "../../../common/helpers/bootstrap-helpers";
 import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { default as classes } from "./page-header.module.scss";
 

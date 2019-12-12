@@ -18,7 +18,6 @@ import firebase from "../../../config/firebase.config";
 import { MemeDeleteActions } from "../../../store/actions/meme-delete-actions";
 
 export const MemeFooter: React.FC<MemeFooterProps> = memo((props: MemeFooterProps) => {
-    console.log(props.meme);
     const auth: any = useSelector((store: ReduxStore) => store.firebase.auth);
     const deletionError: boolean = useSelector((store: ReduxStore) => store.memeDelete.memeDeleteError);
     const isAuthenticated: boolean = !auth.isEmpty;

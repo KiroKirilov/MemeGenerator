@@ -29,19 +29,14 @@ export const userProfileReducer: any = (state: UserProfileStore = initialState, 
         case UserProfileActionType.USER_METADATA_LOADED:
             return {
                 ...state,
-                userMetadata: action.metadata
+                userMetadata: action.metadata,
+                userProfileLoading: false
             };
 
         case UserProfileActionType.USER_PROFILE_LOADING:
             return {
                 ...state,
                 userProfileLoading: true
-            };
-
-        case UserProfileActionType.USER_PROFILE_NOT_LOADING:
-            return {
-                ...state,
-                userProfileLoading: false
             };
 
         case UserProfileActionType.AVATAR_CHANGE_ERRORED:

@@ -37,8 +37,8 @@ export const Home: React.FC = memo(() => {
 
                 <StickyBox className={StringHelpers.joinClassNames(
                     classes.filtersSidebar,
-                    bootstrap.colXl4,
-                    bootstrap.colLg4,
+                    bootstrap.colXl3,
+                    bootstrap.colLg3,
                     bootstrap.colMd6,
                     bootstrap.colSm12,
                     bootstrap.justifyContentCenter,

@@ -124,8 +124,8 @@ export const MemeMetadataForm: React.FC = memo(() => {
                 <div className={bootstrap.col12}>
                     <TagPicker
                         onChange={(val, _opts, tags) => handleTagsChange(val as any, tags)}
-                        validateStatus={errors.title && "error"}
-                        help={errors.title && errors.title.message}
+                        validateStatus={errors.tags && "error"}
+                        help={errors.tags && errors.tags.message}
                     />
                 </div>
             </div>

@@ -26,7 +26,6 @@ export class UserProfileActions {
                 metadata = undefined;
             }
 
-            dispatch({ type: UserProfileActionType.USER_PROFILE_NOT_LOADING });
             dispatch({ type: UserProfileActionType.USER_METADATA_LOADED, metadata: metadata });
         };
     }
@@ -67,7 +66,6 @@ export class UserProfileActions {
 
                 dispatch({ type: UserProfileActionType.AVATAR_CHANGED, newAvatar: undefined });
             } catch (error) {
-                console.error(error);
                 dispatch({ type: UserProfileActionType.AVATAR_CHANGE_ERRORED, avatarChangeError: error });
             }
 

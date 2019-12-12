@@ -41,3 +41,5 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+// TODO: Createdby in meme to become and object with user's id and username

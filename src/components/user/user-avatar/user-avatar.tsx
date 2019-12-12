@@ -47,7 +47,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = memo((props: UserAvatarProp
                     props.hideRemove || !props.avatarUrl || props.userId !== currentUserId
                         ? null
                         : <Tooltip className={!imageLoaded ? bootstrap.dNone : ""} title="Remove avatar">
-                            <Icon onClick={handleAvatarRemove} className={classes.removeAvatarIcon} type="close-circle" />
+                            <Icon onClick={handleAvatarRemove} className={classes.removeAvatarIcon} theme="filled" type="close-circle" />
                         </Tooltip>
                 }
                 {
