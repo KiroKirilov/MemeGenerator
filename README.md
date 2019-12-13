@@ -1,7 +1,7 @@
 # Supreme memes
 > "Please don't call them may-may's" - Confucius
 
-![alt text](https://github.com/KiroKirilov/MemeGenerator/blob/master/pictures/homepage.png?raw=true)
+![alt text](https://github.com/KiroKirilov/MemeGenerator/blob/master/pictures/new-homepage.png?raw=true)
 
 -   Built with React.js
 -   Global state management with redux
