@@ -6,7 +6,8 @@ import { UserProfileActionType } from "../action-types/user-profile/user-profile
 const initialState: UserProfileStore = {
     userMetadata: undefined,
     userProfileLoading: false,
-    avatarChangeError: undefined
+    avatarChangeError: undefined,
+    avatarChangeLoading: false
 };
 
 export const userProfileReducer: any = (state: UserProfileStore = initialState, action: UserProfileActionPayload): UserProfileStore => {
@@ -19,7 +20,7 @@ export const userProfileReducer: any = (state: UserProfileStore = initialState, 
             };
             return {
                 ...state,
-                userProfileLoading: false,
+                avatarChangeLoading: false,
                 userMetadata: {
                     ...oldMetadata,
                     avatarUrl: action.newAvatar || ""
@@ -42,14 +43,22 @@ export const userProfileReducer: any = (state: UserProfileStore = initialState, 
         case UserProfileActionType.AVATAR_CHANGE_ERRORED:
             return {
                 ...state,
-                avatarChangeError: action.avatarChangeError
+                avatarChangeError: action.avatarChangeError,
+                avatarChangeLoading: false
             };
 
         case UserProfileActionType.AVATAR_CHANGE_ERROR_HANDLED:
             return {
                 ...state,
-                avatarChangeError: undefined
+                avatarChangeError: undefined,
+                avatarChangeLoading: false
             };
+
+        case UserProfileActionType.USER_AVATAR_CHANGE_LOADING:
+            return {
+                ...state,
+                avatarChangeLoading: true
+            }
 
         case UserProfileActionType.RESET_USER_PROFILE_STATE:
             return initialState;

@@ -15,8 +15,8 @@ export const Home: React.FC = memo(() => {
 
                 <div className={StringHelpers.joinClassNames(
                     classes.memeListWrapper,
-                    bootstrap.offsetXl3,
-                    bootstrap.offsetLg3,
+                    bootstrap.offsetXl2,
+                    bootstrap.offsetLg2,
                     bootstrap.offsetMd0,
                     bootstrap.offsetSm0,
                     bootstrap.colXl4,
@@ -37,6 +37,10 @@ export const Home: React.FC = memo(() => {
 
                 <StickyBox className={StringHelpers.joinClassNames(
                     classes.filtersSidebar,
+                    bootstrap.offsetXl1,
+                    bootstrap.offsetLg1,
+                    bootstrap.offsetMd0,
+                    bootstrap.offsetSm0,
                     bootstrap.colXl3,
                     bootstrap.colLg3,
                     bootstrap.colMd6,

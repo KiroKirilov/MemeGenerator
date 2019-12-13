@@ -16,17 +16,28 @@
 }
 
 .removeAvatarIcon {
-    font-size: 18px;
-    color: red !important;
-    position: absolute;
-    margin-left: 20px;
-    margin-top: -20px;
+    @extend .avatarIcon;
     cursor: pointer;
+    color: red !important;
     transition: 0.2s;
 
     &:hover {
         transform: scale(1.2);
     }
+}
+
+.loadingIcon {
+    @extend .avatarIcon;
+    color: rgba(0, 0, 0, 0.85);
+    cursor: wait;
+    z-index: 9;
+}
+
+.avatarIcon {
+    font-size: 18px;
+    position: absolute;
+    margin-left: 20px;
+    margin-top: -20px;
 }
 
 .otherUserAvatar {

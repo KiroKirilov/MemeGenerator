@@ -18,8 +18,11 @@ export const UserAvatar: React.FC<UserAvatarProps> = memo((props: UserAvatarProp
     const avatarChangeError = useSelector((store: ReduxStore) => store.userProfile.avatarChangeError);
     const dispatch = useDispatch();
     let [imageLoaded, setImageLoaded] = useState(false);
+    const isBeingChanged = useSelector((store: ReduxStore) => store.userProfile.avatarChangeLoading);
+    console.log(`imageLoaded: ${imageLoaded}`);
+    console.log(`isBeingChanged: ${isBeingChanged}`);
 
-    const firstLetter = props.username[0].toUpperCase();
+    const firstLetter = (props.username || "$")[0].toUpperCase();
 
     if (avatarChangeError) {
         notification.error({
@@ -44,11 +47,13 @@ export const UserAvatar: React.FC<UserAvatarProps> = memo((props: UserAvatarProp
                 justifyContent: "center"
             }}>
                 {
-                    props.hideRemove || !props.avatarUrl || props.userId !== currentUserId
-                        ? null
-                        : <Tooltip className={!imageLoaded ? bootstrap.dNone : ""} title="Remove avatar">
-                            <Icon onClick={handleAvatarRemove} className={classes.removeAvatarIcon} theme="filled" type="close-circle" />
-                        </Tooltip>
+                    (!imageLoaded && !!props.avatarUrl) || isBeingChanged
+                        ? <Icon className={classes.loadingIcon} spin type="sync" />
+                        : props.hideRemove || !props.avatarUrl || props.userId !== currentUserId
+                            ? null
+                            : <Tooltip className={!imageLoaded ? bootstrap.dNone : ""} title="Remove avatar">
+                                <Icon onClick={handleAvatarRemove} className={classes.removeAvatarIcon} theme="filled" type="close-circle" />
+                            </Tooltip>
                 }
                 {
                     props.avatarUrl

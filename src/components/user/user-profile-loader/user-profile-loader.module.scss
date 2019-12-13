@@ -1,0 +1,18 @@
+.profileLoader {
+  padding: 0;
+}
+
+.profileLoaderRow {
+  padding: 10px;
+}
+
+.loaderRow {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  span {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+}

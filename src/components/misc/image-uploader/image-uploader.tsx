@@ -43,7 +43,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = memo((props: ImageUpl
                 {props.buttonText || "Upload your own"}
             </Button>
 
-            <DashboardModal open={isOpen} inline={false} uppy={uppy} />
+            <DashboardModal onRequestClose={() => setIsOpen(false)} open={isOpen} inline={false} uppy={uppy} />
         </div>
     );
 });

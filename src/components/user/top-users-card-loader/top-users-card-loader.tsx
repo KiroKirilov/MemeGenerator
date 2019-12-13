@@ -19,8 +19,8 @@ export const TopUsersCardLoader: React.FC = memo(() => {
             </div>
 
             {
-                [...Array(NumberHelpers.getRandomInt(3, 5))].map(() => (
-                    <div className={StringHelpers.joinClassNames(bootstrap.row, classes.userRowLoader, classes.loaderRow)}>
+                [...Array(NumberHelpers.getRandomInt(3, 5))].map((_item, index) => (
+                    <div key={index} className={StringHelpers.joinClassNames(bootstrap.row, classes.userRowLoader, classes.loaderRow)}>
                         <div className={StringHelpers.joinClassNames(bootstrap.col10, classes.titleLoader)}>
                             <Skeleton color="#A1D2FF" width="60%" widthRandomness={0.5} height="15px" />
                         </div>

@@ -20,6 +20,7 @@ import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { UserProfileActions } from "../../../store/actions/user-profile-actions";
 import { Result, Button, Spin } from "antd";
 import { TopUsers } from "../top-users/top-users";
+import { UserProfileLoader } from "../user-profile-loader/user-profile-loader";
 
 export const UserProfile: React.FC = memo(() => {
     const { userId } = useParams();
@@ -40,21 +41,16 @@ export const UserProfile: React.FC = memo(() => {
         <div>
             {
                 isLoading
-                    ? <Spin size="large" />
+                    ? <UserProfileLoader />
                     : user
                         ? <div>
                             <div className={bootstrap.containerFluid}>
                                 <div className={StringHelpers.joinClassNames(bootstrap.row, bootstrap.alignItemsStart)}>
                                     <div className={StringHelpers.joinClassNames(
-                                        classes.filtersSidebar,
                                         bootstrap.colXl4,
                                         bootstrap.colLg4,
                                         bootstrap.colMd12,
-                                        bootstrap.colSm12,
-                                        bootstrap.justifyContentCenter,
-                                        bootstrap.alignItemsStart,
-                                        bootstrap.flexColumn,
-                                        bootstrap.dFlex)}>
+                                        bootstrap.colSm12)}>
 
                                         <div className={classes.profileHeader}>
                                             <Title className={StringHelpers.joinClassNames(

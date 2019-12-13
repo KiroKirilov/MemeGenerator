@@ -36,6 +36,7 @@ export type UserProfileStore = {
     userMetadata?: UserMetadata;
     userProfileLoading: boolean;
     avatarChangeError?: FirebaseError;
+    avatarChangeLoading: boolean;
 };
 
 export type MemeDeleteStore = {
