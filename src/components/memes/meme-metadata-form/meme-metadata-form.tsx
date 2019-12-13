@@ -117,8 +117,8 @@ export const MemeMetadataForm: React.FC = memo(() => {
                                     message: "The title must be at least 3 chracters long"
                                 },
                                 maxLength: {
-                                    value: 30,
-                                    message: "The title must be shorter than 30 chracters"
+                                    value: 50,
+                                    message: "The title must be shorter than 50 chracters"
                                 }
                             })}
                         />

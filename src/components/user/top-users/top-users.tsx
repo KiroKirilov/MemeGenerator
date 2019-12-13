@@ -41,13 +41,15 @@ export const TopUsers: React.FC = memo(() => {
     }
 
     function transformMemes(memes: Meme[]): TopUserModel[] {
-        const groupableMemes: GroupableMeme[] = memes.map(m => ({
-            creatorUsername: m.createdBy.username,
-            creatorId: m.createdBy.id,
-            score: m.score,
-            ratings: m.ratings || [],
-            createdOn: DateHelpers.fbDateToDate(m.createdOn as FirebaseDate)
-        }));
+        const groupableMemes: GroupableMeme[] = memes
+            .filter(m => m.ratings && m.ratings.length > 0)
+            .map(m => ({
+                creatorUsername: m.createdBy.username,
+                creatorId: m.createdBy.id,
+                score: m.score,
+                ratings: m.ratings || [],
+                createdOn: DateHelpers.fbDateToDate(m.createdOn as FirebaseDate)
+            }));
         const groupedMemes = ArrayHelpers.groupBy(groupableMemes, "creatorId");
         const models: TopUserModel[] = [];
         for (const userId in groupedMemes) {
@@ -140,8 +142,8 @@ export const TopUsers: React.FC = memo(() => {
             <div className={classes.topUsersCardWrapper}>
                 {
                     loading
-                    ? <TopUsersCardLoader />
-                    : <TopUsersCard topUsers={transformMemes(memes || [])} syncing={syncing} onSync={() => handleSync()} title="All time top users" />
+                        ? <TopUsersCardLoader />
+                        : <TopUsersCard topUsers={transformMemes(memes || [])} syncing={syncing} onSync={() => handleSync()} title="All time top users" />
                 }
             </div>
         </div>
