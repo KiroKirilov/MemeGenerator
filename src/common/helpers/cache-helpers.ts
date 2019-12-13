@@ -1,8 +1,9 @@
 import { CacheItem } from "../../models/cache/cache-item";
+import { FucntionHelpers } from "./funtions-helpers";
 
 export class CacheHelpers {
     public static async getFromCacheOrSet<T>(key: string, expiresInSeconds: number, dataFunc: () => T | Promise<T>, forceUpdate: boolean = false): Promise<T> {
-        const currrentCacheValue: string | null = localStorage.getItem(key);
+        const currrentCacheValue: string | null = sessionStorage.getItem(key);
         if (!currrentCacheValue || forceUpdate) {
             return await CacheHelpers.setCacheItem(key, expiresInSeconds, dataFunc);
         }
@@ -26,7 +27,7 @@ export class CacheHelpers {
             data: data
         };
 
-        localStorage.setItem(key, JSON.stringify(cacheItem));
+        sessionStorage.setItem(key, JSON.stringify(cacheItem));
         return data;
     }
 }

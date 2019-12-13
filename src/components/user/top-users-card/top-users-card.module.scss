@@ -1,0 +1,32 @@
+.topUserRowAlign {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 12px;
+    padding-left: 12px;
+}
+
+.topUserRow:nth-child(even) {
+    background-color: white;
+}
+
+.topUserRow {
+    span {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+}
+
+
+.topUserHeader {
+    font-size: 17px;
+    font-weight: bold;
+    border-bottom: 2px solid black;
+    background-color: #d4d4d4;
+    padding-top: 5px;
+}
+
+.topUsersCard {
+    div[class*='ant-card-body'] {
+        padding: 0;
+    }
+}

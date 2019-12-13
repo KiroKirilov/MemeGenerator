@@ -1,0 +1,32 @@
+.memeTemplateLoaderContainer {
+    border-radius: 2px;
+    border: 1px solid #b0b0b0;
+
+    .titleLoaderRow {
+        padding: 10px;
+    }
+
+    .userRowLoader {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+
+    .userRowLoader:nth-child(even) {
+        background-color: rgb(240, 242, 245);
+    }
+    
+
+    .titleLoader {
+        padding: 0;
+    }
+
+    .loaderRow {
+        span {
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+    }
+}

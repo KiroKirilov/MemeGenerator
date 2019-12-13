@@ -17,6 +17,7 @@ import { Empty, Button } from "antd";
 import { useHistory } from "react-router-dom";
 import { appRoutes } from "../../../common/constants/app-routes";
 import { MemeListProps } from "./meme-list-props";
+import { DateHelpers } from "../../../common/helpers/date-helpers";
 
 export const MemeList: React.FC<MemeListProps> = memo((props: MemeListProps) => {
     const [memes, setMemes] = useState<Meme[] | null>(null);
@@ -109,9 +110,7 @@ export const MemeList: React.FC<MemeListProps> = memo((props: MemeListProps) => 
         const allTimeBestQuery: Query = baseQuery
             .orderBy("score", "desc");
 
-        const queryDate: Date = new Date();
-        const currentHours: number = queryDate.getHours();
-        queryDate.setHours(currentHours - 24);
+        const queryDate: Date = DateHelpers.dateNHoursAgo(24);
 
         const hotQuery: Query = baseQuery
             .orderBy("createdOn")
@@ -162,7 +161,7 @@ export const MemeList: React.FC<MemeListProps> = memo((props: MemeListProps) => 
                                 {
                                     isAuthenticated
                                         ? <Button
-                                            icon="home"
+                                            icon="file-image"
                                             onClick={() => history.push(appRoutes.memes.submit)}
                                             type="primary">
                                             Submit one!
