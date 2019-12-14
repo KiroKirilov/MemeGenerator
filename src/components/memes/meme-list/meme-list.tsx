@@ -1,5 +1,5 @@
 import * as React from "react";
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState, useRef } from "react";
 import { ReduxStore } from "../../../types/redux-store";
 import { useSelector } from "react-redux";
 import { Meme } from "../../../models/memes/meme";
@@ -34,7 +34,14 @@ export const MemeList: React.FC<MemeListProps> = memo((props: MemeListProps) => 
 
     useEffect(() => {
         loadInitial();
-    }, [sortType, filterTags, props.userId, deletedMemeId]);
+    }, [filterTags, props.userId, deletedMemeId]);
+
+    useEffect(() => {
+        if (listContainer.current) {
+            listContainer.current.scrollTop = 0;
+        }
+        loadInitial();
+    }, [sortType]);
 
     function updateMemes(querySnapshot: QuerySnapshot, clearPrev: boolean = false): void {
         const queryMemes: Meme[] = [];
