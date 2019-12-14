@@ -4,7 +4,7 @@ import { UserAvatarProps } from "./user-avatar-props";
 import { ZoomableImage } from "../../misc/zoomable-image/zoomable-image";
 import { ReduxStore } from "../../../types/redux-store";
 import { useSelector, useDispatch } from "react-redux";
-import { Avatar, notification, Icon, Tooltip } from "antd";
+import { Avatar, notification, Icon, Tooltip, Button } from "antd";
 import { ImageUploader } from "../../misc/image-uploader/image-uploader";
 import classes from "./user-avatar.module.scss";
 import { UserProfileActions } from "../../../store/actions/user-profile-actions";
@@ -17,10 +17,9 @@ export const UserAvatar: React.FC<UserAvatarProps> = memo((props: UserAvatarProp
     const currentUserId = auth.uid;
     const avatarChangeError = useSelector((store: ReduxStore) => store.userProfile.avatarChangeError);
     const dispatch = useDispatch();
-    let [imageLoaded, setImageLoaded] = useState(false);
+    const [imageLoaded, setImageLoaded] = useState(false);
+    const [imageUploaderVisible, setImageUploaderVisible] = useState<boolean>(false);
     const isBeingChanged = useSelector((store: ReduxStore) => store.userProfile.avatarChangeLoading);
-    console.log(`imageLoaded: ${imageLoaded}`);
-    console.log(`isBeingChanged: ${isBeingChanged}`);
 
     const firstLetter = (props.username || "$")[0].toUpperCase();
 
@@ -32,6 +31,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = memo((props: UserAvatarProp
     }
 
     function handleImageUploaded(b64: string): void {
+        setImageUploaderVisible(false);
         dispatch(UserProfileActions.profilePictureChanged(b64, props.userId));
     }
 
@@ -60,7 +60,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = memo((props: UserAvatarProp
                         ? <ZoomableImage
                             containerClasses={StringHelpers.joinClassNames(
                                 !imageLoaded ? bootstrap.dNone : "",
-                                props.userId !== currentUserId ? classes.otherUserAvatar : ""
+                                classes.otherUserAvatar
                             )}
                             onLoad={() => setImageLoaded(true)}
                             imageClasses={classes.avatarImage}
@@ -80,7 +80,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = memo((props: UserAvatarProp
                 }}
                     className={StringHelpers.joinClassNames(
                         imageLoaded && props.avatarUrl ? bootstrap.dNone : "",
-                        props.userId !== currentUserId ? classes.otherUserAvatar : ""
+                        classes.otherUserAvatar
                     )}>
                     {firstLetter}
                 </Avatar>
@@ -88,12 +88,15 @@ export const UserAvatar: React.FC<UserAvatarProps> = memo((props: UserAvatarProp
 
             {
                 props.userId === currentUserId && !props.disableChange
-                    ? <ImageUploader
-                        onFileUploaded={handleImageUploaded}
-                        buttonClasses={classes.openUploadDialogButton}
-                        buttonType="default"
-                        buttonIcon="edit"
-                        buttonText="Change" />
+                    ? <div>
+                        <Tooltip title="Change avatar">
+                            <Icon className={classes.editAvatarIcon} onClick={() => setImageUploaderVisible(true)} theme="filled" type="edit" />
+                        </Tooltip>
+                        <ImageUploader
+                            onFileUploaded={handleImageUploaded}
+                            onRequestClose={() => setImageUploaderVisible(false)}
+                            isOpen={imageUploaderVisible} />
+                    </div>
                     : null
             }
         </div>

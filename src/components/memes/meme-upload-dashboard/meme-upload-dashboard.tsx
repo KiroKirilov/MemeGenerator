@@ -19,7 +19,8 @@ import { ImageUploader } from "../../misc/image-uploader/image-uploader";
 
 export const MemeUploadDashboard: React.FC = memo(() => {
     const dispatch: Dispatch<any> = useDispatch();
-    const [visible, setVisible] = useState<boolean>(false);
+    const [templatePickerVisible, setTemplatePickerVisible] = useState<boolean>(false);
+    const [imageUploaderVisible, setImageUploaderVisible] = useState<boolean>(false);
 
     useEffect(() => {
         dispatch(MemeTemplateActions.getPopularTemplates());
@@ -29,9 +30,22 @@ export const MemeUploadDashboard: React.FC = memo(() => {
         <div className={bootstrap.containerFluid}>
             <div className={bootstrap.row}>
                 <div className={StringHelpers.joinClassNames(bootstrap.col12, bootstrap.dFlex, bootstrap.justifyContentCenter)}>
+                    <Button
+                        className={classes.memeUploadDashboardButton}
+                        type={"primary"}
+                        onClick={() => setImageUploaderVisible(true)}
+                        icon={"upload"}>
+                        {"Upload your own"}
+                    </Button>
+
                     <ImageUploader
                         buttonClasses={classes.memeUploadDashboardButton}
-                        onFileUploaded={(b64: string) => dispatch(MemeUploadActions.memeUploaded(b64))} />
+                        isOpen={imageUploaderVisible}
+                        onRequestClose={() => setImageUploaderVisible(false)}
+                        onFileUploaded={(b64: string) => {
+                            setImageUploaderVisible(false);
+                            dispatch(MemeUploadActions.memeUploaded(b64))
+                        }} />
                 </div>
             </div>
 
@@ -45,15 +59,15 @@ export const MemeUploadDashboard: React.FC = memo(() => {
                 <div className={StringHelpers.joinClassNames(bootstrap.col12, bootstrap.dFlex, bootstrap.justifyContentCenter)}>
                     <Button
                         className={classes.memeUploadDashboardButton}
-                        onClick={() => setVisible(true)} icon="rise">
+                        onClick={() => setTemplatePickerVisible(true)} icon="rise">
                         Use a popular template
                     </Button>
 
                     <Modal
                         footer={null}
                         title="Popular templates"
-                        visible={visible}
-                        onCancel={() => setVisible(false)}
+                        visible={templatePickerVisible}
+                        onCancel={() => setTemplatePickerVisible(false)}
                         style={{ top: 20 }}
                     >
                         <MemeTemplatePicker />

@@ -26,18 +26,35 @@
     }
 }
 
+.editAvatarIcon {
+    @extend .avatarIcon;
+    cursor: pointer;
+    background-color: white;
+    border-radius: 50%;
+    margin-left: 9px !important;
+    margin-top: -17px !important;
+    transition: 0.2s;
+
+    &:hover {
+        transform: scale(1.2);
+    }
+}
+
+
 .loadingIcon {
     @extend .avatarIcon;
     color: rgba(0, 0, 0, 0.85);
     cursor: wait;
+    background-color: white;
+    border-radius: 50%;
     z-index: 9;
 }
 
 .avatarIcon {
     font-size: 18px;
     position: absolute;
-    margin-left: 20px;
-    margin-top: -20px;
+    margin-left: 18px;
+    margin-top: -15px;
 }
 
 .otherUserAvatar {

@@ -4,4 +4,6 @@ export type ImageUploaderProps = {
     buttonText?: string;
     buttonIcon?: string;
     buttonType?: "link" | "default" | "ghost" | "primary" | "dashed" | "danger";
+    isOpen: boolean;
+    onRequestClose: () => void;
 }

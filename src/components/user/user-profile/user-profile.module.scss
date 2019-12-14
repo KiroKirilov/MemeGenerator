@@ -1,18 +1,22 @@
 .profileHeader {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    margin: auto;
-    margin-bottom: -6px !important;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  margin-bottom: -6px !important;
 }
 
 .filtersSidebar {
-    padding-left: 0;
-    padding-right: 0;
-    margin-bottom: 20px;
+  padding-left: 0;
+  padding-right: 0;
+  margin-bottom: 20px;
 }
 
 .memeListWrapper {
-    padding-left: 0;
-    padding-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.profileInfo {
+  margin-right: 15px;
 }

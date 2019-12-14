@@ -7,8 +7,6 @@ import { Button } from "antd";
 import { DashboardModal } from "@uppy/react";
 
 export const ImageUploader: React.FC<ImageUploaderProps> = memo((props: ImageUploaderProps) => {
-    const [isOpen, setIsOpen] = useState(false);
-
     const uppy: Uppy.Uppy = Uppy({
         restrictions: {
             maxNumberOfFiles: 1,
@@ -16,6 +14,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = memo((props: ImageUpl
         },
         autoProceed: true
     });
+
     async function onImageUpload(): Promise<void> {
         const file: UppyFile<{}, {}> = uppy.getFiles()[0];
         const b64: string = await FileHelpers.toBase64(file.data);
@@ -24,7 +23,6 @@ export const ImageUploader: React.FC<ImageUploaderProps> = memo((props: ImageUpl
             elements[0].classList.remove("uppy-Dashboard-isFixed");
         }
         uppy.reset();
-        setIsOpen(false);
         if (props.onFileUploaded) {
             props.onFileUploaded(b64);
         }
@@ -35,15 +33,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = memo((props: ImageUpl
 
     return (
         <div>
-            <Button
-                className={props.buttonClasses}
-                type={props.buttonType || "primary"}
-                onClick={() => setIsOpen(true)}
-                icon={props.buttonIcon || "upload"}>
-                {props.buttonText || "Upload your own"}
-            </Button>
-
-            <DashboardModal onRequestClose={() => setIsOpen(false)} open={isOpen} inline={false} uppy={uppy} />
+            <DashboardModal onRequestClose={props.onRequestClose} open={props.isOpen} inline={false} uppy={uppy} />
         </div>
     );
 });
