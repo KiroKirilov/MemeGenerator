@@ -1,9 +1,8 @@
 import * as React from "react";
-import { memo, useState } from "react";
+import { memo } from "react";
 import Uppy, { UppyFile } from "@uppy/core";
 import { ImageUploaderProps } from "./image-uploader-props";
 import { FileHelpers } from "../../../common/helpers/file-helpers";
-import { Button } from "antd";
 import { DashboardModal } from "@uppy/react";
 
 export const ImageUploader: React.FC<ImageUploaderProps> = memo((props: ImageUploaderProps) => {

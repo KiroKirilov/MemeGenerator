@@ -1,5 +1,4 @@
 import { CacheItem } from "../../models/cache/cache-item";
-import { FucntionHelpers } from "./funtions-helpers";
 
 export class CacheHelpers {
     public static async getFromCacheOrSet<T>(key: string, expiresInSeconds: number, dataFunc: () => T | Promise<T>, forceUpdate: boolean = false): Promise<T> {

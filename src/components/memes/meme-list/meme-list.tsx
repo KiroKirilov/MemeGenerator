@@ -1,5 +1,5 @@
 import * as React from "react";
-import { memo, useEffect, useState, useRef } from "react";
+import { memo, useEffect, useState } from "react";
 import { ReduxStore } from "../../../types/redux-store";
 import { useSelector } from "react-redux";
 import { Meme } from "../../../models/memes/meme";

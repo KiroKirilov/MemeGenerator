@@ -10,7 +10,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { notification, Icon, Tooltip, Popconfirm } from "antd";
 import { appRoutes } from "../../../common/constants/app-routes";
 import { generatePath } from "react-router-dom";
-import { collectionNames } from "../../../common/constants/collection-names";
 import { RatingType } from "../../../models/memes/rating-type";
 import { default as classes } from "./meme-footer.module.scss";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";

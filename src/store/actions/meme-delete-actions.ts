@@ -4,6 +4,7 @@ import { MemeDeleteActionType } from "../action-types/meme-delete/meme-delete-ac
 import { collectionNames } from "../../common/constants/collection-names";
 import { MemeDeleteActionPayload } from "../action-types/meme-delete/meme-delete-payload";
 import { Meme } from "../../models/memes/meme";
+
 export class MemeDeleteActions {
     public static memeDeleted(meme: Meme): FunctionAction {
         return async (dispatch: any, getState: GetState, { getFirebase, getFirestore }) => {

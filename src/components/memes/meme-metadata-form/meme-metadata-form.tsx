@@ -1,6 +1,6 @@
 import * as React from "react";
-import { memo, useEffect } from "react";
-import { Spin, Input, Form, Icon, Button, Select } from "antd";
+import { memo } from "react";
+import { Input, Form, Icon, Button } from "antd";
 import { MemeUploadActions } from "../../../store/actions/meme-upload-actions";
 import { ReduxStore } from "../../../types/redux-store";
 import useForm from "react-hook-form";

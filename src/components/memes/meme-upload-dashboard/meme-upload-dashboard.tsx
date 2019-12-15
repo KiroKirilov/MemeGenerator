@@ -1,13 +1,7 @@
 import * as React from "react";
 import { memo, useState, useEffect } from "react";
-import { Dashboard } from "@uppy/react";
-import Uppy, { UppyFile } from "@uppy/core";
 import { useDispatch } from "react-redux";
 import { MemeTemplateActions } from "../../../store/actions/meme-template-actions";
-
-import "@uppy/core/dist/style.css";
-import "@uppy/dashboard/dist/style.css";
-import "@uppy/provider-views/dist/style.css";
 import { MemeTemplatePicker } from "../meme-template-picker/meme-template-picker";
 import { Dispatch } from "redux";
 import { Modal, Button, Typography } from "antd";

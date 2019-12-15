@@ -1,11 +1,7 @@
 import * as React from "react";
 import { memo } from "react";
-import { ReduxStore } from "../../../types/redux-store";
-import { useDispatch, useSelector } from "react-redux";
-import { SortType } from "../../../models/meme-operations/sort-type";
+import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
-import { Button, Icon } from "antd";
-import classes from "./meme-filter-operations.module.scss";
 import { MemeOperationsActions } from "../../../store/actions/meme-oprations-actions";
 import { SelectValue } from "antd/lib/select";
 import { TagPicker } from "../../tags/tag-picker/tag-picker";

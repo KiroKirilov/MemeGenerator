@@ -1,16 +1,13 @@
 import * as React from "react";
-import { memo, createRef, useEffect, useState } from "react";
+import { memo, useState, useEffect } from "react";
 import { MemeImageEditor } from "../meme-image-editor/meme-image-editor";
 import { useSelector, useDispatch } from "react-redux";
 import { ReduxStore } from "../../../types/redux-store";
 import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { default as bootstrap } from "../../../common/styles/bootstrapGrid.module.scss";
 import { default as classes } from "./meme-image-viewer.module.scss";
-import { BootstrapHelpers } from "../../../common/helpers/bootstrap-helpers";
 import { Button } from "antd";
 import { MemeUploadActions } from "../../../store/actions/meme-upload-actions";
-import { ImageEditorRef } from "../../../types/image-editor-reference";
-import { ImageHelpers } from "../../../common/helpers/image-helpers";
 
 export const MemeImageViewer: React.FC = memo(() => {
     const maxHeight = 550;

@@ -5,7 +5,6 @@ import { FunctionAction } from "../../types/function-action";
 import { ImageHelpers } from "../../common/helpers/image-helpers";
 import { MemeMetadata } from "../../models/memes/meme-metadata";
 import { GetState } from "../../types/get-state";
-import { FirebaseInstance } from "../../types/get-firestore-firebase";
 import { Reference } from "@firebase/storage-types";
 import { StringHelpers } from "../../common/helpers/string-helpers";
 import { ReduxStore } from "../../types/redux-store";

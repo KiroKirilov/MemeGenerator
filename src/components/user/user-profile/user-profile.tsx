@@ -1,24 +1,19 @@
 import * as React from "react";
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect } from "react";
 import { useParams } from "react-router";
-import { useFirestore } from "react-redux-firebase";
-import { collectionNames } from "../../../common/constants/collection-names";
 import { UserMetadata } from "../../../models/user/user-metadata";
 import { MemeList } from "../../memes/meme-list/meme-list";
 import { MemeOperations } from "../../memes/meme-operations/meme-operations";
-import { MemeViewer } from "../../memes/meme-viewer/meme-viewer";
 import Title from "antd/lib/typography/Title";
-import Avatar from "react-avatar";
 import { UserAvatar } from "../user-avatar/user-avatar";
 import { useSelector, useDispatch } from "react-redux";
 import { ReduxStore } from "../../../types/redux-store";
-import { ImageUploader } from "../../misc/image-uploader/image-uploader";
 import classes from "./user-profile.module.scss";
 import bootstrap from "../../../common/styles/bootstrapGrid.module.scss";
 import StickyBox from "react-sticky-box";
 import { StringHelpers } from "../../../common/helpers/string-helpers";
 import { UserProfileActions } from "../../../store/actions/user-profile-actions";
-import { Result, Button, Spin } from "antd";
+import { Result, Button } from "antd";
 import { TopUsers } from "../top-users/top-users";
 import { UserProfileLoader } from "../user-profile-loader/user-profile-loader";
 

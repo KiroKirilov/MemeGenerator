@@ -1,6 +1,6 @@
 import * as React from "react";
 import { memo } from "react";
-import { Card, Icon, Empty, Button, Tooltip, Popover } from "antd";
+import { Card, Icon, Empty, Button, Popover } from "antd";
 import { TopUsersCardProps } from "./top-users-card-props";
 import { appRoutes } from "../../../common/constants/app-routes";
 import { ReduxStore } from "../../../types/redux-store";

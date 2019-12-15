@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { RightNav } from './right-nav';
-import { LeftNav } from './left-nav';
 import { Button, Drawer, Icon } from 'antd';
 import "./nav-bar.scss";
 import { memo, useEffect } from 'react';
